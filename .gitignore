@@ -1,0 +1,6 @@
+#WebClient
+WebClient/src/WebClient/bin/
+WebClient/src/WebClient/obj/
+WebClient/.vs/
+WebClient/src/WebClient/client/**/*.js
+WebClient/src/WebClient/client/**/*.js.map

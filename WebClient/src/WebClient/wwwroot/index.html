@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="styles/styles.min.css">
+    
+    <script src="lib/jquery/dist/jquery.js"></script>
+    <script src="lib/tether/dist/js/tether.min.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="lib/knockout/dist/knockout.js"></script>
+    
+    <script type="text/javascript" data-main="js/main.js" src="lib/require.js"></script>
+    <script>
+        require.config({
+            basePath:'js',
+            paths: {
+                knockout: '../lib/knockout/dist/knockout',
+                text: '../lib/text'
+            }
+        });
+    </script>
+
+    <script type="text/javascript" src="js/components.register.js"></script>
+    <script type="text/javascript" src="js/scripts.min.js"></script>
+
+    <title>
+        BubelSoft
+    </title>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-faded">
+        <a class="navbar-brand" href="#">Bubelsoft</a>
+    </nav>
+<div class="flex-container">
+    <buildings class="building-list"></buildings>
+        <div>
+            <button class="btn btn-primary" data-toggle="collapse" data-target="#notifications" aria-expanded="false" aria-controls="notifications">
+                N
+                <!-- ko if: isNotification --><span class="badge badge-pill badge-danger" data-bind="text: notifications.length"></span><!-- /ko -->
+            </button>
+        </div>
+        <div class="notifications-list collapse" id="notifications">
+            Notifications
+        </div>
+    </div>
+</body>
+</html>
