@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BF59166F-8063-4403-879A-AE626D9C6504}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{649599C9-E034-43B8-B743-7A8607BE5FF4}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebApi", "src\WebApi\WebApi.xproj", "{66FF7943-B716-428F-98CA-7C2ABDD75212}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{66FF7943-B716-428F-98CA-7C2ABDD75212}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66FF7943-B716-428F-98CA-7C2ABDD75212}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66FF7943-B716-428F-98CA-7C2ABDD75212}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66FF7943-B716-428F-98CA-7C2ABDD75212}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{66FF7943-B716-428F-98CA-7C2ABDD75212} = {BF59166F-8063-4403-879A-AE626D9C6504}
+	EndGlobalSection
+EndGlobal

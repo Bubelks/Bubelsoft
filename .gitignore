@@ -4,3 +4,8 @@ WebClient/src/WebClient/obj/
 WebClient/.vs/
 WebClient/src/WebClient/client/**/*.js
 WebClient/src/WebClient/client/**/*.js.map
+
+#WebApi
+WebApi/.vs/
+WebApi/src/WebApi/bin/
+WebApi/src/WebApi/obj/
