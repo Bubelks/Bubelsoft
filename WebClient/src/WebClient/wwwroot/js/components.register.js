@@ -1,4 +1,4 @@
-var ko = require(["knockout"],
+require(["knockout"],
     function (ko) {
         var myTemplateLoader = {
             loadTemplate: function (name, templateName, callback) {

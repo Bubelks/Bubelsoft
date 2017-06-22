@@ -25,12 +25,13 @@ paths.htmlDestFiles = paths.htmlDest + "**/*.html";
 
 paths.componentsRegister = paths.webroot + "js/components.register.js";
 paths.koComponents = paths.clientroot + "**/*.register.js";
+paths.koComponentsLoader = paths.clientroot + "components.loaders.js";
 
 gulp.task("ko:components",
     function() {
         rimraf(paths.componentsRegister, () => { });
         return gulp.src([
-                paths.clientroot + "components.loaders.js",
+                paths.koComponentsLoader,
                 paths.koComponents
             ])
             .pipe(concat(paths.componentsRegister))
@@ -39,7 +40,7 @@ gulp.task("ko:components",
 
 gulp.task("min:js", function () {
     rimraf(paths.concatJsDest, function (){});
-    return gulp.src([paths.js, "!" + paths.minJs, "!" + paths.koComponents], { base: "." })
+    return gulp.src([paths.js, "!" + paths.minJs, "!" + paths.koComponents, "!" + paths.koComponentsLoader], { base: "." })
         .pipe(concat(paths.concatJsDest))
         //.pipe(uglify())
         .pipe(gulp.dest("."));

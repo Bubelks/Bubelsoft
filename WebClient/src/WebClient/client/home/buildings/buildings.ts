@@ -1,17 +1,22 @@
 ﻿///<amd-module name="home/buildings/buildings"/>
 
+import * as ko from "knockout";
+import * as rest from "utils/communication/rest";
+
 export class Buildings {
-    public buildings: IBuilding[];
+    public buildings: ko.ObservableArray<IBuilding>;
 
     constructor() {
-    this.buildings = [
-        { name: "Building1", my: true },
-        { name: "Building2", my: false },
-        { name: "Building3", my: false }
-    ];}
+        this.buildings = ko.observableArray([]);
+        rest.get("buildings", "").done(
+            data => {
+                this.buildings(data);
+            }
+        );
+    }
 }
 
 interface IBuilding {
     name: string;
-    my: boolean;
+    ownedByMy: boolean;
 }

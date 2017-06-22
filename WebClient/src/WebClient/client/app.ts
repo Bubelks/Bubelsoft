@@ -12,5 +12,5 @@ export class App
     }
     public notifications: string[];
     public isNotification: ko.Observable<boolean>;
-    
+    public static apiUrl = "http://localhost:13567/api";
 }

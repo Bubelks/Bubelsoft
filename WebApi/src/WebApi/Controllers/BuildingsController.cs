@@ -1,19 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
-    public class ValuesController : Controller
+    public class BuildingsController : Controller
     {
-        // GET api/values
+        // GET api/buildings
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            var buildings = new[]
+            {
+                new BuildingDto("Building1", true),
+                new BuildingDto("building2", false)
+            };
+            return Ok(buildings);
         }
 
         // GET api/values/5
@@ -40,5 +42,18 @@ namespace WebApi.Controllers
         public void Delete(int id)
         {
         }
+    }
+
+    internal class BuildingDto
+    {
+        public BuildingDto(string name, bool ownedByMy)
+        {
+            Name = name;
+            OwnedByMy = ownedByMy;
+        }
+
+        public string Name { get; }
+
+        public bool OwnedByMy { get; }
     }
 }
