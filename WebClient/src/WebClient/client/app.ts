@@ -1,16 +1,17 @@
 ﻿///<amd-module name="app"/>
 
-import * as ko from "knockout";
+import { Buildings } from "home/buildings/buildings";
+import { Notifications } from "home/notifications/notifications";
 
 export class App
 {
-    constructor() {
-        
-        this.notifications = ["Notification1", "Notification2"];
-        this.isNotification = ko.observable(this.notifications.length > 0);
-
-    }
-    public notifications: string[];
-    public isNotification: ko.Observable<boolean>;
     public static apiUrl = "http://localhost:13567/api";
+
+    public readonly buildings: Buildings;
+    public readonly notifications: Notifications;
+
+    constructor() {
+        this.buildings = new Buildings();
+        this.notifications = new Notifications();
+    }
 }

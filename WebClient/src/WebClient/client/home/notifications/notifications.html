@@ -1,0 +1,4 @@
+﻿<div>Notifications <!-- ko if: newNotifications --><span class="badge badge-pill badge-danger" data-bind="text: newNotifications.length"></span><!-- /ko --></div>
+<ul data-bind="foreach: newNotifications">
+   <li data-bind="text: $data"></li>
+</ul>

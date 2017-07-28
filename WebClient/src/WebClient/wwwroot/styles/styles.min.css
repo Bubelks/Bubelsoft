@@ -1,1 +1,1 @@
-.flex-container{display:flex}.building-list{display:flex;flex-grow:4;flex-direction:column}.notifications-list{flex-grow:1}.notifications-collapse-button{border-bottom-right-radius:0;border-top-right-radius:0}
+.flex-container{display:flex}.building-list{display:flex;flex-grow:4;flex-direction:column}.notifications-list{display:flex;flex-grow:1;flex-direction:column}.notifications-collapse-button{border-bottom-right-radius:0;border-top-right-radius:0}
