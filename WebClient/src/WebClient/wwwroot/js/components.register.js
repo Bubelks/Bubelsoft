@@ -1,16 +1,28 @@
 require(["knockout"],
     function (ko) {
-        ko.components.register("buildings",
-        {
-            viewModel: function(params) { return params.viewModel},
-            template: "home/buildings/buildings"
-        });
+        var myTemplateLoader = {
+            loadTemplate: function (name, templateName, callback) {
+                var fullUrl = "../views/" + templateName + ".html";
+                $.get(fullUrl, function (markupString) {
+                    ko.components.defaultLoader.loadTemplate(name, markupString, callback);
+                });
+            }
+        };
+        ko.components.loaders.unshift(myTemplateLoader);
     });
 require(["knockout"],
-    function (ko) {
-        ko.components.register("notifications",
-            {
-                viewModel: function(params) { return params.viewModel },
-                template: "home/notifications/notifications"
-            });
+    function(ko) {
+
+        var components = [
+            { path: "home/buildings/buildings", tag: "buildings" },
+            { path: "home/notifications/notifications", tag: "notifications" }
+        ];
+
+        components.forEach(c => {
+            ko.components.register(c.tag,
+                {
+                    viewModel: function(params) { return params.viewModel; },
+                    template: c.path
+                });
+        });
     });

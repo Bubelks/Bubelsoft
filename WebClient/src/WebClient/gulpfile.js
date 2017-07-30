@@ -24,8 +24,8 @@ paths.htmlDest = paths.webroot + "views/";
 paths.htmlDestFiles = paths.htmlDest + "**/*.html";
 
 paths.componentsRegister = paths.webroot + "js/components.register.js";
-paths.koComponents = paths.clientroot + "**/*.register.js";
-paths.koComponentsLoader = paths.clientroot + "components.loaders.js";
+paths.koComponents = paths.clientroot + "**/components.register.js";
+paths.koComponentsLoader = paths.clientroot + "**/components.loaders.js";
 
 gulp.task("ko:components",
     function() {
