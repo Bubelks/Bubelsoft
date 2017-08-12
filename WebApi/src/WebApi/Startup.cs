@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Cors;
-using Microsoft.AspNetCore.Mvc.Cors.Internal;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using WebApi.Database;
 
 namespace WebApi
 {
@@ -38,6 +37,9 @@ namespace WebApi
 
             services.AddMvc();
             services.AddCors();
+
+            var dbConnect = @"Server=.;Database=MainDatabase;User Id=sa;Password=bubelsoft1234";
+            services.AddDbContext<MainContext>(options => options.UseSqlServer(dbConnect));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
