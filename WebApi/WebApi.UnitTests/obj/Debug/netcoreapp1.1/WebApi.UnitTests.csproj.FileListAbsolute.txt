@@ -1,0 +1,16 @@
+D:\Projekty\Bubelsoft\WebApi\WebApi.UnitTests\bin\Debug\netcoreapp1.1\WebApi.UnitTests.deps.json
+D:\Projekty\Bubelsoft\WebApi\WebApi.UnitTests\bin\Debug\netcoreapp1.1\WebApi.UnitTests.dll
+D:\Projekty\Bubelsoft\WebApi\WebApi.UnitTests\obj\Debug\netcoreapp1.1\WebApi.UnitTests.csprojResolveAssemblyReference.cache
+D:\Projekty\Bubelsoft\WebApi\WebApi.UnitTests\obj\Debug\netcoreapp1.1\WebApi.UnitTests.AssemblyInfo.cs
+D:\Projekty\Bubelsoft\WebApi\WebApi.UnitTests\bin\Debug\netcoreapp1.1\WebApi.UnitTests.pdb
+D:\Projekty\Bubelsoft\WebApi\WebApi.UnitTests\bin\Debug\netcoreapp1.1\WebApi.dll
+D:\Projekty\Bubelsoft\WebApi\WebApi.UnitTests\bin\Debug\netcoreapp1.1\WebApi.pdb
+D:\Projekty\Bubelsoft\WebApi\WebApi.UnitTests\obj\Debug\netcoreapp1.1\WebApi.UnitTests.dll
+D:\Projekty\Bubelsoft\WebApi\WebApi.UnitTests\obj\Debug\netcoreapp1.1\WebApi.UnitTests.pdb
+D:\Projekty\Bubelsoft\WebApi\WebApi.UnitTests\bin\Debug\netcoreapp1.1\WebApi.UnitTests.runtimeconfig.json
+D:\Projekty\Bubelsoft\WebApi\WebApi.UnitTests\bin\Debug\netcoreapp1.1\WebApi.UnitTests.runtimeconfig.dev.json
+D:\Projekty\Bubelsoft\WebApi\WebApi.UnitTests\bin\Debug\netcoreapp1.1\NUnit3.TestAdapter.dll
+D:\Projekty\Bubelsoft\WebApi\WebApi.UnitTests\bin\Debug\netcoreapp1.1\nunit.engine.netstandard.dll
+D:\Projekty\Bubelsoft\WebApi\WebApi.UnitTests\bin\Debug\netcoreapp1.1\Mono.Cecil.dll
+D:\Projekty\Bubelsoft\WebApi\WebApi.UnitTests\obj\Debug\netcoreapp1.1\WebApi.UnitTests.csproj.CoreCompileInputs.cache
+D:\Projekty\Bubelsoft\WebApi\WebApi.UnitTests\obj\Debug\netcoreapp1.1\WebApi.UnitTests.AssemblyInfoInputs.cache

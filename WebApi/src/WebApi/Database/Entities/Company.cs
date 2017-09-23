@@ -1,11 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Database.Entities
 {
-    public class Company
+    public class Company: Entity
     {
-        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+
+        public List<BuildingCompany> Buildings { get; set; }
     }
 }

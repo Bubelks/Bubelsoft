@@ -2,6 +2,7 @@
 {
     public enum RoleType
     {
-        Admin
+        Admin,
+        Reporter
     }
 }

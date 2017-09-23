@@ -8,14 +8,40 @@ namespace WebApi.Database
         public MainContext(DbContextOptions options): base(options)
         { }
 
-        public DbSet<Building> Buildings { get; set; }
         public DbSet<Company> Companies { get; set; }
+        public DbSet<Building> Buildings { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
-
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserRole>().HasKey(ur => new {ur.UserId, ur.RoleId});
+            modelBuilder.Entity<BuildingCompany>()
+                .HasKey(bc => new {bc.BuildingId, bc.CompanyId});
+
+            modelBuilder.Entity<BuildingCompany>()
+                .HasOne(bc => bc.Building)
+                .WithMany(b => b.Companies)
+                .HasForeignKey(bc => bc.BuildingId);
+
+            modelBuilder.Entity<BuildingCompany>()
+                .HasOne(bc => bc.Company)
+                .WithMany(b => b.Buildings)
+                .HasForeignKey(bc => bc.CompanyId);
+
+
+            modelBuilder.Entity<UserRole>()
+                .HasKey(ur=> new {ur.UserId, ur.BuildingId});
+
+            modelBuilder.Entity<UserRole>()
+                .HasOne(ur => ur.User)
+                .WithMany(u => u.Roles)
+                .HasForeignKey(ur => ur.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UserRole>()
+                .HasOne(ur => ur.Building)
+                .WithMany(b => b.Users)
+                .HasForeignKey(ur => new {ur.BuildingId, ur.CompanyId})
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
