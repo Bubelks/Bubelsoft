@@ -8,4 +8,8 @@ export class Notifications {
     constructor() {
         this.newNotifications = ko.observableArray(["Notification1", "Notification2"]);
     }
+
+    public dispose(): void {
+        
+    }
 }

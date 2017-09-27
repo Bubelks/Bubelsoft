@@ -27,16 +27,16 @@ paths.componentsRegister = paths.webroot + "js/components.register.js";
 paths.koComponents = paths.clientroot + "**/components.register.js";
 paths.koComponentsLoader = paths.clientroot + "**/components.loaders.js";
 
-gulp.task("ko:components",
-    function() {
-        rimraf(paths.componentsRegister, () => { });
-        return gulp.src([
-                paths.koComponentsLoader,
-                paths.koComponents
-            ])
-            .pipe(concat(paths.componentsRegister))
-            .pipe(gulp.dest("."));
-    });
+//gulp.task("ko:components",
+//    function() {
+//        rimraf(paths.componentsRegister, () => { });
+//        return gulp.src([
+//                paths.koComponentsLoader,
+//                paths.koComponents
+//            ])
+//            .pipe(concat(paths.componentsRegister))
+//            .pipe(gulp.dest("."));
+//    });
 
 gulp.task("min:js", function () {
     rimraf(paths.concatJsDest, function (){});
@@ -62,4 +62,4 @@ gulp.task("html",
             .pipe(gulp.dest(paths.htmlDest));
     });
 
-gulp.task("default", ["min:js", "min:css", "html", "ko:components"]);
+gulp.task("default", ["min:js", "min:css", "html"]);

@@ -1,5 +1,6 @@
 ﻿require(["knockout", "app"], function (ko, app) {
     var viewModel = new app.App();
-    var element = $("#main-page")[0];
+    app.AppSingleton.setInstance(viewModel);
+    var element = $("body")[0];
     ko.applyBindings(viewModel, element);
 });

@@ -14,6 +14,10 @@ export class Buildings {
             }
         );
     }
+
+    public dispose(): void {
+        
+    }
 }
 
 interface IBuilding {

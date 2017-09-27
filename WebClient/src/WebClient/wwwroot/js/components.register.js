@@ -1,4 +1,4 @@
-require(["knockout"],
+﻿require(["knockout"],
     function (ko) {
         var myTemplateLoader = {
             loadTemplate: function (name, templateName, callback) {
@@ -15,7 +15,8 @@ require(["knockout"],
 
         var components = [
             { path: "home/buildings/buildings", tag: "buildings" },
-            { path: "home/notifications/notifications", tag: "notifications" }
+            { path: "home/notifications/notifications", tag: "notifications" },
+            { path: "login/login", tag: "login" }
         ];
 
         components.forEach(c => {
