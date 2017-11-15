@@ -9,3 +9,5 @@ WebClient/src/WebClient/client/**/*.js.map
 WebApi/.vs/
 WebApi/src/WebApi/bin/
 WebApi/src/WebApi/obj/
+WebApi/WebApi.UnitTests/bin/
+WebApi/WebApi.UnitTests/obj/

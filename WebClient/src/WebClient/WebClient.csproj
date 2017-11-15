@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <None Remove="client\logIn\logIn.ts" />
+    <None Remove="client\utils\router.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +27,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="client\logIn\logIn.ts" />
+    <TypeScriptCompile Include="client\utils\router.ts" />
   </ItemGroup>
 
 </Project>

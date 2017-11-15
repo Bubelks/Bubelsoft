@@ -12,6 +12,7 @@
     <script src="lib/knockout/dist/knockout.js"></script>
 
     <script type="text/javascript" data-main="js/main.js" src="lib/require.js"></script>
+
     <script>
         require.config({
             basePath: 'js',
@@ -31,18 +32,15 @@
     </title>
 </head>
 <body>
-    <!-- ko if: authorized -->
+    <!-- ko if: home() !== null -->
     <div>
         <nav class="navbar navbar-light bg-faded">
             <a class="navbar-brand" href="#">Bubelsoft</a>
         </nav>
-        <div id="main-page" class="flex-container">
-            <buildings class="building-list" params="viewModel: buildings"></buildings>
-            <notifications class="notifications-list" params="viewModel: notifications"></notifications>
-        </div>
+        <home params="viewModel: home"></home>
     </div>
     <!-- /ko -->
-    <!-- ko ifnot: authorized -->
+    <!-- ko if: logIn() !== null -->
     <login params="viewModel: logIn"></login>
     <!-- /ko -->
 </body>

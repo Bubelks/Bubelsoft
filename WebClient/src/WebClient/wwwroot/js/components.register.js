@@ -16,7 +16,8 @@ require(["knockout"],
         var components = [
             { path: "home/buildings/buildings", tag: "buildings" },
             { path: "home/notifications/notifications", tag: "notifications" },
-            { path: "login/login", tag: "login" }
+            { path: "login/login", tag: "login" },
+            { path: "home/home", tag: "home" }
         ];
 
         components.forEach(c => {

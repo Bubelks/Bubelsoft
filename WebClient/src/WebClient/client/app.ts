@@ -1,32 +1,60 @@
 ﻿///<amd-module name="app"/>
 
-import { Buildings } from "home/buildings/buildings";
-import { Notifications } from "home/notifications/notifications";
+import { Home } from "home/home";
 import { LogIn } from "logIn/logIn";
+import { Router, IRouterOptions, RouterMode } from "utils/router";
 
 import * as ko from "knockout";
+
 export class App
 {
     public static apiUrl = "http://localhost:5000/api";
 
-    public readonly buildings: Buildings;
-    public readonly notifications: Notifications;
-    public readonly logIn: LogIn;
-    public readonly authorized: ko.Observable<boolean>;
+    public home: ko.Observable<Home>;
+    public logIn: ko.Observable<LogIn>;
+    public router: Router;
 
     constructor() {
-        this.buildings = new Buildings();
-        this.notifications = new Notifications();
-        this.logIn = new LogIn(() => this.authorize());
-        this.authorized = ko.observable(true);
+        this.home = ko.observable(null);
+        this.logIn = ko.observable(null);
+        this.router = new Router(this.createRouterOptions());
+        this.router.add("home", () => this.goToHome());
+        this.router.add("logIn", () => this.goToLogIn());
+        this.router.start();
+        this.router.navigate("home");
     }
 
     public unauthorize(): void {
-        this.authorized(false);
+        this.router.navigate("logIn");
     }
 
     public authorize(): void {
-        this.authorized(true);
+        this.router.navigate("home");
+    }
+
+    private goToHome(): void {
+        this.home(new Home());
+
+        if (this.logIn() !== null) {
+            this.logIn().dispose();
+            this.logIn(null);
+        }
+    }
+
+    private goToLogIn(): void {
+        this.logIn(new LogIn(() => this.authorize()));
+
+        if (this.home() !== null) {
+            this.home().dispose();
+            this.home(null);
+        }
+    }
+
+    private createRouterOptions(): IRouterOptions {
+        return {
+            mode: RouterMode.History,
+            root: window.location.host
+        }
     }
 }
 

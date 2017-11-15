@@ -24,7 +24,7 @@ namespace WebApi.Controllers.Security
         }
 
         [Route("login")]
-        public IActionResult LogIn(UserLogInInfo userInfo)
+        public IActionResult LogIn([FromBody]UserLogInInfo userInfo)
         {
             var user = _userRepository.GetForLogIn(userInfo.UserName);
 

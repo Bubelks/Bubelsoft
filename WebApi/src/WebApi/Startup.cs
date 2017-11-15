@@ -59,6 +59,7 @@ namespace WebApi
 
             services.AddDbContext<MainContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
             services.AddRepositories();
+
             services.AddMvc();
         }
 
