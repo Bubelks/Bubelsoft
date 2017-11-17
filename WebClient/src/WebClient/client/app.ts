@@ -32,6 +32,15 @@ export class App
         this.router.navigate("home");
     }
 
+    public openUserMenu(): void {
+        $("nav .dropdown .dropdown-menu").toggleClass("show");
+    }
+
+    public logOut(): void {
+        document.cookie = "bubelsoftToken=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+        this.router.navigate("logIn");
+    }
+
     private goToHome(): void {
         this.home(new Home());
 

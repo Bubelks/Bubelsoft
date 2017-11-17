@@ -7,6 +7,7 @@ export class LogIn {
     public readonly userName: ko.Observable<string>;
     public readonly password: ko.Observable<string>;
     public readonly invalid: ko.Observable<boolean>;
+    public readonly loading: ko.Observable<boolean>;
 
     private readonly onLogIn: () => void;
 
@@ -14,24 +15,28 @@ export class LogIn {
         this.userName = ko.observable("");
         this.password = ko.observable("");
         this.invalid = ko.observable(false);
+        this.loading = ko.observable(false);
         this.onLogIn = onLogIn;
     }
 
     public validate = () => this.userName().length !== 0 && this.password().length !== 0;
 
     public logIn(): void {
-        if (!this.validate()) {
-            this.invalid(true);
-            return;
-        }
+        this.loading(true);
 
-        rest.post("user", "logIn", { userName: this.userName(), password: this.password() })
-            .done((data: ITokenInfo) => {
-                this.setCookies(data)
-                this.onLogIn();
-                this.invalid(false);
-            })
-            .fail(() => this.invalid(true));
+        if (!this.validate())
+            this.invalid(true);
+        else
+            rest.post("user", "logIn", { userName: this.userName(), password: this.password() })
+                .done((data: ITokenInfo) => {
+                    this.setCookies(data);
+                    this.onLogIn();
+                    this.invalid(false);
+                })
+                .fail(() => this.invalid(true));
+
+        this.loading(false);
+        document.getElementsByTagName("login")[0].getElementsByTagName("button")[0].blur();
     }
 
     public dispose(): void { }

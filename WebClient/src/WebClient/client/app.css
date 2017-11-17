@@ -17,6 +17,38 @@
     border-top-right-radius: 0;
 }
 
-div {
-    border-radius: 0 !important;
+* {
+    border-radius: 0!important;
+}
+
+.user-avatar {
+    width: 40px;
+    color: white;
+    background-color: darkslateblue;
+    border-radius: 50%!important;
+    height: 40px;
+    box-shadow: none!important;
+}
+
+nav .dropdown-menu {
+    right: 0;
+    left: auto;
+}
+
+.my-button {
+    outline: none!important;
+    background-color: #ffffff;
+    color: #62b5c4;
+    border: none;
+    outline: none;
+}
+
+.my-button:hover, .my-button:focus {
+    opacity: .5;
+    background-color: #62b5c4;
+    color: #ffffff;
+}
+
+.my-button:active {
+    opacity: 1;
 }
