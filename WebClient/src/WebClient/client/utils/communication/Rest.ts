@@ -12,7 +12,7 @@ export function get(controller: string, action: string): any {
         url: url
     }).always(xhr => {
         if (xhr.status === 401)
-            AppSingleton.getInstance().unauthorize()
+            AppSingleton.getInstance().unauthorize();
     });;
 }
 
@@ -30,6 +30,10 @@ export function post(controller: string, action: string, body: any): any {
         if (xhr.status === 401)
             AppSingleton.getInstance().unauthorize();
     });
+}
+
+export function ping(): any {
+    return get("buildings", "");
 }
 
 function readToken(): string {

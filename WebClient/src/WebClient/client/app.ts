@@ -2,6 +2,7 @@
 
 import { Home } from "home/home";
 import { LogIn } from "logIn/logIn";
+import { Company } from "company/company";
 import { Router, IRouterOptions, RouterMode } from "utils/router";
 
 import * as ko from "knockout";
@@ -12,16 +13,22 @@ export class App
 
     public home: ko.Observable<Home>;
     public logIn: ko.Observable<LogIn>;
+    public company: ko.Observable<Company>;
+    public buildings: ko.Observable<Home>;
     public router: Router;
 
     constructor() {
         this.home = ko.observable(null);
         this.logIn = ko.observable(null);
+        this.company = ko.observable(null);
+        this.buildings = ko.observable(null);
         this.router = new Router(this.createRouterOptions());
-        this.router.add("home", () => this.goToHome());
-        this.router.add("logIn", () => this.goToLogIn());
+        this.router.add("home", () => this.showHome());
+        this.router.add("logIn", () => this.showLogIn());
+        this.router.add("company", () => this.showCompany());
+        this.router.add("buildings", () => this.showBuildings());
         this.router.start();
-        this.router.navigate("home");
+        this.goTo("home");
     }
 
     public unauthorize(): void {
@@ -33,6 +40,7 @@ export class App
     }
 
     public openUserMenu(): void {
+        $("nav .dropdown .user-avatar").toggleClass("show");
         $("nav .dropdown .dropdown-menu").toggleClass("show");
     }
 
@@ -41,21 +49,46 @@ export class App
         this.router.navigate("logIn");
     }
 
-    private goToHome(): void {
-        this.home(new Home());
+    public goTo = (url: string): void => {
+        this.router.navigate(url);
+    }
 
+    private showCompany(): void {
+        this.hideAll();
+        this.company(new Company());
+    }
+
+    private showBuildings(): void {
+        this.hideAll();
+        this.buildings(new Home());
+    }
+
+    private showHome(): void {
+        this.hideAll();
+        this.home(new Home());
+    }
+
+    private showLogIn(): void {
+        this.hideAll();
+        this.logIn(new LogIn(() => this.authorize()));
+    }
+
+    private hideAll(): void {
         if (this.logIn() !== null) {
             this.logIn().dispose();
             this.logIn(null);
         }
-    }
-
-    private goToLogIn(): void {
-        this.logIn(new LogIn(() => this.authorize()));
-
         if (this.home() !== null) {
             this.home().dispose();
             this.home(null);
+        }
+        if (this.company() !== null) {
+            this.company().dispose();
+            this.company(null);
+        }
+        if (this.buildings() !== null) {
+            this.buildings().dispose();
+            this.buildings(null);
         }
     }
 

@@ -11,6 +11,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="client\company\company.ts" />
+    <None Remove="client\home\buildings\building.ts" />
     <None Remove="client\logIn\logIn.ts" />
     <None Remove="client\utils\router.ts" />
   </ItemGroup>
@@ -26,6 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="client\company\company.ts" />
+    <TypeScriptCompile Include="client\home\buildings\building.ts" />
     <TypeScriptCompile Include="client\logIn\logIn.ts" />
     <TypeScriptCompile Include="client\utils\router.ts" />
   </ItemGroup>

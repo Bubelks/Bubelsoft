@@ -1,0 +1,57 @@
+﻿.building-list {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+.building-list .header {
+    border-bottom: none;
+}
+    .building-list .list {
+        border-bottom: none;
+    }
+
+    .building-list .filters .type-select{
+        margin-left: 5px;
+        min-width: 145px;
+    }
+
+    .building-list .building {
+        border-left: none;
+        border-right: none;
+    }
+
+.building {
+    display: flex;
+    margin-left: 10px;
+    min-height: 200px;
+}
+
+    .building .home-button {
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .building .info .name {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .building .info {
+        margin-right: auto;
+        margin-left: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .building .contract-type {
+        align-self: center;
+    }
+
+    .building .buttons{
+        visibility: hidden;
+    }
+
+    .building:hover .buttons{
+        visibility: visible;
+    }

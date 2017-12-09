@@ -1,0 +1,52 @@
+﻿.notifications-list {
+    display: flex;
+    flex-grow: 3;
+    flex-direction: column;
+}
+
+    .notifications-list .list {
+        background-color: white;
+        height: 100%;
+    }
+
+    .notifications-list .header-text {
+        margin-right: 0;
+    }
+
+    .notifications-list .badge {
+        top: -10px;
+        position: relative;
+    }
+
+        .notifications-list .filters * {
+            margin-left: 5px;
+        }
+        
+        .notifications-list .filters .close-button {
+            margin-left: -3px;
+            padding: 2px;
+        }
+        
+        .notifications-list .filters .type-select {
+            margin-left: -3px;
+            padding: 2px;
+        }
+
+.notification {
+    margin: 8px;
+    border-bottom: #ebebeb;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+
+.notification .name {
+    font-weight: bold;
+}
+
+.notification.new {
+    color: black;
+}
+
+    .notification.new .content {
+        font-weight: bold;
+    }

@@ -1,4 +1,25 @@
-<div>Notifications <!-- ko if: newNotifications --><span class="badge badge-pill badge-danger" data-bind="text: newNotifications.length"></span><!-- /ko --></div>
-<ul data-bind="foreach: newNotifications">
-   <li data-bind="text: $data"></li>
-</ul>
+<div class="bordered">
+    <span class="main-header-text">Notifications</span>
+    <!-- ko if: newNotificationsCount() != 0 -->
+    <div class="badge badge-pill badge-danger" data-bind="text: newNotificationsCount"></div>
+    <!-- /ko -->
+</div>
+<div class="bordered filters">
+    <select class="custom-select type-select" data-bind="options: notificationTypes,
+            optionsText: 'displayName',
+            value: selectedType,">
+    </select>
+    <!-- ko if: buildingsNamesVisible-->
+    <button class="btn home-button" data-bind="click: toggleSpecifyBuilding,
+            visible: !specifyBuilding()">Specify building</button>
+    <div data-bind="visible: specifyBuilding">
+        <select class="custom-select type-select" data-bind="options: buildingNames,
+                value: selectedBuildingName"></select>
+        <button class="btn home-button close-button" data-bind="click: toggleSpecifyBuilding,
+                ">X</button>
+    </div>
+    <!-- /ko -->
+</div>
+<div class="bordered list" data-bind="foreach: visibleNotifications">
+   <notification params="viewModel: $data"></notification>
+</div>

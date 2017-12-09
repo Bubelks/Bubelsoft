@@ -1,4 +1,11 @@
-<h3 style="border-bottom: 2px solid red">Buildings:</h3>
-<ul data-bind="foreach: buildings">
-    <li data-bind="text: $data.name"></li>
-</ul>
+<div class="bordered">
+    <span class="main-header-text">Buildings</span>
+</div>
+<div class="bordered filters">
+    <select class="custom-select type-select" data-bind="options: contractTypes,
+            optionsText: 'displayName',
+            value: selectedType,"></select>
+</div>
+<div class="bordered list" data-bind="foreach: visibleBuilding">
+    <building params="viewModel: $data"></building>
+</div>

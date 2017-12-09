@@ -1,0 +1,24 @@
+﻿.my-button {
+    outline: none !important;
+    background-color: #ffffff;
+    color: #62b5c4;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 0;
+}
+
+    .my-button:hover, .my-button:focus {
+        opacity: .5;
+        background-color: #62b5c4;
+        color: #ffffff;
+    }
+
+    .my-button:active {
+        opacity: 1;
+    }
+
+button, a {
+    cursor: pointer;
+    outline: none;
+}

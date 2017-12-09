@@ -23,8 +23,8 @@ namespace WebApi.Controllers
         {
             var buildings = new[]
             {
-                new BuildingDto("Building1", true),
-                new BuildingDto("building2", false)
+                new BuildingDto("Building1", true, new Company(1, "Company1")),
+                new BuildingDto("building2", false, new Company(2, "Company 2"))
             };
 
             return Ok(buildings);
@@ -63,14 +63,30 @@ namespace WebApi.Controllers
 
     internal class BuildingDto
     {
-        public BuildingDto(string name, bool ownedByMy)
+        public BuildingDto(string name, bool ownedByMy, Company company)
         {
             Name = name;
             OwnedByMy = ownedByMy;
+            Company = company;
         }
 
         public string Name { get; }
 
         public bool OwnedByMy { get; }
+
+        public Company Company { get; }
+
+    }
+
+    internal class Company
+    {
+        public Company(int id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+
+        public int Id { get; }
+        public string Name { get; }
     }
 }

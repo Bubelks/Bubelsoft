@@ -1,0 +1,11 @@
+﻿company .company-info {
+    flex-grow: 1;
+}
+
+company .workers {
+    flex-grow: 3;
+}
+
+    company .workers .table tbody{
+        background-color: white;
+    }
