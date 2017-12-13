@@ -3,6 +3,7 @@
 import { Home } from "home/home";
 import { LogIn } from "logIn/logIn";
 import { Company } from "company/company";
+import { BuildingsApp } from "buildings/buildingsApp";
 import { Router, IRouterOptions, RouterMode } from "utils/router";
 
 import * as ko from "knockout";
@@ -14,14 +15,18 @@ export class App
     public home: ko.Observable<Home>;
     public logIn: ko.Observable<LogIn>;
     public company: ko.Observable<Company>;
-    public buildings: ko.Observable<Home>;
+    public buildingsApp: BuildingsApp;
     public router: Router;
+
+    public useBuildingsApp: ko.Observable<boolean>;
 
     constructor() {
         this.home = ko.observable(null);
         this.logIn = ko.observable(null);
         this.company = ko.observable(null);
-        this.buildings = ko.observable(null);
+        this.useBuildingsApp = ko.observable(false);
+
+        this.buildingsApp = new BuildingsApp();
         this.router = new Router(this.createRouterOptions());
         this.router.add("home", () => this.showHome());
         this.router.add("logIn", () => this.showLogIn());
@@ -60,7 +65,7 @@ export class App
 
     private showBuildings(): void {
         this.hideAll();
-        this.buildings(new Home());
+        this.useBuildingsApp(true);
     }
 
     private showHome(): void {
@@ -86,15 +91,13 @@ export class App
             this.company().dispose();
             this.company(null);
         }
-        if (this.buildings() !== null) {
-            this.buildings().dispose();
-            this.buildings(null);
-        }
+
+        this.useBuildingsApp(false);
     }
 
     private createRouterOptions(): IRouterOptions {
         return {
-            mode: RouterMode.History,
+            mode: RouterMode.Hash,
             root: window.location.host
         }
     }

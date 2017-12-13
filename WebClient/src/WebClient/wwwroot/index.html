@@ -56,7 +56,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" tabindex="3" data-bind="click: goTo.bind(this, 'buildings')">Buildings</a>                
-                <!-- ko if: buildings() !== null -->
+                <!-- ko if: useBuildingsApp() -->
                 <div class="current-tab"></div>
                 <!-- /ko -->
             </li>
@@ -77,6 +77,9 @@
     <!-- /ko -->
     <!-- ko if: logIn() !== null -->
     <login params="viewModel: logIn"></login>
+    <!-- /ko -->
+    <!-- ko if: useBuildingsApp() -->
+    <buildings-app params="viewModel: buildingsApp"></buildings-app>
     <!-- /ko -->
 </body>
 </html>

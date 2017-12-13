@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="client\buildings\create\create.ts" />
     <None Remove="client\company\company.ts" />
     <None Remove="client\home\buildings\building.ts" />
     <None Remove="client\logIn\logIn.ts" />
@@ -28,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="client\buildings\create\create.ts" />
     <TypeScriptCompile Include="client\company\company.ts" />
     <TypeScriptCompile Include="client\home\buildings\building.ts" />
     <TypeScriptCompile Include="client\logIn\logIn.ts" />

@@ -20,7 +20,9 @@ require(["knockout"],
             { path: "home/notifications/notification", tag: "notification" },
             { path: "company/company", tag: "company" },
             { path: "login/login", tag: "login" },
-            { path: "home/home", tag: "home" }
+            { path: "home/home", tag: "home" },
+            { path: "buildings/create/create", tag: "building-create" },
+            { path: "buildings/buildingsApp", tag: "buildings-app" }
         ];
 
         components.forEach(c => {

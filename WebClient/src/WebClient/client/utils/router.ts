@@ -41,7 +41,12 @@ export class Router {
             fragment = this.getFragment();
 
         for (let i = 0; i < this.routes.length; i++) {
-            const match = fragment.match(this.routes[i].route);
+            var variableNames = [];
+            const route = this.routes[i].route.replace(/([:*])(\w+)/g, (full, dots, name) => {
+                variableNames.push(name);
+                return "([^\/]+)";
+            }) + "(?:\/|$)";
+            const match = fragment.match(new RegExp(route));
             if (match) {
                 match.shift();
                 this.routes[i].handler.apply({}, match);
@@ -53,17 +58,16 @@ export class Router {
     public getFragment(): string {
         let fragment: string;
         if (this.mode === RouterMode.History) {
-            fragment = this.clearSlashes(decodeURI(location.pathname + location.search));
-            fragment = fragment.replace(/\?(.*)$/, "");
-            fragment = this.root !== "/" ? fragment.replace(this.root, "") : fragment;
-        } else {
             const match = window.location.href.match(/#(.*)$/);
             fragment = match ? match[1] : "";
+        } else {
+            const match = window.location.href.match(/#(.*)$/);
+            fragment = match ? match[1].split("/")[0] : "";
         }
         return this.clearSlashes(fragment);
     }
 
-    public start() {
+    public start = () => {
         var current = this.root;
         const fn = () => {
             if (current !== this.getFragment()) {
@@ -73,7 +77,6 @@ export class Router {
         };
         clearInterval(this.listener);
         this.listener = setInterval(fn, 50);
-        return this;
     }
 
     private clearSlashes(path: string): string {

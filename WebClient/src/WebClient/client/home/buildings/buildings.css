@@ -24,7 +24,6 @@
 .building {
     display: flex;
     margin-left: 10px;
-    min-height: 200px;
 }
 
     .building .home-button {
