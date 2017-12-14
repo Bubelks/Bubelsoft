@@ -22,6 +22,9 @@ require(["knockout"],
             { path: "login/login", tag: "login" },
             { path: "home/home", tag: "home" },
             { path: "buildings/create/create", tag: "building-create" },
+            { path: "buildings/create/steps/building", tag: "building-step" },
+            { path: "buildings/create/steps/company", tag: "company-step" },
+            { path: "buildings/create/steps/estimate", tag: "estimate-step" },
             { path: "buildings/buildingsApp", tag: "buildings-app" }
         ];
 

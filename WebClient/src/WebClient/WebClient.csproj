@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <None Remove="client\buildings\create\create.ts" />
+    <None Remove="client\buildings\create\steps\company.ts" />
     <None Remove="client\company\company.ts" />
     <None Remove="client\home\buildings\building.ts" />
     <None Remove="client\logIn\logIn.ts" />
@@ -30,10 +31,25 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="client\buildings\create\create.ts" />
+    <TypeScriptCompile Include="client\buildings\create\steps\building.ts" />
+    <TypeScriptCompile Include="client\buildings\create\steps\estimate.ts" />
+    <TypeScriptCompile Include="client\buildings\create\steps\company.ts" />
     <TypeScriptCompile Include="client\company\company.ts" />
     <TypeScriptCompile Include="client\home\buildings\building.ts" />
     <TypeScriptCompile Include="client\logIn\logIn.ts" />
     <TypeScriptCompile Include="client\utils\router.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="client\buildings\create\steps\building.js">
+      <DependentUpon>building.ts</DependentUpon>
+    </None>
+    <None Update="client\buildings\create\steps\estimate.js">
+      <DependentUpon>estimate.ts</DependentUpon>
+    </None>
+    <None Update="client\buildings\create\steps\estimate.js.map">
+      <DependentUpon>estimate.js</DependentUpon>
+    </None>
   </ItemGroup>
 
 </Project>

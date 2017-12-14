@@ -92,6 +92,7 @@ export class App
             this.company(null);
         }
 
+        this.buildingsApp.hideAll();
         this.useBuildingsApp(false);
     }
 

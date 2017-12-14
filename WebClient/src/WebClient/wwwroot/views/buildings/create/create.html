@@ -1,1 +1,20 @@
-TU STWORZYMY BUDOWE
+<div class="card" style="width: 20rem;">
+    <div class="card-header">
+        <div data-bind="text: currentStep().header()"></div>
+    </div>
+    <div class="card-block">
+        <!-- ko if: companyStep.active() -->
+        <company-step params="viewModel: companyStep"></company-step>
+        <!-- /ko -->
+        <!-- ko if: buildingStep.active() -->
+        <building-step params="viewModel: buildingStep"></building-step>
+        <!-- /ko -->
+        <!-- ko if: estimateStep.active() -->
+        <estimate-step params="viewModel: estimateStep"></estimate-step>
+        <!-- /ko -->
+    </div>
+    <div class="card-footer">
+        <button data-bind="click: back">Back</button>
+        <button data-bind="click: next">Next</button>
+    </div>
+</div>

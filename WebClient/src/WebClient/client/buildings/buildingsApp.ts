@@ -13,11 +13,16 @@ export class BuildingsApp {
         this.create = ko.observable(null)
         this.router = new Router(this.createRouterOptions());
         this.router.add("buildings/:buildingId/create", buildingId => this.showCreate(buildingId));
+        this.router.add("buildings", () => this.showHome());
         this.router.start();
     }
 
     public goToCreate(): void {
         this.router.navigate("#buildings/1/create");
+    }
+
+    private showHome(): void {
+        this.hideAll();
     }
 
     private showCreate(buildingId: number) {
@@ -30,5 +35,14 @@ export class BuildingsApp {
             mode: RouterMode.History,
             root: window.location.host
         }
+    }
+
+    public  hideAll(): void {
+        if (this.create() != null)
+            this.create().dispose();
+        this.create(null);
+    }
+
+    public dispose(): void {
     }
 }
