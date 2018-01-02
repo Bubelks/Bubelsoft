@@ -13,12 +13,14 @@ namespace WebApi.UnitTests.Controllers
     {
         private IBuildingsController _controller;
         private IBuildingRepository _repository;
+        private ICompanyRepository _companyRepository;
 
         [SetUp]
         public void Init()
         {
             _repository = Substitute.For<IBuildingRepository>();
-            _controller = new BuildingsController(_repository);
+            _companyRepository = Substitute.For<ICompanyRepository>();
+            _controller = new BuildingsController(_repository, _companyRepository);
         }
 
         [Test]

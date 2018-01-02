@@ -15,8 +15,9 @@
     <div data-bind="visible: specifyBuilding">
         <select class="custom-select type-select" data-bind="options: buildingNames,
                 value: selectedBuildingName"></select>
-        <button class="btn home-button close-button" data-bind="click: toggleSpecifyBuilding,
-                ">X</button>
+        <button class="btn home-button close-button" data-bind="click: toggleSpecifyBuilding,">
+            <i class="fa fa-times" aria-hidden="true"></i>
+        </button>
     </div>
     <!-- /ko -->
 </div>

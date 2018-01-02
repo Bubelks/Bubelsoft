@@ -15,18 +15,23 @@ namespace WebApi.Database.Repositories
 
         public CompanyId Save(Company company)
         {
-            var entity = GetById(company.Id.Value) ?? new Entities.Company
-            {
-                Name = company.Name
-            };
+            var entity = GetById(company.Id.Value) ?? new Entities.Company();
 
             entity.Name = company.Name;
+            entity.Nip = company.Nip;
+            entity.PhoneNumber = company.PhoneNumber;
+            entity.EMail = company.EMail;
+            entity.City = company.City;
+            entity.PostCode = company.PostCode;
+            entity.Street = company.Street;
+            entity.PlaceNumber = company.PlaceNumber;
 
             if (entity.Id == 0)
                 _context.Companies.Add(entity);
             _context.SaveChanges();
 
-            company.SetId(new CompanyId(entity.Id));
+            if (company.Id.Value == 0)
+                company.SetId(new CompanyId(entity.Id));
             return company.Id;
         }
 

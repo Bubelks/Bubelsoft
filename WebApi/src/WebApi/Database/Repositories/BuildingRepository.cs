@@ -36,17 +36,20 @@ namespace WebApi.Database.Repositories
             var dbEntity = GetById(building.Id) ?? new Entities.Building();
 
             dbEntity.Name = building.Name;
-            dbEntity.Companies.Add(new BuildingCompany
-            {
-                CompanyId = building.MainContractor.Id.Value,
-                ContractType = ContractType.MainContractor
-            });
+            if(dbEntity.Companies.All(c => c.CompanyId != building.MainContractor.Id.Value))
+                dbEntity.Companies.Add(new BuildingCompany
+                {
+                    CompanyId = building.MainContractor.Id.Value,
+                    ContractType = ContractType.MainContractor
+                });
 
             if (dbEntity.Id == 0)
                 _context.Buildings.Add(dbEntity);
             _context.SaveChanges();
 
-            building.SetId(new BuildingId(dbEntity.Id));
+            if (building.Id.Value == 0)
+                building.SetId(new BuildingId(dbEntity.Id));
+
             return building.Id;
         }
 
@@ -57,10 +60,17 @@ namespace WebApi.Database.Repositories
                 new BuildingId(dbEntity.Id),
                 dbEntity.Name,
                 new Company(new CompanyId(mainContractor.Id),
-                    mainContractor.Name));
+                    mainContractor.Name,
+                    mainContractor.Nip,
+                    mainContractor.PhoneNumber,
+                    mainContractor.EMail,
+                    mainContractor.City,
+                    mainContractor.PostCode,
+                    mainContractor.Street,
+                    mainContractor.PlaceNumber));
         }
 
         private Entities.Building GetById(BuildingId id)
-            => _context.Buildings.FirstOrDefault(b => b.Id == id.Value);
+            => _context.Buildings.Include(b => b.Companies).ThenInclude(c => c.Company).FirstOrDefault(b => b.Id == id.Value);
     }
 }

@@ -23,9 +23,14 @@
         }
         
         .notifications-list .filters .close-button {
-            margin-left: -3px;
+            margin: 0;
             padding: 2px;
         }
+        
+            .notifications-list .filters .close-button i {
+                margin: 0;
+                padding: 2px;
+            }
 
 .notification {
     margin: 8px;

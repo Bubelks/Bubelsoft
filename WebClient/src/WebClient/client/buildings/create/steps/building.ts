@@ -4,12 +4,15 @@ import { IStep } from "buildings/create/create";
 import * as ko from "knockout";
 
 export class BuildingStep implements IStep {
+    public name: ko.Observable<string>;
+
     private nextStep: IStep;
     private backStep: IStep;
 
     public readonly active: ko.Observable<boolean>;
 
-    constructor() {
+    constructor(name: string) {
+        this.name = ko.observable(name);
         this.active = ko.observable(false);
     }
 

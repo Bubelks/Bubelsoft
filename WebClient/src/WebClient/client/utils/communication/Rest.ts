@@ -32,6 +32,22 @@ export function post(controller: string, action: string, body: any): any {
     });
 }
 
+export function put(controller: string, action: string, body: any): any {
+    const url = `${App.apiUrl}/${controller}/${action}`;
+    return $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify(body),
+        type: "PUT",
+        headers: {
+            "authorization": "bearer " + readToken()
+        },
+        url: url
+    }).always(xhr => {
+        if (xhr.status === 401)
+            AppSingleton.getInstance().unauthorize();
+    });
+}
+
 export function ping(): any {
     return get("buildings", "");
 }

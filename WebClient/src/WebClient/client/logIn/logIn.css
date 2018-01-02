@@ -34,32 +34,4 @@
         padding: 8px;
     }
 
-    login .card input {
-        opacity: .5;
-        border: none;
-        border-bottom: 1px solid #62b5c4;
-        color: #62b5c4;
-        margin-bottom: 9px;
-    }
-
-        login .card input::-webkit-input-placeholder {
-            color: inherit;
-        }
-        
-        login .card input:focus {
-            opacity: 1;
-            outline: none;
-        }
-
-        login .card input:focus::-webkit-input-placeholder {
-            text-align: right;
-            opacity: .5;
-            font-size: 10px;
-        }
-        
-
-        login .card input.invalid {
-            border-color: red;
-            color: red;
-        }
 

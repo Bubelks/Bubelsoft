@@ -4,24 +4,30 @@ import { EstimateStep } from "buildings/create/steps/estimate";
 import { BuildingStep } from "buildings/create/steps/building";
 import { CompanyStep } from "buildings/create/steps/company";
 
+import * as rest from "utils/communication/rest";
 import * as ko from "knockout";
 
 export class Create {
-    public readonly currentStep: ko.Observable<IStep>;
-    public readonly estimateStep: EstimateStep;
-    public readonly buildingStep: BuildingStep;
-    public readonly companyStep: CompanyStep;
+    private buildingId: number;
+    public currentStep: ko.Observable<IStep>;
+    public estimateStep: EstimateStep;
+    public buildingStep: BuildingStep;
+    public companyStep: CompanyStep;
 
-    constructor() {
-        this.buildingStep = new BuildingStep();
-        this.estimateStep = new EstimateStep(this.buildingStep);
-        this.companyStep = new CompanyStep(this.buildingStep);
+    constructor(buildingId: number) {
+        this.currentStep = ko.observable(null);
+        this.buildingId = buildingId;
+        this.getBuilding().done((data: IBuilding) => {
+            this.buildingStep = new BuildingStep(data.name);
+            this.estimateStep = new EstimateStep(this.buildingStep);
+            this.companyStep = new CompanyStep(this.buildingStep, data.company);
 
-        this.buildingStep.setNext(this.estimateStep);
-        this.buildingStep.setBack(this.companyStep);
+            this.buildingStep.setNext(this.estimateStep);
+            this.buildingStep.setBack(this.companyStep);
 
-        this.currentStep = ko.observable<IStep>(this.companyStep);
-        this.currentStep().activate(true);
+            this.currentStep(this.companyStep);
+            this.currentStep().activate(true);
+        });
     }
 
     public next(): void {
@@ -40,13 +46,23 @@ export class Create {
             this.changeStep(backStep);
     }
 
+    public cancel(): void { }
+
+    public save(): void {
+        var building = {
+            name: this.buildingStep.name(),
+            company: this.companyStep.getDto()
+        }
+        rest.put("buildings", `${this.buildingId}`, building);
+    }
+
+    private getBuilding(): JQueryPromise<IBuilding> {
+        return rest.get("buildings", `${this.buildingId}`);
+    }
     private changeStep(newStep: IStep): void {
         this.currentStep().activate(false);
         this.currentStep(newStep);
         this.currentStep().activate(true);
-    }
-    private save(): void {
-        
     }
 
     public dispose(): void {
@@ -66,4 +82,21 @@ enum Step {
     Company,
     Building,
     Estimate
+}
+
+interface IBuilding {
+    name: string;
+    company: ICompany;
+}
+
+export interface ICompany {
+    id: number;
+    name: string;
+    nip: string;
+    phoneNumber: string;
+    eMail: string;
+    city: string;
+    postCode: string;
+    street: string;
+    placeNumber: string;
 }

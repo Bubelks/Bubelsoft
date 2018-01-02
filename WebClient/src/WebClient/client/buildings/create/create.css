@@ -1,0 +1,39 @@
+﻿building-create {
+    display: flex;
+    justify-content: space-around;
+}
+
+building-create .card {
+    border-radius: 0;
+}
+
+    building-create .card .card-header {
+        background-color: white;
+        color: #62b5c4;
+        font-weight: bold;
+    }
+
+    building-create .card .card-footer {
+        padding: 0;
+        display: flex;
+    }
+
+    building-create .card .card-footer button {
+        flex-grow: 1;
+        padding: 12px;
+    }
+
+    building-create .card .card-block .step {
+        display: flex;
+        padding: 10px;
+        flex-direction: column;
+    }
+
+    building-create .card .card-block .text-number-input {
+        display: flex;
+        justify-content: space-between
+    }
+    
+        building-create .card .card-block .text-number-input input:last-child {
+            max-width: 35%
+        }

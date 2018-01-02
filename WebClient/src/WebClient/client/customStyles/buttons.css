@@ -8,17 +8,21 @@
     border-radius: 0;
 }
 
-    .my-button:hover, .my-button:focus {
+    .my-button:not([disabled]):hover, .my-button:not([disabled]):focus {
         opacity: .5;
         background-color: #62b5c4;
         color: #ffffff;
     }
 
-    .my-button:active {
+    .my-button:not([disabled]):active {
         opacity: 1;
     }
 
 button, a {
     cursor: pointer;
     outline: none;
+}
+
+button:disabled, a:disabled {
+    cursor: not-allowed;
 }

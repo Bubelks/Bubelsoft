@@ -26,8 +26,7 @@ export class BuildingsApp {
     }
 
     private showCreate(buildingId: number) {
-        console.log(buildingId);
-        this.create(new Create());
+        this.create(new Create(buildingId));
     }
 
     private createRouterOptions(): IRouterOptions {

@@ -33,7 +33,7 @@ export class App
         this.router.add("company", () => this.showCompany());
         this.router.add("buildings", () => this.showBuildings());
         this.router.start();
-        this.goTo("home");
+        this.goTo("buildings/1/create");
     }
 
     public unauthorize(): void {

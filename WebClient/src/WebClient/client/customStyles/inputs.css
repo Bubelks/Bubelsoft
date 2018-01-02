@@ -1,0 +1,29 @@
+﻿
+    .my-input {
+        opacity: .5;
+        border: none;
+        border-bottom: 1px solid #62b5c4;
+        color: #62b5c4;
+        margin-bottom: 9px;
+    }
+
+    .my-input::-webkit-input-placeholder {
+        color: inherit;
+    }
+        
+    .my-input:focus {
+        opacity: 1;
+        outline: none;
+    }
+
+    .my-input:focus::-webkit-input-placeholder {
+        text-align: right;
+        opacity: .5;
+        font-size: 10px;
+    }
+        
+
+    .my-input.invalid {
+        border-color: red;
+        color: red;
+    }
