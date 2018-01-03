@@ -6,6 +6,7 @@ import { CompanyStep } from "buildings/create/steps/company";
 
 import * as rest from "utils/communication/rest";
 import * as ko from "knockout";
+import * as navigator from "utils/navigator";
 
 export class Create {
     private buildingId: number;
@@ -46,14 +47,17 @@ export class Create {
             this.changeStep(backStep);
     }
 
-    public cancel(): void { }
+    public cancel(): void {
+        navigator.navigate("home");
+    }
 
     public save(): void {
         var building = {
             name: this.buildingStep.name(),
             company: this.companyStep.getDto()
         }
-        rest.put("buildings", `${this.buildingId}`, building);
+        rest.put("buildings", `${this.buildingId}`, building)
+            .done(() => navigator.navigate(`buildings/${this.buildingId}`));
     }
 
     private getBuilding(): JQueryPromise<IBuilding> {

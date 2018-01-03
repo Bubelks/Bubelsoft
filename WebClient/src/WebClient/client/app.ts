@@ -7,6 +7,7 @@ import { BuildingsApp } from "buildings/buildingsApp";
 import { Router, IRouterOptions, RouterMode } from "utils/router";
 
 import * as ko from "knockout";
+import * as navigator from "utils/navigator";
 
 export class App
 {
@@ -33,15 +34,14 @@ export class App
         this.router.add("company", () => this.showCompany());
         this.router.add("buildings", () => this.showBuildings());
         this.router.start();
-        this.goTo("buildings/1/create");
     }
 
     public unauthorize(): void {
-        this.router.navigate("logIn");
+        navigator.navigate("logIn");
     }
 
     public authorize(): void {
-        this.router.navigate("home");
+        navigator.navigate("home");
     }
 
     public openUserMenu(): void {
@@ -51,11 +51,11 @@ export class App
 
     public logOut(): void {
         document.cookie = "bubelsoftToken=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-        this.router.navigate("logIn");
+        navigator.navigate("logIn");
     }
 
     public goTo = (url: string): void => {
-        this.router.navigate(url);
+        navigator.navigate(url);
     }
 
     private showCompany(): void {
@@ -91,8 +91,7 @@ export class App
             this.company().dispose();
             this.company(null);
         }
-
-        this.buildingsApp.hideAll();
+        
         this.useBuildingsApp(false);
     }
 

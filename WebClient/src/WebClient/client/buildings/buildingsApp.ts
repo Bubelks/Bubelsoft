@@ -17,10 +17,6 @@ export class BuildingsApp {
         this.router.start();
     }
 
-    public goToCreate(): void {
-        this.router.navigate("#buildings/1/create");
-    }
-
     private showHome(): void {
         this.hideAll();
     }

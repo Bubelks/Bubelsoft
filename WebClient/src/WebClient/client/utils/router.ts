@@ -28,14 +28,6 @@ export class Router {
         return this;
     }
 
-    public navigate(path: string): void {
-        path = path ? path : "";
-        if (this.mode === RouterMode.History)
-            history.pushState({path: path}, this.clearSlashes(path), this.clearSlashes(path));
-        else     
-            window.location.href = window.location.href.replace(/#(.*)$/, "") + "#" + path;
-    }
-
     public check(fragment: string): void {
         if (fragment === null || typeof fragment === "undefined")
             fragment = this.getFragment();
