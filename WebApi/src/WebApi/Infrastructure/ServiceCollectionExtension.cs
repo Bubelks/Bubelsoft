@@ -12,5 +12,10 @@ namespace WebApi.Infrastructure
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
         }
+
+        public static void AddCurrentUser(this IServiceCollection services)
+        {
+            services.AddScoped<ICurrentUser, CurrentUser>();
+        }
     }
 }

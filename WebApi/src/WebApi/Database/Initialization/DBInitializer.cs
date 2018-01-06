@@ -18,8 +18,8 @@ namespace WebApi.Database.Initialization
 
             var companies = new[]
             {
-                new Company("Company 1"),
-                new Company("Company 2")
+                new Company("Company 1", "123-456-789", "123654789", "company1.fake@mail.com", "City", "78-963", "Steet", "221b"),
+                new Company("Company 2", "123-456-789", "123654789", "company1.fake@mail.com", "City", "78-963", "Steet", "221b")
             };
             foreach (var company in companies)
                 _companyRepository.Save(company);
@@ -32,10 +32,12 @@ namespace WebApi.Database.Initialization
             foreach (var building in buildings)
                 _buildingRepository.Save(building);
             
-            var maciek = new User("MacBub", "Maciek", "Bubel", new CompanyId(1));
+            var maciek = new User("MacBub", "Maciek", "Bubel", UserCompanyRole.Admin, "macbub.fake@mail.com", "123456789");
+            maciek.From(companies[0].Id);
             _userRepository.Save(maciek, GeneratePasswordHash(maciek));
 
-            var kamil = new User("KamBub", "Kamil", "Bubel", new CompanyId(2));
+            var kamil = new User("KamBub", "Kamil", "Bubel", UserCompanyRole.Admin, "kambub.fake@mail.com", "123456789");
+            kamil.From(companies[1].Id);
             _userRepository.Save(kamil, GeneratePasswordHash(kamil));
         }
 

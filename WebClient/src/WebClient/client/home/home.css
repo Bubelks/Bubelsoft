@@ -1,12 +1,4 @@
-﻿home .home-button {
-    color: #656565;
-    background-color: #f6f6f6;
-}
-    home .home-button:hover {
-        background-color: buttonface;
-    }
-    
-    home .type-select {
+﻿    home .type-select {
         padding: 0 0 0 10px;
         min-width: 100px;
         border-radius: 0;

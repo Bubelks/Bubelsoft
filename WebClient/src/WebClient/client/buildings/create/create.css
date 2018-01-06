@@ -28,12 +28,3 @@ building-create .card {
         padding: 10px;
         flex-direction: column;
     }
-
-    building-create .card .card-block .text-number-input {
-        display: flex;
-        justify-content: space-between
-    }
-    
-        building-create .card .card-block .text-number-input input:last-child {
-            max-width: 35%
-        }

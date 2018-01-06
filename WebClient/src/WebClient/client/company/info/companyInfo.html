@@ -1,0 +1,24 @@
+﻿<div class="name-header bordered">
+    <span class="main-header-text" data-bind="text: name"></span>
+    <button type="button" class="btn grid-button" data-toggle="modal" data-target="#editCompanyInfo" data-bind="visible: canEdit">
+        <i class="fa fa-pencil" aria-hidden="true"></i>
+    </button>
+</div>
+<div class="bordered info">
+    <span class="header">NIP</span>
+    <span data-bind="text: nip"></span>
+
+    <span class="header">Contact</span>
+    <span data-bind="text: email"></span>
+    <span data-bind="text: phoneNumber"></span>
+
+    <span class="header">Address</span>
+    <div>
+        <span data-bind="text: city"></span>
+        <span data-bind="text: postCode"></span>
+    </div>
+    <div>
+        <span data-bind="text: street"></span>
+        <span data-bind="text: placeNumber"></span>
+    </div>
+</div>

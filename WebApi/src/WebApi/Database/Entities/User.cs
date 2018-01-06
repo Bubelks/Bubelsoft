@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using WebApi.Domain.Models;
 
 namespace WebApi.Database.Entities
 {
@@ -18,9 +19,12 @@ namespace WebApi.Database.Entities
         public string LastName { get; set; }
         [Required]
         public string Password { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
 
         public Company Company { get; set; }
-        public int CompanyId { get; set; }
+        public int? CompanyId { get; set; }
+        public UserCompanyRole CompanyRole { get; set; }
 
         public List<UserRole> Roles { get; set; }
     }

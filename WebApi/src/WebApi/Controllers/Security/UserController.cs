@@ -6,13 +6,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using WebApi.Controllers.Interfaces.Security;
 using WebApi.Database.Repositories.Interfaces;
 
 namespace WebApi.Controllers.Security
 {
     [Route("api/[controller]")]
-    public class UserController: Controller, IUserController
+    public class UserController: Controller
     {
         private readonly IUserRepository _userRepository;
         private readonly IConfigurationRoot _configuration;
@@ -38,7 +37,8 @@ namespace WebApi.Controllers.Security
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
@@ -65,5 +65,6 @@ namespace WebApi.Controllers.Security
     {
         public string UserName { get; set; }
         public string Password { get; set; }
+        public int Id { get; set; }
     }
 }

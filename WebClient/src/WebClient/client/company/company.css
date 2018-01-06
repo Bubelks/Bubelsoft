@@ -1,11 +1,47 @@
 ﻿company .company-info {
     flex-grow: 1;
+    flex-direction: column;
+    display: flex;
 }
+
+    company .company-info .info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    company .company-info .info .header {
+        font-weight: bold;
+        margin-left: 10px;
+    }
+
+    company .company-info .info span:not(.header) {
+        margin-left: 15px;
+    }
+
+    company .company-info .name-header {
+        justify-content: space-between;
+    }
 
 company .workers {
     flex-grow: 3;
 }
 
-    company .workers .table tbody{
+    company .grid-button {
+        align-self: center;
+    }
+
+    company .workers .table tbody {
         background-color: white;
     }
+
+company #deleteUsers .user-row {
+    line-height: 10px;
+}
+
+company #deleteUsers .user-row:hover {
+    background-color: #c2e8ef;
+}
+
+company #deleteUsers .user-row.selected {
+    background-color: #62b5c4;
+}

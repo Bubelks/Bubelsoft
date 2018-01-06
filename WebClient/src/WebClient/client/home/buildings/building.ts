@@ -1,5 +1,7 @@
 ﻿///<amd-module name="home/buildings/building"/>
 
+import * as navigator from "utils/navigator";
+
 export class Building {
     public name: string;
     public ownedByMy: boolean;
@@ -23,6 +25,10 @@ export class Building {
         if (this.ownedByMy)
             return "Main-Contract";
         return "Sub-Contract";
+    }
+
+    public goToCompany(): void {
+        navigator.navigate(`company/${this.company.id}`);
     }
 }
 

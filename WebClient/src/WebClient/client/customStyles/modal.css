@@ -1,0 +1,20 @@
+﻿.my-modal {
+    border-radius: 0;
+}
+
+.my-modal .modal-header {
+    background-color: white;
+    color: #62b5c4;
+    font-weight: bold;
+    border-radius: 0;
+}
+
+.my-modal .modal-footer {
+    padding: 0;
+    display: flex;
+}
+
+.my-modal .modal-footer button {
+    flex-grow: 1;
+    padding: 12px;
+}

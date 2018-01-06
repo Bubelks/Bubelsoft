@@ -50,7 +50,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" tabindex="2" data-bind="click: goTo.bind(this, 'company')">Company</a>                
-                <!-- ko if: company() !== null -->
+                <!-- ko if: useCompanyApp() -->
                 <div class="current-tab"></div>
                 <!-- /ko -->
             </li>
@@ -72,11 +72,11 @@
     <!-- ko if: home() !== null -->
     <home params="viewModel: home"></home>
     <!-- /ko -->
-    <!-- ko if: company() !== null -->
-    <company params="viewModel: company"></company>
-    <!-- /ko -->
     <!-- ko if: logIn() !== null -->
     <login params="viewModel: logIn"></login>
+    <!-- /ko -->
+    <!-- ko if: useCompanyApp() -->
+    <company-app params="viewModel: companyApp"></company-app>
     <!-- /ko -->
     <!-- ko if: useBuildingsApp() -->
     <buildings-app params="viewModel: buildingsApp"></buildings-app>

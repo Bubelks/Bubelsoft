@@ -9,6 +9,7 @@
 }
     .building-list .list {
         border-bottom: none;
+        flex-direction: column;
     }
 
     .building-list .filters .type-select{
@@ -26,7 +27,7 @@
     margin-left: 10px;
 }
 
-    .building .home-button {
+    .building .grid-button {
         border-radius: 0;
         box-shadow: none;
     }
@@ -34,6 +35,10 @@
     .building .info .name {
         font-weight: bold;
         font-size: 20px;
+    }
+
+    .building .info .company-name {
+        color: blue;
     }
 
     .building .info {

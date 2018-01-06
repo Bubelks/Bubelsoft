@@ -2,7 +2,7 @@
 
 import { Home } from "home/home";
 import { LogIn } from "logIn/logIn";
-import { Company } from "company/company";
+import { CompanyApp } from "company/companyApp";
 import { BuildingsApp } from "buildings/buildingsApp";
 import { Router, IRouterOptions, RouterMode } from "utils/router";
 
@@ -15,19 +15,21 @@ export class App
 
     public home: ko.Observable<Home>;
     public logIn: ko.Observable<LogIn>;
-    public company: ko.Observable<Company>;
+    public companyApp: CompanyApp;
     public buildingsApp: BuildingsApp;
     public router: Router;
 
     public useBuildingsApp: ko.Observable<boolean>;
+    public useCompanyApp: ko.Observable<boolean>;
 
     constructor() {
         this.home = ko.observable(null);
         this.logIn = ko.observable(null);
-        this.company = ko.observable(null);
         this.useBuildingsApp = ko.observable(false);
+        this.useCompanyApp = ko.observable(false);
 
         this.buildingsApp = new BuildingsApp();
+        this.companyApp = new CompanyApp();
         this.router = new Router(this.createRouterOptions());
         this.router.add("home", () => this.showHome());
         this.router.add("logIn", () => this.showLogIn());
@@ -60,7 +62,7 @@ export class App
 
     private showCompany(): void {
         this.hideAll();
-        this.company(new Company());
+        this.useCompanyApp(true);
     }
 
     private showBuildings(): void {
@@ -87,11 +89,7 @@ export class App
             this.home().dispose();
             this.home(null);
         }
-        if (this.company() !== null) {
-            this.company().dispose();
-            this.company(null);
-        }
-        
+        this.useCompanyApp(false);
         this.useBuildingsApp(false);
     }
 

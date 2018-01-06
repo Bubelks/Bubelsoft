@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using WebApi.Controllers.Security;
 using WebApi.Database.Repositories.Interfaces;
 using WebApi.Domain.Models;
@@ -28,9 +29,15 @@ namespace WebApi.Database.Repositories
                 ? null
                 : new UserLogInInfo
                 {
+                    Id = entity.Id,
                     UserName = entity.Name,
                     Password = entity.Password
                 };
+        }
+
+        public IEnumerable<User> GetWorkers(CompanyId companyId)
+        {
+            return _context.Users.Where(u => u.CompanyId == companyId.Value).Select(e => Create(e));
         }
 
         public UserId Save(User user, string password = "")
@@ -43,6 +50,9 @@ namespace WebApi.Database.Repositories
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     CompanyId = user.CompanyId.Value,
+                    CompanyRole = user.CompanyRole,
+                    PhoneNumber = user.PhoneNumber,
+                    Email = user.Email,
                     Password = password};
                 _context.Users.Add(entity);
             }
@@ -55,7 +65,10 @@ namespace WebApi.Database.Repositories
 
         private static User Create(Entites.User entity)
         {
-            var user = new User(new UserId(entity.Id), entity.Name, entity.FirstName, entity.LastName, new CompanyId(entity.CompanyId));
+            var user = new User(new UserId(entity.Id), entity.Name, entity.FirstName, entity.LastName, entity.CompanyRole, entity.Email, entity.PhoneNumber);
+
+            if(entity.CompanyId != null)
+                user.From(new CompanyId(entity.CompanyId.Value));
 
             return user;
         }
@@ -66,6 +79,9 @@ namespace WebApi.Database.Repositories
             entity.FirstName = user.FirstName;
             entity.LastName = user.LastName;
             entity.CompanyId = user.CompanyId.Value;
+            entity.PhoneNumber = user.PhoneNumber;
+            entity.Email = user.Email;
+            entity.CompanyRole = user.CompanyRole;
             entity.Roles.Clear();
         }
 

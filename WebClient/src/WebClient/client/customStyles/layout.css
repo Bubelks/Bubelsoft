@@ -3,6 +3,7 @@
 }
 
 .bordered {
+    display: flex;
     border-width: 0;
     border-left-width: 1px;
     border-right-width: 1px;

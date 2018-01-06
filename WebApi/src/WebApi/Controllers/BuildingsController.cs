@@ -1,22 +1,24 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Controllers.Interfaces;
 using WebApi.Database.Repositories.Interfaces;
 using WebApi.Domain.Models;
+using WebApi.Infrastructure;
 
 namespace WebApi.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
-    public class BuildingsController : Controller, IBuildingsController
+    public class BuildingsController : Controller
     {
         private readonly IBuildingRepository _buildingRepository;
         private readonly ICompanyRepository _companyRepository;
+        private readonly ICurrentUser _currentUser;
 
-        public BuildingsController(IBuildingRepository buildingRepository, ICompanyRepository companyRepository)
+        public BuildingsController(IBuildingRepository buildingRepository, ICompanyRepository companyRepository, ICurrentUser currentUser)
         {
             _buildingRepository = buildingRepository;
             _companyRepository = companyRepository;
+            _currentUser = currentUser;
         }
 
         // GET api/buildings
@@ -53,9 +55,9 @@ namespace WebApi.Controllers
             {
                 Id = building.MainContractor.Id.Value,
                 Name = building.MainContractor.Name,
-                NIP = building.MainContractor.Nip,
+                Nip = building.MainContractor.Nip,
                 PhoneNumber = building.MainContractor.PhoneNumber,
-                EMail = building.MainContractor.EMail,
+                Email = building.MainContractor.Email,
                 City = building.MainContractor.City,
                 PostCode = building.MainContractor.PostCode,
                 Street = building.MainContractor.Street,
@@ -76,9 +78,9 @@ namespace WebApi.Controllers
             var company = new Company(
                 new CompanyId(buildingCreation.Company.Id),
                 buildingCreation.Company.Name,
-                buildingCreation.Company.NIP,
+                buildingCreation.Company.Nip,
                 buildingCreation.Company.PhoneNumber,
-                buildingCreation.Company.EMail,
+                buildingCreation.Company.Email,
                 buildingCreation.Company.City,
                 buildingCreation.Company.PostCode,
                 buildingCreation.Company.Street,

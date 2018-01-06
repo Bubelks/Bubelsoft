@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 using WebApi.Database;
 using WebApi.Database.Entities;
+using WebApi.Domain.Models;
 
 namespace WebApi.Migrations
 {
@@ -81,7 +82,11 @@ namespace WebApi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("CompanyId");
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<int>("CompanyRole");
+
+                    b.Property<string>("Email");
 
                     b.Property<string>("FirstName")
                         .IsRequired();
@@ -94,6 +99,8 @@ namespace WebApi.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired();
+
+                    b.Property<string>("PhoneNumber");
 
                     b.HasKey("Id");
 
@@ -136,8 +143,7 @@ namespace WebApi.Migrations
                 {
                     b.HasOne("WebApi.Database.Entities.Company", "Company")
                         .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CompanyId");
                 });
 
             modelBuilder.Entity("WebApi.Database.Entities.UserRole", b =>

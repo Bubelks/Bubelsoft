@@ -1,32 +1,113 @@
-﻿<div class="flex-container grey-fill">
-    <div class="company-info bordered">
-        aaaaa
-    </div>
+﻿
+<div class="flex-container grey-fill">
+    <!-- ko if: companyInfo() !== null -->
+    <company-info class="company-info" params="viewModel: companyInfo"></company-info>
+    <!-- /ko -->
     <div class="workers">
         <div class="bordered">
             <span class="main-header-text">Workers</span>
+            <!-- ko if: canManageWorkers() -->
+            <button class="btn grid-button" data-toggle="modal" data-target="#editUser" data-bind="click: openAddUser"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <button class="btn grid-button" data-toggle="modal" data-target="#deleteUsers"><i class="fa fa-trash" aria-hidden="true"></i></button>
+            <!-- /ko -->
         </div>
         <table class="table table-bordered">
             <thead>
-                <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Telephone</th>
-                    <th>Role</th>
-                </tr>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Role</th>
+            </tr>
             </thead>
-            <tbody data-bind="foreach: visibleWorkers()">
-                <tr>
-                    <td data-bind="text: firstName"></td>
-                    <td data-bind="text: lastName"></td>
-                    <td data-bind="text: name"></td>
-                    <td data-bind="text: email"></td>
-                    <td data-bind="text: tel"></td>
-                    <td data-bind="text: role"></td>
-                </tr>
+            <tbody data-bind="foreach: workers">
+            <tr>
+                <td data-bind="text: firstName"></td>
+                <td data-bind="text: lastName"></td>
+                <td data-bind="text: username"></td>
+                <td data-bind="text: email"></td>
+                <td data-bind="text: phoneNumber"></td>
+                <td data-bind="text: companyRole"></td>
+            </tr>
             </tbody>
         </table>
+    </div>
+</div>
+
+<!-- ko if: companyInfoEdit() != null -->
+<div class="modal fade" id="editCompanyInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="my-modal modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Company</h5>
+                <button type="button" class="close my-button" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <company-create params="viewModel: companyInfoEdit"></company-create>
+            </div>
+            <div class="modal-footer">
+                <button class="my-button" data-bind="click: saveInfo" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: userEdit() != null -->
+<div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="my-modal modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">User</h5>
+                <button type="button" class="close my-button" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <user-create params="viewModel: userEdit"></user-create>
+            </div>
+            <div class="modal-footer">
+                <button class="my-button" data-bind="click: saveUser" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /ko -->
+
+<div class="modal fade" id="deleteUsers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="my-modal modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">User</h5>
+                <button type="button" class="close my-button" data-dismiss="modal" aria-label="Close" data-bind="click: cancelDelete">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Username</th>
+                    </tr>
+                    </thead>
+                    <tbody data-bind="foreach: workers">
+                    <tr class="user-row" data-bind="click: $parent.toDelete">
+                        <td data-bind="text: firstName"></td>
+                        <td data-bind="text: lastName"></td>
+                        <td data-bind="text: username"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="my-button" data-bind="click: confirmDelete" data-dismiss="modal">Save</button>
+            </div>
+        </div>
     </div>
 </div>

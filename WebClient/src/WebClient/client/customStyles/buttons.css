@@ -18,6 +18,19 @@
         opacity: 1;
     }
 
+.grid-button {
+    color: #656565;
+    background-color: #f6f6f6;
+    border-radius: 0;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.grid-button:hover {
+    background-color: buttonface;
+}
+
 button, a {
     cursor: pointer;
     outline: none;

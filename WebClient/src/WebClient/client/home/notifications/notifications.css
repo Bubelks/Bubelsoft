@@ -6,7 +6,7 @@
 
     .notifications-list .list {
         background-color: white;
-        height: 100%;
+        flex-direction: column;
     }
 
     .notifications-list .header-text {
@@ -14,8 +14,8 @@
     }
 
     .notifications-list .badge {
-        top: -10px;
-        position: relative;
+        align-self: flex-start;
+        margin-top: 10px;
     }
 
         .notifications-list .filters * {

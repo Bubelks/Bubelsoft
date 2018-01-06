@@ -4,10 +4,10 @@
     </i>
     <div class="info">
         <span class="name" data-bind="text: name"></span>
-        <a class="company-name" data-bind="text: company.name" href=""></a>
+        <a class="company-name" data-bind="text: company.name, click: goToCompany"></a>
     </div>
     <div class="btn-group-vertical buttons">
-        <button class="btn home-button" data-bind="click: showNotifications.bind(this, name)"><i class="fa fa-envelope" aria-hidden="true"></i></button>
-        <button class="btn home-button"><i class="fa fa-file" aria-hidden="true"></i></button>
+        <button class="btn grid-button" data-bind="click: showNotifications.bind(this, name)"><i class="fa fa-envelope" aria-hidden="true"></i></button>
+        <button class="btn grid-button"><i class="fa fa-file" aria-hidden="true"></i></button>
     </div>
 </div>
