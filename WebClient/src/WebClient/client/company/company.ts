@@ -80,6 +80,7 @@ export class Company {
             phoneNumber: null,
             email: null,
             companyRole: UserCompanyRole.Worker,
+            forRegister: false
         });
     }
 

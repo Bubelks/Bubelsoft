@@ -19,6 +19,8 @@
     <None Remove="client\company\interfaces.ts" />
     <None Remove="client\home\buildings\building.ts" />
     <None Remove="client\logIn\logIn.ts" />
+    <None Remove="client\user\register\register.ts" />
+    <None Remove="client\user\userApp.ts" />
     <None Remove="client\utils\router.ts" />
   </ItemGroup>
 
@@ -43,6 +45,8 @@
     <TypeScriptCompile Include="client\buildings\create\steps\company.ts" />
     <TypeScriptCompile Include="client\company\companyApp.ts" />
     <TypeScriptCompile Include="client\company\interfaces.ts" />
+    <TypeScriptCompile Include="client\user\register\register.ts" />
+    <TypeScriptCompile Include="client\user\userApp.ts" />
     <TypeScriptCompile Include="client\utils\navigator.ts" />
     <TypeScriptCompile Include="client\company\company.ts" />
     <TypeScriptCompile Include="client\home\buildings\building.ts" />

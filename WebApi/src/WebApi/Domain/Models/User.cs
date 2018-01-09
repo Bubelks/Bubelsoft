@@ -1,8 +1,10 @@
-﻿namespace WebApi.Domain.Models
+﻿using System;
+
+namespace WebApi.Domain.Models
 {
     public class User
     {
-        public UserId Id { get; }
+        public UserId Id { get; private set; }
         public string Name { get; }
         public string FirstName { get; }
         public string LastName { get; }
@@ -36,6 +38,13 @@
 
         public bool CanManageWorkers(CompanyId companyId) => companyId == CompanyId &&
                                                              (CompanyRole == UserCompanyRole.Admin || CompanyRole == UserCompanyRole.UserAdmin);
+
+        public void SetId(UserId id)
+        {
+            if (Id.Value != 0)
+                throw new InvalidOperationException("Id is already set");
+            Id = id;
+        }
     }
 
     public struct UserId

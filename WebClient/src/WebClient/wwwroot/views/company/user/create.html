@@ -1,5 +1,8 @@
 <div class="user-create">
+    <!-- ko if: forRegister -->
     <input class="my-input" type="text" data-bind="value: username" placeholder="Username">
+    <input class="my-input" type="password" data-bind="value: password" placeholder="Password"> 
+    <!-- /ko -->
     <input class="my-input" type="text" data-bind="value: firstName" placeholder="First Name">
     <input class="my-input" type="text" data-bind="value: lastName" placeholder="Last Name">
     <input class="my-input" type="tel" data-bind="value: phoneNumber" placeholder="Phone">

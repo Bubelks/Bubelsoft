@@ -62,6 +62,7 @@ namespace WebApi
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddRepositories();
             services.AddCurrentUser();
+            services.AddEmailService();
 
             services.AddMvc();
         }

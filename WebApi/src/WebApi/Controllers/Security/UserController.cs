@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using WebApi.Database.Repositories.Interfaces;
+using WebApi.Domain.Models;
+using User = WebApi.Controllers.DTO.User;
 
 namespace WebApi.Controllers.Security
 {
@@ -59,6 +61,57 @@ namespace WebApi.Controllers.Security
                 expiration = token.ValidTo
             });
         }
+
+        [Route("register")]
+        public IActionResult Register([FromBody] UserRegisterInfo userInfo)
+        {
+            var userId = new UserId(userInfo.Id);
+            var user = _userRepository.Get(userId);
+            if (user == null)
+                return BadRequest();
+
+            var passwordHasher = new PasswordHasher<UserLogInInfo>();
+            var userLogInInfo = new UserLogInInfo
+            {
+                UserName = userInfo.Username,
+                Password = userInfo.Password,
+                Id = userInfo.Id
+            };
+            var passwordHash = passwordHasher.HashPassword(userLogInInfo, userLogInInfo.Password);
+
+            var userDomain = new Domain.Models.User(
+                userInfo.Username,
+                userInfo.FirstName,
+                userInfo.LastName,
+                userInfo.CompanyRole,
+                userInfo.Email,
+                userInfo.PhoneNumber);
+
+            userDomain.From(user.CompanyId);
+
+            _userRepository.Save(userDomain, passwordHash);
+
+            return Ok();
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var userId = new UserId(id);
+            var user = _userRepository.Get(userId);
+            if (user == null)
+                return BadRequest();
+
+            return Ok(new User
+            {
+                Username = user.Name,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                Email = user.Email,
+                CompanyRole = user.CompanyRole
+            });
+        }
     }
 
     public class UserLogInInfo
@@ -66,5 +119,10 @@ namespace WebApi.Controllers.Security
         public string UserName { get; set; }
         public string Password { get; set; }
         public int Id { get; set; }
+    }
+
+    public class UserRegisterInfo: User
+    {
+        public string Password { get; set; }
     }
 }

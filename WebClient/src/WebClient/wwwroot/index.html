@@ -75,6 +75,9 @@
     <!-- ko if: logIn() !== null -->
     <login params="viewModel: logIn"></login>
     <!-- /ko -->
+    <!-- ko if: useUserApp() !== null -->
+    <user-app params="viewModel: userApp"></user-app>
+    <!-- /ko -->
     <!-- ko if: useCompanyApp() -->
     <company-app params="viewModel: companyApp"></company-app>
     <!-- /ko -->

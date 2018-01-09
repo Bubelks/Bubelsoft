@@ -4,6 +4,7 @@ import { Home } from "home/home";
 import { LogIn } from "logIn/logIn";
 import { CompanyApp } from "company/companyApp";
 import { BuildingsApp } from "buildings/buildingsApp";
+import { UserApp } from "user/userApp";
 import { Router, IRouterOptions, RouterMode } from "utils/router";
 
 import * as ko from "knockout";
@@ -17,24 +18,29 @@ export class App
     public logIn: ko.Observable<LogIn>;
     public companyApp: CompanyApp;
     public buildingsApp: BuildingsApp;
+    public userApp: UserApp;
     public router: Router;
 
     public useBuildingsApp: ko.Observable<boolean>;
     public useCompanyApp: ko.Observable<boolean>;
+    public useUserApp: ko.Observable<boolean>;
 
     constructor() {
         this.home = ko.observable(null);
         this.logIn = ko.observable(null);
         this.useBuildingsApp = ko.observable(false);
         this.useCompanyApp = ko.observable(false);
+        this.useUserApp = ko.observable(false);
 
         this.buildingsApp = new BuildingsApp();
         this.companyApp = new CompanyApp();
+        this.userApp = new UserApp();
         this.router = new Router(this.createRouterOptions());
         this.router.add("home", () => this.showHome());
         this.router.add("logIn", () => this.showLogIn());
         this.router.add("company", () => this.showCompany());
         this.router.add("buildings", () => this.showBuildings());
+        this.router.add("user", () => this.showUser());
         this.router.start();
     }
 
@@ -70,6 +76,11 @@ export class App
         this.useBuildingsApp(true);
     }
 
+    private showUser(): void {
+        this.hideAll();
+        this.useUserApp(true);
+    }
+
     private showHome(): void {
         this.hideAll();
         this.home(new Home());
@@ -91,6 +102,7 @@ export class App
         }
         this.useCompanyApp(false);
         this.useBuildingsApp(false);
+        this.useUserApp(false);
     }
 
     private createRouterOptions(): IRouterOptions {

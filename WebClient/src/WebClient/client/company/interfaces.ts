@@ -24,6 +24,7 @@ interface IUser {
     email: string;
     phoneNumber: string;
     companyRole: UserCompanyRole;
+    forRegister: boolean;
 }
 
 enum UserCompanyRole {

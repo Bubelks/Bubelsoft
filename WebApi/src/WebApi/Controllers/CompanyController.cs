@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebApi.Database.Repositories.Interfaces;
 using WebApi.Domain.Models;
 using WebApi.Infrastructure;
+using WebApi.Services;
 
 namespace WebApi.Controllers
 {
@@ -16,13 +17,15 @@ namespace WebApi.Controllers
         private readonly ICompanyRepository _companyRepository;
         private readonly IUserRepository _userRepository;
         private readonly ICurrentUser _currentUser;
+        private readonly IMailService _mailService;
 
         public CompanyController(ICompanyRepository companyRepository, IUserRepository userRepository,
-            ICurrentUser currentUser)
+            ICurrentUser currentUser, IMailService mailService)
         {
             _companyRepository = companyRepository;
             _userRepository = userRepository;
             _currentUser = currentUser;
+            _mailService = mailService;
         }
 
         [HttpGet("{id}")]
@@ -95,7 +98,8 @@ namespace WebApi.Controllers
         public IActionResult AddWorker(int id, [FromBody] DTO.User worker)
         {
             var companyId = new CompanyId(id);
-            if (!_companyRepository.Exists(companyId))
+            var company = _companyRepository.Get(companyId);
+            if (company == null)
                 return BadRequest();
 
             var user = new User(
@@ -110,6 +114,7 @@ namespace WebApi.Controllers
 
             _userRepository.Save(user);
 
+            _mailService.SendWorkerAddedInfo(user, _currentUser.User, company);
             return Ok(user);
         }
 

@@ -40,7 +40,7 @@ namespace WebApi.Database.Repositories
             return _context.Users.Where(u => u.CompanyId == companyId.Value).Select(e => Create(e));
         }
 
-        public UserId Save(User user, string password = "")
+        public UserId Save(User user, string password = null)
         {
             var entity = Get(user.Id.Value);
             if (entity == null)
@@ -60,6 +60,10 @@ namespace WebApi.Database.Repositories
                 Update(entity, user);
 
             _context.SaveChanges();
+
+            if (user.Id.Value == 0)
+                user.SetId(new UserId(entity.Id));
+
             return new UserId(entity.Id);
         }
 

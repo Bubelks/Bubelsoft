@@ -1,0 +1,20 @@
+<!-- ko if: user() != null -->
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="my-modal modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">User</h5>
+            </div>
+            <div class="modal-body">
+                <user-create params="viewModel: user"></user-create>
+            </div>
+            <div class="modal-footer">
+                <button class="my-button" data-bind="click: saveUser" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /ko -->
+<!-- ko if: modalOpen -->
+<div class="modal-backdrop fade show"></div>
+<!-- /ko -->
