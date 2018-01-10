@@ -23,7 +23,7 @@ interface IUser {
     lastName: string;
     email: string;
     phoneNumber: string;
-    companyRole: UserCompanyRole;
+    companyRole: UserCompanyRole | string | ISelectValue;
     forRegister: boolean;
 }
 
@@ -31,4 +31,9 @@ enum UserCompanyRole {
     Admin,
     UserAdmin,
     Worker
+}
+
+interface ISelectValue {
+    value: number;
+    displayValue: string;
 }

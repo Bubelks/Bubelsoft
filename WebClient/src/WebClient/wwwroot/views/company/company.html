@@ -97,7 +97,7 @@
                     </tr>
                     </thead>
                     <tbody data-bind="foreach: workers">
-                    <tr class="user-row" data-bind="click: $parent.toDelete">
+                    <tr id="delete-worker" class="user-row" data-bind="click: $parent.toDelete">
                         <td data-bind="text: firstName"></td>
                         <td data-bind="text: lastName"></td>
                         <td data-bind="text: username"></td>

@@ -6,5 +6,8 @@
     <input class="my-input" type="text" data-bind="value: firstName" placeholder="First Name">
     <input class="my-input" type="text" data-bind="value: lastName" placeholder="Last Name">
     <input class="my-input" type="tel" data-bind="value: phoneNumber" placeholder="Phone">
-    <input class="my-input" type="email" data-bind="value: email" placeholder="Email">
+    <input class="my-input" type="email" data-bind="value: email" placeholder="Email">    
+    <!-- ko if: !forRegister -->
+    <select class="my-input" data-bind="options: $parent.avaiableRoles, optionsText: 'displayValue', value: companyRole"></select>    
+    <!-- /ko -->
 </div>
