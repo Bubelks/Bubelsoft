@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 using WebApi.Controllers.Security;
 using WebApi.Database.Repositories;
 using WebApi.Database.Repositories.Interfaces;
@@ -26,18 +27,21 @@ namespace WebApi.Database.Initialization
 
             var buildings = new[]
             {
-                new Building("Building 1", companies[0]),
-                new Building("Building 2", companies[1])
+                new Building("Building 1", companies[0], new []{ companies[1] }),
+                new Building("Building 2", companies[1], new List<Company>())
             };
             foreach (var building in buildings)
                 _buildingRepository.Save(building);
             
             var maciek = new User("MacBub", "Maciek", "Bubel", UserCompanyRole.Admin, "macbub.fake@mail.com", "123456789");
             maciek.From(companies[0].Id);
+            maciek.AddRole(buildings[0], Role.Admin);
             _userRepository.Save(maciek, GeneratePasswordHash(maciek));
 
             var kamil = new User("KamBub", "Kamil", "Bubel", UserCompanyRole.Admin, "kambub.fake@mail.com", "123456789");
             kamil.From(companies[1].Id);
+            kamil.AddRole(buildings[1], Role.Admin);
+            kamil.AddRole(buildings[0], Role.Admin);
             _userRepository.Save(kamil, GeneratePasswordHash(kamil));
         }
 

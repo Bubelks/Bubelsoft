@@ -1,4 +1,6 @@
-﻿namespace WebApi.Database.Entities
+﻿using WebApi.Domain.Models;
+
+namespace WebApi.Database.Entities
 {
     public class UserRole
     {
@@ -9,11 +11,5 @@
         public BuildingCompany Building { get; set; }
 
         public Role Role { get; set; }
-    }
-
-    public enum Role
-    {
-        Admin,
-        Reporter
     }
 }

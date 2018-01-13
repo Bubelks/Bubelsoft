@@ -10,10 +10,8 @@ namespace WebApi.Controllers.DTO
         public bool CanEdit { get; set; }
     }
 
-    public class CompanyInfo
+    public class CompanyInfo: CompanyBase
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
         public string Nip { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
@@ -21,6 +19,12 @@ namespace WebApi.Controllers.DTO
         public string PostCode { get; set; }
         public string Street { get; set; }
         public string PlaceNumber { get; set; }
+    }
+
+    public class CompanyBase
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 
     public class User

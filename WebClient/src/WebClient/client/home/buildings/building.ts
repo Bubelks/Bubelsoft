@@ -5,13 +5,16 @@ import * as navigator from "utils/navigator";
 export class Building {
     public name: string;
     public ownedByMy: boolean;
-    public company: ICompany;
+    public companyName: string;
     public showNotifications: (buildingName: string) => void;
+
+    private companyId: number;
 
     constructor(base: IBuilding, showNotifications: (buildingName: string) => void) {
         this.name = base.name;
         this.ownedByMy = base.ownedByMy;
-        this.company = base.company;
+        this.companyName = base.companyName;
+        this.companyId = base.companyId;
         this.showNotifications = showNotifications;
     }
 
@@ -28,14 +31,15 @@ export class Building {
     }
 
     public goToCompany(): void {
-        navigator.navigate(`company/${this.company.id}`);
+        navigator.navigate(`company/${this.companyId}`);
     }
 }
 
 export interface IBuilding {
     name: string;
     ownedByMy: boolean;
-    company: ICompany;
+    companyName: string;
+    companyId: number;
 }
 
 interface ICompany {

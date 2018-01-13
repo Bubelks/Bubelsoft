@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Database.Repositories.Interfaces;
 using WebApi.Domain.Models;
@@ -25,19 +27,16 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var buildings = new[]
-            {
-                new BuildingDto("Building1", true, new DTO.Company
-                {
-                    Id = 1,
-                    Name = "Company1"
-                }),
-                new BuildingDto("building2", false, new DTO.Company
-                {
-                    Id = 2,
-                    Name = "Company 2"
-                })
-            };
+            var userBuildings = _buildingRepository.GetFor(_currentUser.Id);
+
+            var buildings = userBuildings.Select(b => new BuildingsListItem{
+                Id = b.Id.Value,
+                Name = b.Name,
+                OwnedByMy = b.IsOwnedBy(_currentUser.User),
+                CompanyName = b.MainContractor.Name,
+                CompanyId = b.MainContractor.Id.Value
+                
+            });
 
             return Ok(buildings);
         }
@@ -51,7 +50,7 @@ namespace WebApi.Controllers
             if (building == null)
                 return NotFound();
 
-            return Ok(new BuildingDto(building.Name, true, new DTO.Company
+            return Ok(new BuildingDto(building.Name, building.IsOwnedBy(_currentUser.User), new DTO.Company
             {
                 Id = building.MainContractor.Id.Value,
                 Name = building.MainContractor.Name,
@@ -64,13 +63,6 @@ namespace WebApi.Controllers
                 PlaceNumber = building.MainContractor.PlaceNumber,
             }));
         }
-
-        // POST api/values
-        [HttpPost]
-        public void Create([FromBody]string value)
-        {
-        }
-
         // PUT api/values/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody]DTO.BuildingCreation buildingCreation)
@@ -86,23 +78,17 @@ namespace WebApi.Controllers
                 buildingCreation.Company.Street,
                 buildingCreation.Company.PlaceNumber
                 );
-            var building = new Building(new BuildingId(id), buildingCreation.Name, company);
+            var building = new Building(new BuildingId(id), buildingCreation.Name, company, new List<Company>());
             _buildingRepository.Save(building);
             _companyRepository.Save(company);
             return Ok();
 
         }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 
     internal class BuildingDto
     {
-        public BuildingDto(string name, bool ownedByMy, DTO.Company company)
+        public BuildingDto(string name, bool ownedByMy, DTO.CompanyBase company)
         {
             Name = name;
             OwnedByMy = ownedByMy;
@@ -113,6 +99,19 @@ namespace WebApi.Controllers
 
         public bool OwnedByMy { get; }
 
-        public DTO.Company Company { get; }
+        public DTO.CompanyBase Company { get; }
+    }
+
+    internal class BuildingsListItem
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public bool OwnedByMy { get; set; }
+
+        public string CompanyName { get; set; }
+
+        public int CompanyId { get; set; }
     }
 }

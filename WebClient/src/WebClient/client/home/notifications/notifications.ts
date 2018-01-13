@@ -18,8 +18,8 @@ export class Notifications {
 
     constructor(buildingNames: Array<string>) {
         this.allNotifcations = ko.observableArray([
-            { name: "Notification1", source: "Building1", content: "KOCHAM DOMiNKIĘ BARDZO BARDZO <3", isNew: true, type: NotificationType.Building },
-            { name: "Notification2", source: "Company1", content: "KOCHAM DOMiNKIĘ BARDZO BARDZO <3 x22222", isNew: false, type: NotificationType.Company }]);
+            { name: "Notification1", source: "Building 1", content: "KOCHAM DOMiNKIĘ BARDZO BARDZO <3", isNew: true, type: NotificationType.Building },
+            { name: "Notification2", source: "Company 1", content: "KOCHAM DOMiNKIĘ BARDZO BARDZO <3 x22222", isNew: false, type: NotificationType.Company }]);
 
         this.notificationTypes = ko.observableArray([
             { type: NotificationType.All, displayName: "All" },

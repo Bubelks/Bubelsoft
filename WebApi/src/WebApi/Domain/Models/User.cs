@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using WebApi.Migrations;
 
 namespace WebApi.Domain.Models
 {
@@ -13,6 +17,8 @@ namespace WebApi.Domain.Models
         public CompanyId CompanyId { get; private set; }
         public UserCompanyRole CompanyRole { get; }
 
+        public  readonly IList<UserRole> Roles;
+
         public User(UserId id, string name, string firstName, string lastName, UserCompanyRole companyRole, string email, string phoneNumber) : this(name, firstName, lastName, companyRole, email, phoneNumber)
         {
             Id = id;
@@ -26,6 +32,7 @@ namespace WebApi.Domain.Models
             CompanyRole = companyRole;
             Email = email;
             PhoneNumber = phoneNumber;
+            Roles = new List<UserRole>();
         }
 
         public void From(CompanyId companyId)
@@ -45,6 +52,28 @@ namespace WebApi.Domain.Models
                 throw new InvalidOperationException("Id is already set");
             Id = id;
         }
+
+        public void AddRole(Building building, Role role)
+        {
+            if (!building.CanAccess(this)) return;
+
+            if(!Roles.Any(r => r.BuildingId == building.Id && r.Role == role))
+                Roles.Add(new UserRole(role, building.Id));
+        }
+
+
+        public class UserRole
+        {
+            public UserRole(Role role, BuildingId buildingId)
+            {
+                Role = role;
+                BuildingId = buildingId;
+            }
+
+            public Role Role { get; }
+
+            public BuildingId BuildingId { get; }
+        }
     }
 
     public struct UserId
@@ -56,11 +85,17 @@ namespace WebApi.Domain.Models
 
         public int Value { get;  }
     }
-
+    
     public enum UserCompanyRole
     {
         Admin,
         UserAdmin,
         Worker
+    }
+
+    public enum Role
+    {
+        Admin,
+        Reporter
     }
 }

@@ -88,6 +88,7 @@ namespace WebApi.Controllers.Security
                 userInfo.PhoneNumber);
 
             userDomain.From(user.CompanyId);
+            userDomain.SetId(userId);
 
             _userRepository.Save(userDomain, passwordHash);
 

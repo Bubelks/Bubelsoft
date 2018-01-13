@@ -21,6 +21,8 @@ namespace WebApi.Database.Repositories
         public IEnumerable<Building> GetFor(UserId userId)
         {
             var enities = _context.Buildings
+                .Include(b => b.Companies)
+                .ThenInclude(bc => bc.Company)
                 .Where(b => b.Companies.Any(bc => bc.Users.Any(ur => ur.UserId == userId.Value)));
 
             return enities.Select(Convert);
@@ -36,12 +38,20 @@ namespace WebApi.Database.Repositories
             var dbEntity = GetById(building.Id) ?? new Entities.Building();
 
             dbEntity.Name = building.Name;
-            if(dbEntity.Companies.All(c => c.CompanyId != building.MainContractor.Id.Value))
-                dbEntity.Companies.Add(new BuildingCompany
+
+            dbEntity.Companies = new List<BuildingCompany>
+            {
+                new BuildingCompany
                 {
                     CompanyId = building.MainContractor.Id.Value,
                     ContractType = ContractType.MainContractor
-                });
+                }
+            };
+            dbEntity.Companies.AddRange(building.SubContractors.Select(c => new BuildingCompany
+            {
+                CompanyId = c.Id.Value,
+                ContractType = ContractType.SubContractor
+            }));
 
             if (dbEntity.Id == 0)
                 _context.Buildings.Add(dbEntity);
@@ -53,7 +63,7 @@ namespace WebApi.Database.Repositories
             return building.Id;
         }
 
-        private static Building Convert(Entities.Building dbEntity)
+        internal static Building Convert(Entities.Building dbEntity)
         {
             var mainContractor = dbEntity.Companies.Single(bc => bc.ContractType == ContractType.MainContractor).Company;
             return new Building(
@@ -67,7 +77,16 @@ namespace WebApi.Database.Repositories
                     mainContractor.City,
                     mainContractor.PostCode,
                     mainContractor.Street,
-                    mainContractor.PlaceNumber));
+                    mainContractor.PlaceNumber),
+                dbEntity.Companies.Where(c => c.ContractType != ContractType.MainContractor).Select(c => new Company(new CompanyId(c.Company.Id),
+                    c.Company.Name,
+                    c.Company.Nip,
+                    c.Company.PhoneNumber,
+                    c.Company.EMail,
+                    c.Company.City,
+                    c.Company.PostCode,
+                    c.Company.Street,
+                    c.Company.PlaceNumber)));
         }
 
         private Entities.Building GetById(BuildingId id)

@@ -53,7 +53,15 @@ namespace WebApi.Database.Repositories
                     CompanyRole = user.CompanyRole,
                     PhoneNumber = user.PhoneNumber,
                     Email = user.Email,
-                    Password = password};
+                    Password = password,
+                    Roles = user.Roles.Select(r => new Entites.UserRole
+                    {
+                        BuildingId = r.BuildingId.Value,
+                        CompanyId = user.CompanyId.Value,
+                        Role = r.Role
+
+                    }).ToList()
+                };
                 _context.Users.Add(entity);
             }
             else
@@ -74,6 +82,8 @@ namespace WebApi.Database.Repositories
             if(entity.CompanyId != null)
                 user.From(new CompanyId(entity.CompanyId.Value));
 
+            entity.Roles.ForEach(r => user.AddRole(BuildingRepository.Convert(r.Building.Building), r.Role));
+
             return user;
         }
 
@@ -86,7 +96,14 @@ namespace WebApi.Database.Repositories
             entity.PhoneNumber = user.PhoneNumber;
             entity.Email = user.Email;
             entity.CompanyRole = user.CompanyRole;
-            entity.Roles.Clear();
+            entity.Roles = user.Roles.Select(r => new Entites.UserRole
+            {
+                BuildingId = r.BuildingId.Value,
+                CompanyId = user.CompanyId.Value,
+                Role = r.Role,
+                UserId = entity.Id
+
+            }).ToList();
         }
 
         private Entites.User Get(int id)
