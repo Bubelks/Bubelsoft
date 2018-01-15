@@ -34,8 +34,8 @@ namespace WebApi.Controllers
                 Name = b.Name,
                 OwnedByMy = b.IsOwnedBy(_currentUser.User),
                 CompanyName = b.MainContractor.Name,
-                CompanyId = b.MainContractor.Id.Value
-                
+                CompanyId = b.MainContractor.Id.Value,
+                UserBuildingRoles = _currentUser.User.Roles.Where(r => r.BuildingId == b.Id).Select(r => r.UserBuildingRole)
             });
 
             return Ok(buildings);
@@ -113,5 +113,7 @@ namespace WebApi.Controllers
         public string CompanyName { get; set; }
 
         public int CompanyId { get; set; }
+
+        public IEnumerable<UserBuildingRole> UserBuildingRoles { get; set; }
     }
 }

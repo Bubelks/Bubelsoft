@@ -1,0 +1,22 @@
+<div class="buildings-list flex-container grey-fill">
+    <div class="type-column">
+        <div class="bordered">
+            <span class="main-header-text">
+                Main-Contract
+            </span>
+        </div>
+        <div class="list bordered" data-bind="foreach: mainContractBuildings">
+            <buildings-list-item params="viewModel: $data"></buildings-list-item>
+        </div>
+    </div>
+    <div class="type-column">
+        <div class="bordered">
+            <span class="main-header-text">
+                Sub-Contract
+            </span>
+        </div>
+        <div class="list bordered" data-bind="foreach: subContractBuildings">
+            <buildings-list-item params="viewModel: $data"></buildings-list-item>
+        </div>
+    </div>
+</div>

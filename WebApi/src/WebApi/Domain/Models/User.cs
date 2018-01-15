@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using WebApi.Migrations;
 
 namespace WebApi.Domain.Models
 {
@@ -53,24 +51,22 @@ namespace WebApi.Domain.Models
             Id = id;
         }
 
-        public void AddRole(Building building, Role role)
+        public void AddRole(BuildingId buildingId, UserBuildingRole userBuildingRole)
         {
-            if (!building.CanAccess(this)) return;
-
-            if(!Roles.Any(r => r.BuildingId == building.Id && r.Role == role))
-                Roles.Add(new UserRole(role, building.Id));
+            if(!Roles.Any(r => r.BuildingId == buildingId && r.UserBuildingRole == userBuildingRole))
+                Roles.Add(new UserRole(userBuildingRole, buildingId));
         }
 
 
         public class UserRole
         {
-            public UserRole(Role role, BuildingId buildingId)
+            public UserRole(UserBuildingRole userBuildingRole, BuildingId buildingId)
             {
-                Role = role;
+                UserBuildingRole = userBuildingRole;
                 BuildingId = buildingId;
             }
 
-            public Role Role { get; }
+            public UserBuildingRole UserBuildingRole { get; }
 
             public BuildingId BuildingId { get; }
         }
@@ -93,7 +89,7 @@ namespace WebApi.Domain.Models
         Worker
     }
 
-    public enum Role
+    public enum UserBuildingRole
     {
         Admin,
         Reporter

@@ -35,13 +35,14 @@ namespace WebApi.Database.Initialization
             
             var maciek = new User("MacBub", "Maciek", "Bubel", UserCompanyRole.Admin, "macbub.fake@mail.com", "123456789");
             maciek.From(companies[0].Id);
-            maciek.AddRole(buildings[0], Role.Admin);
+            maciek.AddRole(buildings[0].Id, UserBuildingRole.Admin);
+            maciek.AddRole(buildings[0].Id, UserBuildingRole.Reporter);
             _userRepository.Save(maciek, GeneratePasswordHash(maciek));
 
             var kamil = new User("KamBub", "Kamil", "Bubel", UserCompanyRole.Admin, "kambub.fake@mail.com", "123456789");
             kamil.From(companies[1].Id);
-            kamil.AddRole(buildings[1], Role.Admin);
-            kamil.AddRole(buildings[0], Role.Admin);
+            kamil.AddRole(buildings[1].Id, UserBuildingRole.Admin);
+            kamil.AddRole(buildings[0].Id, UserBuildingRole.Admin);
             _userRepository.Save(kamil, GeneratePasswordHash(kamil));
         }
 

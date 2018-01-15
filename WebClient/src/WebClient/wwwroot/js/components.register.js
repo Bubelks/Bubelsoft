@@ -28,6 +28,8 @@ require(["knockout"],
             { path: "user/register/register", tag: "user-register" },
             { path: "home/home", tag: "home" },
             { path: "buildings/create/create", tag: "building-create" },
+            { path: "buildings/list/list", tag: "buildings-list" },
+            { path: "buildings/list/listItem", tag: "buildings-list-item" },
             { path: "buildings/create/steps/building", tag: "building-step" },
             { path: "buildings/create/steps/estimate", tag: "estimate-step" },
             { path: "buildings/buildingsApp", tag: "buildings-app" }

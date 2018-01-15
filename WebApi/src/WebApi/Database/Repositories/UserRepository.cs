@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Controllers.Security;
 using WebApi.Database.Repositories.Interfaces;
 using WebApi.Domain.Models;
@@ -58,7 +59,7 @@ namespace WebApi.Database.Repositories
                     {
                         BuildingId = r.BuildingId.Value,
                         CompanyId = user.CompanyId.Value,
-                        Role = r.Role
+                        UserBuildingRole = r.UserBuildingRole
 
                     }).ToList()
                 };
@@ -82,7 +83,7 @@ namespace WebApi.Database.Repositories
             if(entity.CompanyId != null)
                 user.From(new CompanyId(entity.CompanyId.Value));
 
-            entity.Roles.ForEach(r => user.AddRole(BuildingRepository.Convert(r.Building.Building), r.Role));
+            entity.Roles.ForEach(r => user.AddRole(new BuildingId(r.BuildingId), r.UserBuildingRole));
 
             return user;
         }
@@ -100,7 +101,7 @@ namespace WebApi.Database.Repositories
             {
                 BuildingId = r.BuildingId.Value,
                 CompanyId = user.CompanyId.Value,
-                Role = r.Role,
+                UserBuildingRole = r.UserBuildingRole,
                 UserId = entity.Id
 
             }).ToList();
@@ -108,7 +109,9 @@ namespace WebApi.Database.Repositories
 
         private Entites.User Get(int id)
         {
-            return _context.Users.FirstOrDefault(u => u.Id == id);
+            return _context.Users
+                .Include(u => u.Roles)
+                .FirstOrDefault(u => u.Id == id);
         }
     }
 }

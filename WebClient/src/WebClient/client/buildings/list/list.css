@@ -1,0 +1,31 @@
+﻿buildings-list .buildings-list {
+    width: fit-content;
+    margin: 0 auto;
+}
+
+buildings-list .type-column {
+    min-width: 400px;
+}
+
+    buildings-list .type-column .list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    buildings-list buildings-list-item .list-item:hover {
+        background-color: #c2e8ef;
+    }
+    
+    buildings-list buildings-list-item .list-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px;
+        background-color: white;
+        cursor: pointer;
+        flex-direction: column;
+    }
+
+    buildings-list buildings-list-item .list-item .bold {
+        font-weight: 700;
+        font-size: 20px;
+    }

@@ -29,7 +29,7 @@ namespace WebApi.Database
 
 
             modelBuilder.Entity<UserRole>()
-                .HasKey(ur=> new {ur.UserId, ur.BuildingId});
+                .HasKey(ur=> new {ur.UserId, ur.BuildingId, ur.UserBuildingRole});
 
             modelBuilder.Entity<UserRole>()
                 .HasOne(ur => ur.User)

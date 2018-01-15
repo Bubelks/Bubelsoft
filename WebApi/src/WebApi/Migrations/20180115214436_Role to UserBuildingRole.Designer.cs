@@ -13,9 +13,10 @@ using WebApi.Domain.Models;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(MainContext))]
-    partial class MainContextModelSnapshot : ModelSnapshot
+    [Migration("20180115214436_Role to UserBuildingRole")]
+    partial class RoletoUserBuildingRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,11 +115,11 @@ namespace WebApi.Migrations
 
                     b.Property<int>("BuildingId");
 
-                    b.Property<int>("UserBuildingRole");
-
                     b.Property<int>("CompanyId");
 
-                    b.HasKey("UserId", "BuildingId", "UserBuildingRole");
+                    b.Property<int>("UserBuildingRole");
+
+                    b.HasKey("UserId", "BuildingId");
 
                     b.HasIndex("BuildingId", "CompanyId");
 

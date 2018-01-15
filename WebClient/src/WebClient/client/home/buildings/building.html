@@ -5,6 +5,10 @@
     <div class="info">
         <span class="name" data-bind="text: name"></span>
         <a class="company-name" data-bind="text: companyName, click: goToCompany"></a>
+        <div>
+            <b>Roles: </b>
+            <span data-bind="text: rolesString"></span>
+        </div>
     </div>
     <div class="btn-group-vertical buttons">
         <button class="btn grid-button" data-bind="click: showNotifications.bind(this, name)"><i class="fa fa-envelope" aria-hidden="true"></i></button>

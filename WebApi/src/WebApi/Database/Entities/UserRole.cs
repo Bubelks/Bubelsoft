@@ -10,6 +10,6 @@ namespace WebApi.Database.Entities
         public int CompanyId { get; set; }
         public BuildingCompany Building { get; set; }
 
-        public Role Role { get; set; }
+        public UserBuildingRole UserBuildingRole { get; set; }
     }
 }
