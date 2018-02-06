@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices.ComTypes;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using WebApi.Database.Repositories;
 using WebApi.Database.Repositories.Interfaces;
 using WebApi.Infrastructure.Email;

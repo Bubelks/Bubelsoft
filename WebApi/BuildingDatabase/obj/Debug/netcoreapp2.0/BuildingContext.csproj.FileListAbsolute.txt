@@ -1,0 +1,9 @@
+D:\Projekty\Bubelsoft\WebApi\BuildingDatabase\bin\Debug\netcoreapp2.0\BuildingContext.deps.json
+D:\Projekty\Bubelsoft\WebApi\BuildingDatabase\bin\Debug\netcoreapp2.0\BuildingContext.dll
+D:\Projekty\Bubelsoft\WebApi\BuildingDatabase\bin\Debug\netcoreapp2.0\BuildingContext.pdb
+D:\Projekty\Bubelsoft\WebApi\BuildingDatabase\obj\Debug\netcoreapp2.0\BuildingContext.csprojResolveAssemblyReference.cache
+D:\Projekty\Bubelsoft\WebApi\BuildingDatabase\obj\Debug\netcoreapp2.0\BuildingContext.csproj.CoreCompileInputs.cache
+D:\Projekty\Bubelsoft\WebApi\BuildingDatabase\obj\Debug\netcoreapp2.0\BuildingContext.AssemblyInfoInputs.cache
+D:\Projekty\Bubelsoft\WebApi\BuildingDatabase\obj\Debug\netcoreapp2.0\BuildingContext.AssemblyInfo.cs
+D:\Projekty\Bubelsoft\WebApi\BuildingDatabase\obj\Debug\netcoreapp2.0\BuildingContext.dll
+D:\Projekty\Bubelsoft\WebApi\BuildingDatabase\obj\Debug\netcoreapp2.0\BuildingContext.pdb

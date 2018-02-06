@@ -61,6 +61,29 @@ namespace WebApi {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;
+        ///                Hi,
+        ///            &lt;/p&gt;
+        ///            &lt;p&gt;
+        ///                Your company has been invited to &lt;b&gt;#BuildingName&lt;/b&gt; as sub-contractor by &lt;b&gt;#UserFirstName #UserLastName&lt;/b&gt;.
+        ///            &lt;/p&gt;
+        ///            &lt;p&gt;
+        ///                Click on the button below to accept invitation and registry company.
+        ///            &lt;/p&gt;
+        ///
+        ///            &lt;a class=&quot;button&quot; href=&quot;#Link&quot;&gt;REGISTER&lt;/a&gt;
+        ///
+        ///            &lt;p&gt;
+        ///                Please skiped this mail, if you should not get it.
+        ///            &lt;/p&gt;.
+        /// </summary>
+        internal static string CompanyInvited {
+            get {
+                return ResourceManager.GetString("CompanyInvited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;!DOCTYPE html&gt;
         ///&lt;html&gt;
         ///&lt;head&gt;

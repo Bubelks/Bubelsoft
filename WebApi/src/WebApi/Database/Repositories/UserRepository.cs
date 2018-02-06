@@ -41,6 +41,15 @@ namespace WebApi.Database.Repositories
             return _context.Users.Where(u => u.CompanyId == companyId.Value).Select(e => Create(e));
         }
 
+        public IEnumerable<User> GetBuildingWorkers(BuildingId buildingId, CompanyId companyId)
+        {
+            return _context.Users
+                .Where(u => u.CompanyId == companyId.Value)
+                .Include(u => u.Roles)
+                .Where(u => u.Roles.Any(r => r.BuildingId == buildingId.Value))
+                .Select(Create);
+        }
+
         public UserId Save(User user, string password = null)
         {
             var entity = Get(user.Id.Value);
@@ -66,7 +75,7 @@ namespace WebApi.Database.Repositories
                 _context.Users.Add(entity);
             }
             else
-                Update(entity, user);
+                Update(entity, user, password);
 
             _context.SaveChanges();
 
@@ -88,7 +97,7 @@ namespace WebApi.Database.Repositories
             return user;
         }
 
-        private static void Update(Entites.User entity, User user)
+        private static void Update(Entites.User entity, User user, string passwordHash = null)
         {
             entity.Name = user.Name;
             entity.FirstName = user.FirstName;
@@ -97,14 +106,25 @@ namespace WebApi.Database.Repositories
             entity.PhoneNumber = user.PhoneNumber;
             entity.Email = user.Email;
             entity.CompanyRole = user.CompanyRole;
-            entity.Roles = user.Roles.Select(r => new Entites.UserRole
-            {
-                BuildingId = r.BuildingId.Value,
-                CompanyId = user.CompanyId.Value,
-                UserBuildingRole = r.UserBuildingRole,
-                UserId = entity.Id
 
-            }).ToList();
+            entity.Roles.RemoveAll(ur => user.Roles.All(r =>
+                r.BuildingId.Value != ur.BuildingId && r.UserBuildingRole != ur.UserBuildingRole &&
+                user.CompanyId.Value != ur.CompanyId));
+
+            entity.Roles.AddRange(user.Roles
+                .Where(r => 
+                    entity.Roles.All(ur => r.BuildingId.Value != ur.BuildingId && r.UserBuildingRole != ur.UserBuildingRole && user.CompanyId.Value != ur.CompanyId))
+                .Select(r => new Entites.UserRole
+                {
+                    BuildingId = r.BuildingId.Value,
+                    CompanyId = user.CompanyId.Value,
+                    UserBuildingRole = r.UserBuildingRole,
+                    UserId = entity.Id
+
+                }));
+
+            if (passwordHash != null)
+                entity.Password = passwordHash;
         }
 
         private Entites.User Get(int id)

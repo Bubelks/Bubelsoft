@@ -6,7 +6,7 @@
             </span>
         </div>
         <div class="list bordered" data-bind="foreach: mainContractBuildings">
-            <buildings-list-item params="viewModel: $data"></buildings-list-item>
+            <buildings-list-item params="viewModel: $data" data-bind="click: $parent.goToBuilding"></buildings-list-item>
         </div>
     </div>
     <div class="type-column">
@@ -16,7 +16,7 @@
             </span>
         </div>
         <div class="list bordered" data-bind="foreach: subContractBuildings">
-            <buildings-list-item params="viewModel: $data"></buildings-list-item>
+            <buildings-list-item params="viewModel: $data" data-bind="click: $parent.goToBuilding"></buildings-list-item>
         </div>
     </div>
 </div>

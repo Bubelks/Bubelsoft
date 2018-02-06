@@ -50,7 +50,7 @@ namespace WebApi.Controllers
             if (building == null)
                 return NotFound();
 
-            return Ok(new BuildingDto(building.Name, building.IsOwnedBy(_currentUser.User), new DTO.Company
+            return Ok(new BuildingDto(building.Name, building.IsOwnedBy(_currentUser.User), new DTO.CompanyInfo
             {
                 Id = building.MainContractor.Id.Value,
                 Name = building.MainContractor.Name,
@@ -62,27 +62,6 @@ namespace WebApi.Controllers
                 Street = building.MainContractor.Street,
                 PlaceNumber = building.MainContractor.PlaceNumber,
             }));
-        }
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]DTO.BuildingCreation buildingCreation)
-        {
-            var company = new Company(
-                new CompanyId(buildingCreation.Company.Id),
-                buildingCreation.Company.Name,
-                buildingCreation.Company.Nip,
-                buildingCreation.Company.PhoneNumber,
-                buildingCreation.Company.Email,
-                buildingCreation.Company.City,
-                buildingCreation.Company.PostCode,
-                buildingCreation.Company.Street,
-                buildingCreation.Company.PlaceNumber
-                );
-            var building = new Building(new BuildingId(id), buildingCreation.Name, company, new List<Company>());
-            _buildingRepository.Save(building);
-            _companyRepository.Save(company);
-            return Ok();
-
         }
     }
 

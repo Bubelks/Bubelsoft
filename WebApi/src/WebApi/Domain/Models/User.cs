@@ -70,6 +70,11 @@ namespace WebApi.Domain.Models
 
             public BuildingId BuildingId { get; }
         }
+
+        public bool CanReport(BuildingId buildingId)
+        {
+            return Roles.Any(r => r.BuildingId == buildingId && r.UserBuildingRole == UserBuildingRole.Reporter);
+        }
     }
 
     public struct UserId

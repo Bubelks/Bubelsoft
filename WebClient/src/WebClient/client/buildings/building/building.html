@@ -1,0 +1,50 @@
+﻿<div class="flex-container grey-fill">
+    <div class="left-column">
+        <div class="bordered">
+            <span class="main-header-text" data-bind="text: buildingName"></span>
+        </div>
+        <!-- ko if: companies() !== null -->
+        <building-companies params="viewModel: companies"></building-companies>
+        <!-- /ko -->
+    </div>
+    <div class="right-column">
+        <div class="bordered">
+            <button class="my-button card-button" data-bind="click: toggleCard.bind(this, 'calendar'), css: {'current': useCalendar()}">Calendar</button>
+            <button class="my-button card-button" data-bind="click: toggleCard.bind(this, 'estimation'), css: {'current': useEstimation()}">Estimation</button>
+            <button class="my-button card-button" data-bind="click: toggleCard.bind(this, 'reports'), css: {'current': useReports()}">Reports</button>
+            <button class="my-button card-button" data-bind="visible: canReport, click: openAddReport" data-toggle="modal" data-target="#addNewReport">
+                <i class="fa fa-file" aria-hidden="true"></i>
+            </button>
+        </div>
+        <!-- ko if: calendar() !== null && useCalendar()-->
+        <building-calendar params="viewModel: calendar"></building-calendar>
+        <!-- /ko -->
+        <!-- ko if: estimation() !== null && useEstimation()-->
+        <building-estimation params="viewModel: estimation"></building-estimation>
+        <!-- /ko -->
+        <!-- ko if: reports() !== null && useReports()-->
+        <building-reports params="viewModel: reports"></building-reports>
+        <!-- /ko -->
+    </div>
+</div>
+
+<!-- ko if: newReport() !== null -->
+<div class="modal fade" id="addNewReport" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="my-modal modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Report</h5>
+                <button type="button" class="close my-button" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <report params="viewModel: newReport"></report>
+            </div>
+            <div class="modal-footer">
+                <button class="my-button" data-bind="click: addReport" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /ko -->

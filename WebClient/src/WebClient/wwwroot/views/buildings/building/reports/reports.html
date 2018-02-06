@@ -1,0 +1,37 @@
+<div class="bordered filters">
+    <select class="custom-select" data-bind="options: types, optionsText: 'displayValue', value: type"></select>
+    <!-- ko if: type().value === 2 -->
+    <input class="custom-select" type="text" id="reports-date-from" data-provide="datepicker" placeholder="From">
+    <input class="custom-select" type="text" id="reports-date-to" data-provide="datepicker" placeholder="To">
+    <!-- /ko -->
+    <button class="btn grid-button" data-bind="click: refresh">
+        <i class="fa fa-refresh"></i>
+    </button>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Number</th>
+        <th>Spec Number</th>
+        <th>Description</th>
+        <th>Unit</th>
+        <th>Quantity</th>
+        <th>Unit Price</th>
+        <th>Amount</th>
+        <th>Done quantity</th>
+    </tr>
+    </thead>
+    <tbody data-bind="foreach: estimationsReport">
+        <tr>
+            <td data-bind="text: estimationId"></td>
+            <td data-bind="text: specNumber"></td>
+            <td data-bind="text: description"></td>
+            <td data-bind="text: unit"></td>
+            <td data-bind="text: quantity"></td>
+            <td data-bind="text: unitPrice"></td>
+            <td data-bind="text: amount"></td>
+            <td data-bind="text: doneQuantity"></td>
+        </tr>
+    </tbody>
+</table>

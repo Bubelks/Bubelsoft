@@ -1,0 +1,50 @@
+﻿report .work-done {
+    display: flex;
+    flex-direction: column;
+}
+
+    report .work-done .work {
+        display: flex;
+    }
+
+    report .work-done .work .fa-circle {
+        font-size: 10px;
+        align-self: center;
+        margin-right: 5px;
+    }
+
+    report .work-done .work:hover button.delete {
+        display: block;
+    }
+
+        report .work-done .work button.delete {
+            display: none;
+            height: 24px;
+            padding-top: 0;
+        }
+
+report select.estimation {
+    height: 27px;
+}
+
+report .editable-value {
+    display: flex;
+}
+
+    report .editable-value i {
+        font-size: 15px;
+    }
+    report .editable-value input {
+        width: 100%;
+    }
+
+    report .editable-value .editable-value-button {
+        display: none;
+        background-color: transparent;
+        border: none;
+        outline: none;
+    }
+
+        report .editable-value:hover .editable-value-button, report .editable-value .editable-value-button.show {
+            display: block;
+        }

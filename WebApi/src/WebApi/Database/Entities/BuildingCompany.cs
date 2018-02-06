@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace WebApi.Database.Entities
 {
@@ -9,7 +10,7 @@ namespace WebApi.Database.Entities
 
         public int CompanyId { get; set; }
         public Company Company { get; set; }
-
+        
         public List<UserRole> Users { get; set; }
 
         public ContractType ContractType { get; set; }

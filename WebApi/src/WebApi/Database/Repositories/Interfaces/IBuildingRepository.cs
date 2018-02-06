@@ -8,5 +8,6 @@ namespace WebApi.Database.Repositories.Interfaces
         Building Get(BuildingId id);
         IEnumerable<Building> GetFor(UserId userId);
         BuildingId Save(Building building);
+        string GetConnectionString(BuildingId buildingId);
     }
 }

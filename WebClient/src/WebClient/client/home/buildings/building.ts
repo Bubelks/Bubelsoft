@@ -1,6 +1,10 @@
 ﻿///<amd-module name="home/buildings/building"/>
 
+import { Report } from "buildings/building/report/report";
+
 import * as navigator from "utils/navigator";
+import * as rest from "utils/communication/rest";
+import * as ko from "knockout";
 
 export class Building {
     public name: string;
@@ -9,6 +13,9 @@ export class Building {
     public showNotifications: (buildingName: string) => void;
     public rolesString: string;
     public id: number;
+    public canReport: boolean;
+
+    public newReport: ko.Observable<Report>;
 
     private companyId: number;
     private buildingRolesMap: IMap[] = [
@@ -29,7 +36,10 @@ export class Building {
         this.companyName = base.companyName;
         this.companyId = base.companyId;
         this.showNotifications = showNotifications;
+        this.canReport = base.userBuildingRoles.filter(r => r === UserBuildingRole.Reporter).length > 0;
         this.rolesString = this.getRolesString(base.userBuildingRoles);
+
+        this.newReport = ko.observable(null);
     }
 
     public icon(): string {
@@ -46,6 +56,23 @@ export class Building {
 
     public goToCompany(): void {
         navigator.navigate(`company/${this.companyId}`);
+    }
+
+    public goToBuilding(_, event): void {
+        if ($(event.target).hasClass("company-name")) return;
+        if ($(event.target).hasClass("grid-button")) return;
+        if ($(event.target).hasClass("fa")) return;
+
+        navigator.navigate(`buildings/${this.id}`);
+    }
+
+    public openAddReport(): void {
+        this.newReport(new Report(this.id));
+    }
+
+    public addReport(): void {
+        const dto = this.newReport().getDto();
+        rest.put("building", `${this.id}/report`, dto);
     }
 
     private getRolesString(roles: UserBuildingRole[]): string {
@@ -65,17 +92,7 @@ export interface IBuilding {
     userBuildingRoles: UserBuildingRole[];
 }
 
-export enum UserBuildingRole {
-    Admin,
-    Reporter
-}
-
 interface ICompany {
     name: string;
     id: number;
-}
-
-interface IMap {
-    key: UserBuildingRole;
-    value: string;
 }

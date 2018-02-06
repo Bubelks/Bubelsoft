@@ -36,7 +36,9 @@ namespace WebApi.Infrastructure
         public CurrentUser(IHttpContextAccessor context, IUserRepository userRepository)
         {
             _userRepository = userRepository;
-            Id = new UserId(int.Parse(context.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value));
+            var claim = context.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+            if(claim != null)
+                Id = new UserId(int.Parse(context.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value));
         }
     }
 }

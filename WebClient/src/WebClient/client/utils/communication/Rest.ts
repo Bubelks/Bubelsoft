@@ -20,7 +20,25 @@ export function post(controller: string, action: string, body: any): any {
     const url = `${App.apiUrl}/${controller}/${action}`;
     return $.ajax({
         contentType: 'application/json',
+        dataType: 'json',
         data: JSON.stringify(body),
+        type: "POST",
+        headers: {
+            "authorization": "bearer " + readToken()
+        },
+        url: url
+    }).always(xhr => {
+        if (xhr.status === 401)
+            AppSingleton.getInstance().unauthorize();
+    });
+}
+
+export function formPost(controller: string, action: string, data: FormData): any {
+    const url = `${App.apiUrl}/${controller}/${action}`;
+    return $.ajax({
+        contentType: false,
+        processData: false,
+        data: data,
         type: "POST",
         headers: {
             "authorization": "bearer " + readToken()
@@ -36,6 +54,7 @@ export function put(controller: string, action: string, body: any): any {
     const url = `${App.apiUrl}/${controller}/${action}`;
     return $.ajax({
         contentType: 'application/json',
+        dataType: 'json',
         data: JSON.stringify(body),
         type: "PUT",
         headers: {

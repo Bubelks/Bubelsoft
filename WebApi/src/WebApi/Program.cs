@@ -21,10 +21,10 @@ namespace WebApi
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<MainContext>();
-                    context.Database.EnsureDeleted();
-                    context.Database.Migrate();
-                    DbInitializer.Initialize(context);
+                    //var context = services.GetRequiredService<MainContext>();
+                    //context.Database.EnsureDeleted();
+                    //context.Database.Migrate();
+                    //DbInitializer.Initialize(context);
                 }
                 catch (Exception ex)
                 {

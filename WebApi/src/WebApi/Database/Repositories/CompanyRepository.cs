@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using WebApi.Database.Entities;
 using WebApi.Database.Repositories.Interfaces;
 using WebApi.Domain.Models;
+using Company = WebApi.Domain.Models.Company;
 
 namespace WebApi.Database.Repositories
 {
@@ -71,6 +73,60 @@ namespace WebApi.Database.Repositories
             {
                 u.CompanyId = null;
                 u.Company = null;
+            });
+
+            _context.SaveChanges();
+        }
+
+        public IEnumerable<Company> GetContractors(BuildingId buildingId)
+        {
+            return _context.Companies
+                .Where(c => c.Buildings.Any(bc => bc.BuildingId == buildingId.Value))
+                .Select(entity => new Company(new CompanyId(entity.Id),
+                    entity.Name,
+                    entity.Nip,
+                    entity.PhoneNumber,
+                    entity.EMail,
+                    entity.City,
+                    entity.PostCode,
+                    entity.Street,
+                    entity.PlaceNumber));
+        }
+
+        public IEnumerable<Company> GetAll()
+        {
+            return _context.Companies
+                .Select(entity => new Company(new CompanyId(entity.Id),
+                    entity.Name,
+                    entity.Nip,
+                    entity.PhoneNumber,
+                    entity.EMail,
+                    entity.City,
+                    entity.PostCode,
+                    entity.Street,
+                    entity.PlaceNumber));
+        }
+
+        public void AddSubContract(BuildingId buildingId, CompanyId companyId)
+        {
+            var company = _context.Companies.Single(c => c.Id == companyId.Value);
+            var admin = _context.Users.FirstOrDefault(u =>
+                u.CompanyId == companyId.Value && u.CompanyRole == UserCompanyRole.Admin);
+            if(company.Buildings == null)
+                company.Buildings = new List<BuildingCompany>();
+
+            company.Buildings.Add(new BuildingCompany
+            {
+                BuildingId = buildingId.Value,
+                ContractType = ContractType.SubContractor,
+                Users = new List<UserRole>(new []
+                {
+                    new UserRole
+                    {
+                        UserId = admin.Id,
+                        UserBuildingRole = UserBuildingRole.Admin
+                    }
+                })
             });
 
             _context.SaveChanges();

@@ -23,6 +23,7 @@ namespace WebApi.Database.Repositories
             var enities = _context.Buildings
                 .Include(b => b.Companies)
                 .ThenInclude(bc => bc.Company)
+                .Where(b => b.IsReady.Value)
                 .Where(b => b.Companies.Any(bc => bc.Users.Any(ur => ur.UserId == userId.Value)));
 
             return enities.Select(Convert);
@@ -36,22 +37,29 @@ namespace WebApi.Database.Repositories
         public BuildingId Save(Building building)
         {
             var dbEntity = GetById(building.Id) ?? new Entities.Building();
-
+            
             dbEntity.Name = building.Name;
 
-            dbEntity.Companies = new List<BuildingCompany>
-            {
-                new BuildingCompany
+            if(dbEntity.Companies.Count > 1)
+                dbEntity.Companies.RemoveAll(c => c.ContractType == ContractType.SubContractor && building.SubContractors.All(sc => sc.Id.Value != c.CompanyId));
+
+            if(dbEntity.Companies.Count == 0)
+                dbEntity.Companies.Add(
+                    new BuildingCompany
+                    {
+                        CompanyId = building.MainContractor.Id.Value,
+                        ContractType = ContractType.MainContractor
+                    }
+                );
+
+            dbEntity.Companies.AddRange(building.SubContractors
+                .Where(sc => dbEntity.Companies.All(c => c.CompanyId != sc.Id.Value))
+                .Select(c => new BuildingCompany
                 {
-                    CompanyId = building.MainContractor.Id.Value,
-                    ContractType = ContractType.MainContractor
-                }
-            };
-            dbEntity.Companies.AddRange(building.SubContractors.Select(c => new BuildingCompany
-            {
-                CompanyId = c.Id.Value,
-                ContractType = ContractType.SubContractor
-            }));
+                    CompanyId = c.Id.Value,
+                    ContractType = ContractType.SubContractor
+                })
+            );
 
             if (dbEntity.Id == 0)
                 _context.Buildings.Add(dbEntity);
@@ -61,6 +69,11 @@ namespace WebApi.Database.Repositories
                 building.SetId(new BuildingId(dbEntity.Id));
 
             return building.Id;
+        }
+
+        public string GetConnectionString(BuildingId buildingId)
+        {
+            return GetById(buildingId).ConnectionString;
         }
 
         internal static Building Convert(Entities.Building dbEntity)

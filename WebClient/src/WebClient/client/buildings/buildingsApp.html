@@ -5,3 +5,11 @@
 <!-- ko if: buildingsList() != null -->
 <buildings-list params="viewModel: buildingsList"></buildings-list>
 <!-- /ko -->
+
+<!-- ko if: building() != null -->
+<building-home params="viewModel: building"></building-home>
+<!-- /ko -->
+
+<!-- ko if: subContractor() != null -->
+<building-subcontractor params="viewModel: subContractor"></building-subcontractor>
+<!-- /ko -->

@@ -52,11 +52,16 @@ export class Create {
     }
 
     public save(): void {
-        var building = {
+        if (!this.estimateStep.valid()) return;
+
+        const building = {
             name: this.buildingStep.name(),
             company: this.companyStep.getDto()
-        }
-        rest.put("buildings", `${this.buildingId}`, building)
+        };
+
+        rest.formPost("building", `${this.buildingId}/estimation`, this.estimateStep.getDto());
+
+        rest.put("building", `${this.buildingId}`, building)
             .done(() => navigator.navigate(`buildings/${this.buildingId}`));
     }
 
@@ -98,7 +103,7 @@ export interface ICompany {
     name: string;
     nip: string;
     phoneNumber: string;
-    eMail: string;
+    email: string;
     city: string;
     postCode: string;
     street: string;

@@ -25,6 +25,7 @@
 .building {
     display: flex;
     margin-left: 10px;
+    cursor: pointer;
 }
 
     .building .grid-button {
@@ -39,6 +40,7 @@
 
     .building .info .company-name {
         color: blue;
+        width: fit-content;
     }
 
     .building .info {

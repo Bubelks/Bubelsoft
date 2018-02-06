@@ -37,3 +37,13 @@ interface ISelectValue {
     value: number;
     displayValue: string;
 }
+
+enum UserBuildingRole {
+    Admin,
+    Reporter
+}
+
+interface IMap {
+    key: UserBuildingRole;
+    value: string;
+}

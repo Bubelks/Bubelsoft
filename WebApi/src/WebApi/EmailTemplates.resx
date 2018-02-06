@@ -117,6 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CompanyInvited" xml:space="preserve">
+    <value>&lt;p&gt;
+                Hi,
+            &lt;/p&gt;
+            &lt;p&gt;
+                Your company has been invited to &lt;b&gt;#BuildingName&lt;/b&gt; as sub-contractor by &lt;b&gt;#UserFirstName #UserLastName&lt;/b&gt;.
+            &lt;/p&gt;
+            &lt;p&gt;
+                Click on the button below to accept invitation and registry company.
+            &lt;/p&gt;
+
+            &lt;a class="button" href="#Link"&gt;REGISTER&lt;/a&gt;
+
+            &lt;p&gt;
+                Please skiped this mail, if you should not get it.
+            &lt;/p&gt;</value>
+  </data>
   <data name="FullBody" xml:space="preserve">
     <value>&lt;!DOCTYPE html&gt;
 &lt;html&gt;

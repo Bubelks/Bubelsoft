@@ -1,4 +1,4 @@
-﻿<div class="building bordered">
+﻿<div class="building bordered" data-bind="click: goToBuilding">
     <i class="contract-type fa my-tooltip" aria-hidden="true" data-bind="css: icon()">
         <span class="tooltiptext" data-bind="text: contractType()"></span>
     </i>
@@ -12,6 +12,27 @@
     </div>
     <div class="btn-group-vertical buttons">
         <button class="btn grid-button" data-bind="click: showNotifications.bind(this, name)"><i class="fa fa-envelope" aria-hidden="true"></i></button>
-        <button class="btn grid-button"><i class="fa fa-file" aria-hidden="true"></i></button>
+        <button class="btn grid-button" data-bind="visible: canReport, click: openAddReport" data-toggle="modal" data-target="#addReport"><i class="fa fa-file" aria-hidden="true"></i></button>
     </div>
 </div>
+
+<!-- ko if: newReport() !== null -->
+<div class="modal fade" id="addReport" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="my-modal modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Report</h5>
+                <button type="button" class="close my-button" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <report params="viewModel: newReport"></report>
+            </div>
+            <div class="modal-footer">
+                <button class="my-button" data-bind="click: addReport" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /ko -->

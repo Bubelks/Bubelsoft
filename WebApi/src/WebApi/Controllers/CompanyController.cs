@@ -10,7 +10,6 @@ using WebApi.Services;
 
 namespace WebApi.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     public class CompanyController : Controller
     {
@@ -28,6 +27,20 @@ namespace WebApi.Controllers
             _mailService = mailService;
         }
 
+        [Authorize]
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var companies = _companyRepository.GetAll();
+
+            return Ok(companies.Select(c => new
+            {
+                Value = c.Id.Value,
+                DisplayValue = c.Name
+            }));
+        }
+
+        [Authorize]
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -61,6 +74,7 @@ namespace WebApi.Controllers
             });
         }
 
+        [Authorize]
         [HttpGet]
         [Route("my")]
         public IActionResult GetMy()
@@ -68,6 +82,7 @@ namespace WebApi.Controllers
             return Get(_currentUser.User.CompanyId.Value);
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public IActionResult Edit(int id, [FromBody] DTO.CompanyInfo companyInfo)
         {
@@ -93,6 +108,47 @@ namespace WebApi.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        public IActionResult Add([FromBody] DTO.BuildingCompany companyInfo)
+        {
+            var company = new Company(
+                companyInfo.Name,
+                companyInfo.Nip,
+                companyInfo.PhoneNumber,
+                companyInfo.Email,
+                companyInfo.City,
+                companyInfo.PostCode,
+                companyInfo.Street,
+                companyInfo.PlaceNumber
+            );
+
+            var companyId = _companyRepository.Save(company);
+
+            var user = new User("", "", "", UserCompanyRole.Admin, "", "");
+            user.From(companyId);
+            var userId = _userRepository.Save(user);
+
+            _companyRepository.AddSubContract(new BuildingId(companyInfo.BuildingId), companyId);
+
+            return Ok(userId.Value);
+        }
+
+        [Authorize]
+        [HttpGet("{id}/workers")]
+        public IActionResult GetWorkers(int id)
+        {
+            var companyId = new CompanyId(id);
+            var workers = _userRepository.GetWorkers(companyId);
+
+            return Ok(workers.Select(w => new
+            {
+                Value = w.Id.Value,
+                DisplayValue = $"{w.FirstName} {w.LastName} ({w.Name})"
+            }));
+        }
+
+
+        [Authorize]
         [HttpPut]
         [Route("{id}/workers/add")]
         public IActionResult AddWorker(int id, [FromBody] DTO.User worker)
@@ -118,6 +174,7 @@ namespace WebApi.Controllers
             return Ok(user);
         }
 
+        [Authorize]
         [HttpPut]
         [Route("{id}/workers/delete")]
         public IActionResult DeleteWorkers(int id, [FromBody]IEnumerable<int> usersId)

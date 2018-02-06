@@ -11,10 +11,10 @@ namespace WebApi.Infrastructure.Email
             _configuration = configuration;
         }
 
-        public string GetWorkedAdded(string userFirstName, string userLastName, int userId, string adminFirstName, string adminLastName, string companyName, string userCompanyRole)
+        public string GetWorkerAdded(string userFirstName, string userLastName, int userId, string adminFirstName, string adminLastName, string companyName, string userCompanyRole)
         {
             var registerLink = $"{_configuration["Links:WebLink"]}#user/register/{userId}";
-            var contetnt = EmailTemplates.WorkerAdded
+            var content = EmailTemplates.WorkerAdded
                 .Replace("#UserFirstName", userFirstName)
                 .Replace("#UserLastName", userLastName)
                 .Replace("#AdminFirstName", adminFirstName)
@@ -24,7 +24,22 @@ namespace WebApi.Infrastructure.Email
                 .Replace("#Link", registerLink);
 
             var full = EmailTemplates.FullBody
-                .Replace("#Body", contetnt);
+                .Replace("#Body", content);
+
+            return full;
+        }
+
+        public string GetCompanyInvited(string buildingName, string userFirstName, string userLastName, int buildingId)
+        {
+            var registryLink = $"{_configuration["Links:WebLink"]}#buildings/{buildingId}/subContractor";
+            var content = EmailTemplates.CompanyInvited
+                .Replace("#BuildingName", buildingName)
+                .Replace("#UserFirstName", userFirstName)
+                .Replace("#UserLastName", userLastName)
+                .Replace("#Link", registryLink);
+
+            var full = EmailTemplates.FullBody
+                .Replace("#Body", content);
 
             return full;
         }

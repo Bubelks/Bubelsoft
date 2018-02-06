@@ -5,6 +5,7 @@
 
 building-create .card {
     border-radius: 0;
+    min-width: 330px;
 }
 
     building-create .card .card-header {
@@ -28,3 +29,22 @@ building-create .card {
         padding: 10px;
         flex-direction: column;
     }
+
+estimate-step tr {
+    height: 10px;
+}
+
+estimate-step .table {
+    width: 1%;
+    white-space: nowrap;
+    line-height: 1%;
+    font-size: 10px;
+}
+
+estimate-step input.invalid {
+    color: red;
+}
+
+estimate-step .bad-file-info {
+    color: red;
+}

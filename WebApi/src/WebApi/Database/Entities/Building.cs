@@ -14,5 +14,9 @@ namespace WebApi.Database.Entities
         public string Name { get; set; }
 
         public List<BuildingCompany> Companies { get; set; }
+
+        public string ConnectionString { get; set; }
+        
+        public bool? IsReady { get; set; }
     }
 }

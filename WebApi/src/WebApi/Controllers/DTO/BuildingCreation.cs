@@ -2,9 +2,8 @@
 {
     public class BuildingCreation
     {
-        public Company Company { get; set; }
+        public CompanyInfo Company { get; set; }
 
         public string Name { get; set; }
     }
-
 }

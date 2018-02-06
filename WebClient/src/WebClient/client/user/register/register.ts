@@ -45,9 +45,6 @@ export class RegisterUser {
     private openModal(): void {
         this.modalOpen(true);
         $("body").addClass("modal-open");
-        var modal = $("#registerModal");
-        modal.addClass("show");
-        modal.css("display", "block");
     }
 }
 

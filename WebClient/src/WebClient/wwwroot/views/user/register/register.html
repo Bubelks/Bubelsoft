@@ -1,5 +1,5 @@
 <!-- ko if: user() != null -->
-<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade show" style="display: block" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="my-modal modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -15,6 +15,6 @@
     </div>
 </div>
 <!-- /ko -->
-<!-- ko if: modalOpen -->
+<!-- ko if: modalOpen() -->
 <div class="modal-backdrop fade show"></div>
 <!-- /ko -->

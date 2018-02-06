@@ -1,0 +1,191 @@
+﻿building-home .left-column {
+    flex-grow: 1;
+}
+
+building-home .right-column {
+    flex-grow: 10;
+}
+
+building-home .card-button.current {
+    background-color: #048299;
+    color: white;
+}
+building-home .card-button {
+    height: 55px;
+    font-weight: bold;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+building-estimation tbody {
+    line-height: 1%;
+    background-color: white;
+}
+
+    building-estimation tbody tr:hover {
+        cursor: pointer;
+        background-color: #c2e8ef;
+    }
+
+    building-estimation #estimationModal .pair {
+        display: flex;
+        flex-direction: column;
+        max-width: 100px;
+    }
+    
+    building-estimation #estimationModal .pair:not(:first-child) {
+        margin-left: 30px;
+    }
+
+        building-estimation #estimationModal .pair>span {
+            font-weight: bold;
+        }
+
+    building-estimation #estimationModal .values {
+        display: flex;
+        margin-bottom: 15px;
+    }
+
+    building-estimation #estimationModal .reports-header {
+        font-weight: bold;
+    }
+
+    
+    building-estimation #estimationModal .company {
+        margin-bottom: 15px;
+    }
+
+    building-estimation #estimationModal .company .company-name {
+        font-weight: bold;
+    }
+
+    building-estimation #estimationModal .reports {
+        display: flex;
+        flex-direction: column;
+    }
+
+
+building-estimation .editable-value {
+    display: flex;
+}
+
+
+    building-estimation .editable-value i{
+        font-size: 15px;
+    }
+    
+    building-estimation .editable-value input {
+        width: 100%;
+    }
+
+building-estimation .editable-value .editable-value-button {
+    display: none;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+    building-estimation .editable-value:hover .editable-value-button, building-estimation .editable-value .editable-value-button.show {
+        display: block;
+    }
+
+building-companies .list {
+    display: flex;
+    flex-direction: column;
+}
+
+building-companies .add-subcontractor {
+    height: 25px;
+    display: flex;
+    font-size: 13px;
+}
+
+building-companies .company-details {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+    building-companies .company-details .company-header {
+        display: flex;
+        justify-content: space-between;
+    } 
+
+    building-companies .company-details .company-header span {
+        font-weight: bold;
+        margin-left: 10px;
+        font-size: 17px;
+    }
+    
+    building-companies .company-details .grid-button {
+        background-color: white;
+    }
+
+    building-companies .company-details .grid-button:hover {
+        background-color: #f6f6f6;
+    }
+
+    building-companies .company-details .workers-list {
+        margin-left: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    building-companies .company-details .workers-list .user-display-name {
+        margin-left: 10px;
+        font-weight: 500;
+    }
+
+    building-companies .header {
+        font-weight: bold;
+    }
+
+building-home .custom-select {
+    padding: 0 0 0 10px;
+    min-width: 100px;
+    border-radius: 0;
+    background-color: #f6f6f6;
+    margin-right: 5px;
+}
+
+building-home .filters {
+    padding: 5px;
+}
+
+building-calendar .reports {
+    display: flex;
+}
+
+building-calendar .report {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    padding: 5px;
+    border: 1px solid buttonface;
+    margin-right: 5px;
+}
+
+    building-calendar .report:hover {
+        cursor: pointer;
+        background-color: buttonface;
+    }
+
+building-calendar .report .company-name {
+    font-weight: bold;
+}
+
+building-calendar .day {
+    width: 1%;
+    text-align: center;
+}
+
+building-calendar .table {
+    max-width: 600px;
+}
+
+building-reports .filters input {
+    background: none;
+}
+
+building-reports tbody { background-color: white; }

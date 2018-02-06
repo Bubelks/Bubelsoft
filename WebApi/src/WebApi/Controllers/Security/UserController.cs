@@ -90,6 +90,10 @@ namespace WebApi.Controllers.Security
             userDomain.From(user.CompanyId);
             userDomain.SetId(userId);
 
+            foreach (var userRole in user.Roles)
+            {
+                userDomain.AddRole(userRole.BuildingId, userRole.UserBuildingRole);
+            }
             _userRepository.Save(userDomain, passwordHash);
 
             return Ok();

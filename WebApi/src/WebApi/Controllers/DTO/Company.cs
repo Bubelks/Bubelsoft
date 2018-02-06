@@ -10,6 +10,11 @@ namespace WebApi.Controllers.DTO
         public bool CanEdit { get; set; }
     }
 
+    public class BuildingCompany: CompanyInfo
+    {
+        public int BuildingId { get; set; }
+    }
+
     public class CompanyInfo: CompanyBase
     {
         public string Nip { get; set; }

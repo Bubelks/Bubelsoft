@@ -1,0 +1,48 @@
+<div>
+    <div>
+        <!-- ko if: canEdit() -->
+        <input class="my-input" type="text" id="report-date" data-provide="datepicker" placeholder="Date">
+        <input class="my-input" type="number" min="1" placeholder="Number of workers" data-bind="value: numberOfWorkers">
+        <!-- /ko -->
+        <!-- ko if: !canEdit() -->
+        <span id="report-date"></span>
+        <span data-bind="text: numberOfWorkers"></span>
+        <!-- /ko -->
+    </div>
+    <div>
+        <span>Work done:</span>
+        <button class="btn grid-button" data-bind="click: addNewWork, visible: canEdit">Add</button>
+        <!-- ko if: workDone().length !== 0 -->
+        <div class="work-done" data-bind="foreach: workDone">
+            <div class="work">
+                <i class="fa fa-circle"></i>
+                <span data-bind="text: estimationDescription"></span>
+                <span>: </span>
+                <!-- ko if: $parent.canEdit() -->
+                <div data-bind="template: { name: 'editable-value', data: quantity }"></div>
+                <!-- /ko -->
+                <!-- ko if: !$parent.canEdit() -->
+                <span data-bind="template: { text: quantity.value() }"></span>
+                <!-- /ko -->
+                <button class="btn grid-button delete" data-bind="click: deleteItem, visible: $parent.canEdit"><i class="fa fa-trash" aria-hidden="true"></i></button>
+            </div>
+        </div>
+        <!-- /ko -->
+        <!-- ko if: addNew() -->
+        <div>
+            <select class="my-input estimation" data-bind="value: newWorkEstimate, optionsText: 'displayValue', options: estimations" placeholder="Estimate position"></select>
+            <input class="my-input" type="number" step="0.01" min="0.01" data-bind="value: newWorkQuantity" placeholder="Quantity"/>
+            <button class="btn grid-button" data-bind="click: saveAdding"><i class="fa fa-check" aria-hidden="true"></i></button>
+            <button class="btn grid-button" data-bind="click: cancelAdding"><i class="fa fa-times" aria-hidden="true"></i></button>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
+
+<script type="text/html" id="editable-value">
+    <div class="editable-value">
+        <span data-bind="text: value, visible: !editingMode()"></span>
+        <input class="my-input" data-bind="value: value, visible: editingMode()"></input>
+        <button class="editable-value-button" data-bind="click: toggleMode, css: {'show': editingMode()}"><i class="fa" aria-hidden="true" data-bind="css: icon()"></i></button>
+    </div>
+</script>
