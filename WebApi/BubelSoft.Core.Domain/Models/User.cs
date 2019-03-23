@@ -15,9 +15,10 @@ namespace BubelSoft.Core.Domain.Models
         public CompanyId CompanyId { get; private set; }
         public UserCompanyRole CompanyRole { get; }
 
-        public  readonly IList<UserRole> Roles;
+        public readonly IList<UserRole> Roles;
 
-        public User(UserId id, string name, string firstName, string lastName, UserCompanyRole companyRole, string email, string phoneNumber) : this(name, firstName, lastName, companyRole, email, phoneNumber)
+        public User(UserId id, string name, string firstName, string lastName, UserCompanyRole companyRole, string email, string phoneNumber) 
+            : this(name, firstName, lastName, companyRole, email, phoneNumber)
         {
             Id = id;
         }
@@ -55,7 +56,7 @@ namespace BubelSoft.Core.Domain.Models
 
         public void AddRole(BuildingId buildingId, UserBuildingRole userBuildingRole)
         {
-            if(!Roles.Any(r => r.BuildingId == buildingId && r.UserBuildingRole == userBuildingRole))
+            if (!Roles.Any(r => r.BuildingId == buildingId && r.UserBuildingRole == userBuildingRole))
                 Roles.Add(new UserRole(userBuildingRole, buildingId));
         }
 

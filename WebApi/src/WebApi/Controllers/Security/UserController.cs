@@ -2,13 +2,12 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using BubelSoft.Core.Domain.Models;
+using BubelSoft.Core.Infrastructure.Database.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using WebApi.Database.Repositories.Interfaces;
-using WebApi.Domain.Models;
-using User = WebApi.Controllers.DTO.User;
 
 namespace WebApi.Controllers.Security
 {
@@ -33,7 +32,7 @@ namespace WebApi.Controllers.Security
                 return BadRequest("User not found");
             
             var passwordHasher = new PasswordHasher<UserLogInInfo>();
-            if (passwordHasher.VerifyHashedPassword(user, user.Password, userInfo.Password) ==
+            if (passwordHasher.VerifyHashedPassword(userInfo, user.Password, userInfo.Password) ==
                 PasswordVerificationResult.Failed)
                 return BadRequest("Password is invalid");
 
@@ -65,7 +64,8 @@ namespace WebApi.Controllers.Security
         [Route("register")]
         public IActionResult Register([FromBody] UserRegisterInfo userInfo)
         {
-            var userId = new UserId(userInfo.Id);
+            var newId = 0;
+            var userId = new UserId(0);
             var user = _userRepository.Get(userId);
             if (user == null)
                 return BadRequest();
@@ -73,19 +73,19 @@ namespace WebApi.Controllers.Security
             var passwordHasher = new PasswordHasher<UserLogInInfo>();
             var userLogInInfo = new UserLogInInfo
             {
-                UserName = userInfo.Username,
+                UserName = userInfo.UserName,
                 Password = userInfo.Password,
-                Id = userInfo.Id
+                Id = newId
             };
             var passwordHash = passwordHasher.HashPassword(userLogInInfo, userLogInInfo.Password);
 
-            var userDomain = new Domain.Models.User(
-                userInfo.Username,
-                userInfo.FirstName,
-                userInfo.LastName,
-                userInfo.CompanyRole,
-                userInfo.Email,
-                userInfo.PhoneNumber);
+            var userDomain = new User(
+                userInfo.UserName,
+                "userInfo.FirstName",
+                "userInfo.LastName",
+                UserCompanyRole.Admin,
+                "userInfo.Email",
+                "userInfo.PhoneNumber");
 
             userDomain.From(user.CompanyId);
             userDomain.SetId(userId);
@@ -107,7 +107,7 @@ namespace WebApi.Controllers.Security
             if (user == null)
                 return BadRequest();
 
-            return Ok(new User
+            return Ok(new 
             {
                 Username = user.Name,
                 FirstName = user.FirstName,
@@ -126,8 +126,9 @@ namespace WebApi.Controllers.Security
         public int Id { get; set; }
     }
 
-    public class UserRegisterInfo: User
+    public class UserRegisterInfo
     {
+        public string UserName { get; set; }
         public string Password { get; set; }
     }
 }

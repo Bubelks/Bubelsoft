@@ -1,5 +1,4 @@
-﻿using BubelSoft.Core.Infrastructure;
-using BubelSoft.Core.Infrastructure.Database.Repositories;
+﻿using BubelSoft.Core.Infrastructure.Database.Repositories;
 using BubelSoft.Core.Infrastructure.Database.Repositories.Interfaces;
 using BubelSoft.Core.Infrastructure.Email;
 using BubelSoft.Core.Infrastructure.Services;
