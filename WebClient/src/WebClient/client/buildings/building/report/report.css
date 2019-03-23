@@ -5,37 +5,39 @@
 
     report .work-done .work {
         display: flex;
+        height: 36px;
+        align-items: center;
     }
 
-    report .work-done .work .fa-circle {
-        font-size: 10px;
+    report .work-done .quantity {
+        margin-left: 5px;
+    }
+
+    report .work-done .work>i {
         align-self: center;
-        margin-right: 5px;
+        margin: 5px;
     }
 
     report .work-done .work:hover button.delete {
         display: block;
     }
 
-        report .work-done .work button.delete {
-            display: none;
-            height: 24px;
-            padding-top: 0;
-        }
-
-report select.estimation {
-    height: 27px;
-}
+    report .work-done .work button.delete {
+        display: none;
+    }
 
 report .editable-value {
     display: flex;
+    height: 36px;
+    align-items: center;
 }
 
     report .editable-value i {
         font-size: 15px;
     }
+
     report .editable-value input {
-        width: 100%;
+        max-width: 50px;
     }
 
     report .editable-value .editable-value-button {
@@ -48,3 +50,44 @@ report .editable-value {
         report .editable-value:hover .editable-value-button, report .editable-value .editable-value-button.show {
             display: block;
         }
+
+report .adding-work {
+    display: flex;
+    margin: 5px;
+    align-items: baseline;
+    height: 36px;
+}
+        report .adding-work .dropdown .dropdown-toggle {
+            background-color: white;
+        }
+
+        report .adding-work>* {
+            margin-right: 5px;
+        }
+
+        report .adding-work  .dropdown .search {
+            margin-left: 5px;
+        }
+
+report .work-manage {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #62b5c4;
+}
+    
+    report .work-manage button.add {
+        width: fit-content;
+    }
+
+    report .work-manage .header {
+        display: flex;
+        justify-content: space-between;
+        font-weight: bold;
+        line-height: 36px;
+        border-bottom: 1px solid #62b5c4;
+    }
+    
+report .work-manage .header span {
+    margin-left: 5px;
+    font-size: 15px;
+}

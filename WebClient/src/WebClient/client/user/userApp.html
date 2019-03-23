@@ -1,3 +1,7 @@
 ﻿<!-- ko if: registerUser() != null -->
 <user-register params="viewModel: registerUser"></user-register>
 <!-- /ko -->
+
+<!-- ko if: logIn() !== null -->
+<login class="app" params="viewModel: logIn"></login>
+<!-- /ko -->

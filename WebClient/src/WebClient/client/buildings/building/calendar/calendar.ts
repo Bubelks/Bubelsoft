@@ -82,11 +82,11 @@ export class Calendar {
 
     public saveReport(): void {
         const dto = this.reportDetails().getDto();
-        rest.post("building", `${this.buildingId}/report/${this.reportDetails().reportId}`, dto);
+        rest.post("buildings", `${this.buildingId}/report/${this.reportDetails().reportId}`, dto);
     }
 
     private getReports(): JQueryPromise<IReports[]> {
-        return rest.post("building", `${this.buildingId}/reports`, { month: this.month().value, year: this.year() });
+        return rest.post("buildings", `${this.buildingId}/reports`, { month: this.month().value, year: this.year() });
     }
 }
 

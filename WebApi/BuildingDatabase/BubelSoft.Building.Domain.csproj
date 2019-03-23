@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>BubelSoft.Building.Domain</AssemblyName>
+    <RootNamespace>BubelSoft.Building.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BubelSoft.Core.Domain\BubelSoft.Core.Domain.csproj" />
+    <ProjectReference Include="..\BubelSoft.Core.Infrastructure\BubelSoft.Core.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

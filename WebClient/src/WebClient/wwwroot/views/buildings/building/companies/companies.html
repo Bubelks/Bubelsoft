@@ -26,9 +26,11 @@
                 <i class="fa" aria-hidden="true" data-bind="css: { 'fa-chevron-down' : isOpen(), 'fa-chevron-right' : !isOpen() }"></i>
                 <span data-bind="text: name"></span>
             </button>
+            <!-- ko if: canAddWorker-->
             <button class="btn grid-button" data-bind="click: addWorker"  data-toggle="modal" data-target="#addWorker">
                 <i class="fa fa-plus" aria-hidden="true"></i>
             </button>
+            <!-- /ko -->
         </div>
         <button class="btn grid-button" data-bind="click: goToCompany">
             <i class="fa fa-chevron-right" aria-hidden="true"></i>

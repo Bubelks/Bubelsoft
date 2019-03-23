@@ -1,0 +1,82 @@
+﻿building-reports .filters input {
+    background: none;
+}
+
+building-reports tbody {
+    background-color: white;
+    line-height: 1%;
+}
+
+    building-reports tbody tr:hover {
+        cursor: pointer;
+        background-color: #c2e8ef;
+    }
+
+building-reports #estimationModal .pair {
+    display: flex;
+    flex-direction: column;
+    max-width: 100px;
+}
+    
+building-reports #estimationModal .pair:not(:first-child) {
+    margin-left: 30px;
+}
+
+building-reports #estimationModal .pair>span {
+    font-weight: bold;
+}
+
+building-reports #estimationModal .values {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+building-reports #estimationModal .reports {
+    border: 1px solid #62b5c4;
+}
+
+building-reports #estimationModal .reports-header {
+    font-weight: bold;
+    border-bottom: 1px solid #62b5c4;
+    padding: 5px;
+}
+
+    
+building-reports #estimationModal .company {
+    margin-bottom: 15px;
+}
+
+building-reports #estimationModal .company .company-name {
+    font-weight: bold;
+}
+
+building-reports #estimationModal .reports-list {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+
+building-reports .editable-value {
+    display: flex;
+}
+
+
+building-reports .editable-value i{
+    font-size: 15px;
+}
+    
+building-reports .editable-value input {
+    width: 100%;
+}
+
+building-reports .editable-value .editable-value-button {
+    display: none;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+building-reports .editable-value:hover .editable-value-button, building-reports .editable-value .editable-value-button.show {
+    display: block;
+}

@@ -1,7 +1,6 @@
 ﻿///<amd-module name="app"/>
 
 import { Home } from "home/home";
-import { LogIn } from "logIn/logIn";
 import { CompanyApp } from "company/companyApp";
 import { BuildingsApp } from "buildings/buildingsApp";
 import { UserApp } from "user/userApp";
@@ -15,7 +14,6 @@ export class App
     public static apiUrl = "http://localhost:5000/api";
 
     public home: ko.Observable<Home>;
-    public logIn: ko.Observable<LogIn>;
     public companyApp: CompanyApp;
     public buildingsApp: BuildingsApp;
     public userApp: UserApp;
@@ -24,20 +22,20 @@ export class App
     public useBuildingsApp: ko.Observable<boolean>;
     public useCompanyApp: ko.Observable<boolean>;
     public useUserApp: ko.Observable<boolean>;
+    public showNavBar: ko.Observable<boolean>;
 
     constructor() {
         this.home = ko.observable(null);
-        this.logIn = ko.observable(null);
         this.useBuildingsApp = ko.observable(false);
         this.useCompanyApp = ko.observable(false);
         this.useUserApp = ko.observable(false);
+        this.showNavBar = ko.observable(true);
 
         this.buildingsApp = new BuildingsApp();
         this.companyApp = new CompanyApp();
         this.userApp = new UserApp();
         this.router = new Router(this.createRouterOptions());
         this.router.add("home", () => this.showHome());
-        this.router.add("logIn", () => this.showLogIn());
         this.router.add("company", () => this.showCompany());
         this.router.add("buildings", () => this.showBuildings());
         this.router.add("user", () => this.showUser());
@@ -45,7 +43,7 @@ export class App
     }
 
     public unauthorize(): void {
-        navigator.navigate("logIn");
+        navigator.navigate("user/logIn");
     }
 
     public authorize(): void {
@@ -78,6 +76,7 @@ export class App
 
     private showUser(): void {
         this.hideAll();
+        this.showNavBar(false);
         this.useUserApp(true);
     }
 
@@ -86,16 +85,8 @@ export class App
         this.home(new Home());
     }
 
-    private showLogIn(): void {
-        this.hideAll();
-        this.logIn(new LogIn(() => this.authorize()));
-    }
-
     private hideAll(): void {
-        if (this.logIn() !== null) {
-            this.logIn().dispose();
-            this.logIn(null);
-        }
+        this.showNavBar(true);
         if (this.home() !== null) {
             this.home().dispose();
             this.home(null);

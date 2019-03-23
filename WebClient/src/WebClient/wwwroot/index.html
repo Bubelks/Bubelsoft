@@ -40,7 +40,7 @@
     </title>
 </head>
 <body>
-    <!-- ko if: logIn() === null -->
+    <!-- ko if: showNavBar() -->
     <nav class="navbar navbar-toggleable-md">
         <a class="navbar-brand" tabindex="0" data-bind="click: goTo.bind(this, 'home')">Bubelsoft</a>
         <ul class="navbar-nav mr-auto">
@@ -72,19 +72,16 @@
     </nav>
     <!-- /ko -->
     <!-- ko if: home() !== null -->
-    <home params="viewModel: home"></home>
-    <!-- /ko -->
-    <!-- ko if: logIn() !== null -->
-    <login params="viewModel: logIn"></login>
+    <home class="app" params="viewModel: home"></home>
     <!-- /ko -->
     <!-- ko if: useUserApp() -->
-    <user-app params="viewModel: userApp"></user-app>
+    <user-app class="app" params="viewModel: userApp"></user-app>
     <!-- /ko -->
     <!-- ko if: useCompanyApp() -->
-    <company-app params="viewModel: companyApp"></company-app>
+    <company-app class="app" params="viewModel: companyApp"></company-app>
     <!-- /ko -->
     <!-- ko if: useBuildingsApp() -->
-    <buildings-app params="viewModel: buildingsApp"></buildings-app>
+    <buildings-app class="app" params="viewModel: buildingsApp"></buildings-app>
     <!-- /ko -->
 </body>
 </html>

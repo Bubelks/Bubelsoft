@@ -12,6 +12,11 @@
         color: #62b5c4!important;
     }
 
+
+body > .app {
+    height: 100%;
+}
+
 nav {
     background-color: #048299;
 }

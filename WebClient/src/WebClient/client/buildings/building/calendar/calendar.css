@@ -1,0 +1,45 @@
+﻿building-calendar .reports {
+    display: flex;
+}
+
+building-calendar .report {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    padding: 5px;
+    border: 1px solid buttonface;
+    margin-right: 5px;
+}
+
+building-calendar .report:hover {
+    cursor: pointer;
+    background-color: buttonface;
+}
+
+building-calendar .report .company-name {
+    font-weight: bold;
+}
+
+building-calendar .day {
+    width: 1%;
+    text-align: center;
+}
+
+building-calendar .no-reports {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: 40px;
+    text-align: center;
+    background-color: white;
+    height: 100%;
+}
+
+building-calendar .no-reports>div>p {
+    font-weight: bold;
+}
+
+building-calendar .no-reports>div>i {
+    color: darkred;
+}

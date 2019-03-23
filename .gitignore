@@ -1,13 +1,19 @@
+#Visual Studio
+**/.vs/
+
+#Resharper
+**/*.sln.DotSettings.user
+
+#Build
+**/[Bb]in/
+**/[Oo]bj/
+
+#Packages
+**/[Pp]ackages/
+**/node_modules/
+
 #WebClient
-WebClient/src/WebClient/bin/
-WebClient/src/WebClient/obj/
-WebClient/.vs/
 WebClient/src/WebClient/client/**/*.js
 WebClient/src/WebClient/client/**/*.js.map
 
 #WebApi
-WebApi/.vs/
-WebApi/src/WebApi/bin/
-WebApi/src/WebApi/obj/
-WebApi/WebApi.UnitTests/bin/
-WebApi/WebApi.UnitTests/obj/

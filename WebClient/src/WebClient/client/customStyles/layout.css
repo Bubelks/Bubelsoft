@@ -15,6 +15,7 @@
 .grey-fill {
     color: #656565;
     background-color: #f6f6f6;
+    height: 100%
 }
 
 .main-header-text {
@@ -22,4 +23,12 @@
     font-size: 30px;
     margin: 5px;
     margin-left: 10px;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
 }

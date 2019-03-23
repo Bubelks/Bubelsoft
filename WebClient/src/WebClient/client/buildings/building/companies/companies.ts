@@ -69,6 +69,7 @@ class BuildingCompany {
     public newWorker: ko.Observable<ISelectValue>;
     public addingRole: ko.Observable<ISelectValue>;
     public roles: ko.Observable<string>;
+    public canAddWorker: boolean;
     private roleIds: Array<number>;
 
     constructor(base: IBuildingCompany, buildingId: number, closeCompanies: () => void) {
@@ -77,6 +78,7 @@ class BuildingCompany {
         this.isOpen = ko.observable(false);
         this.id = base.id;
         this.name = base.name;
+        this.canAddWorker = base.canAddWorker;
         this.workers = base.workers.map(w => {
             return {
                 userId: w.userId,
@@ -157,6 +159,7 @@ export interface IBuildingCompany {
     id: number;
     name: string;
     mainContract: boolean;
+    canAddWorker: boolean;
     workers: IBuildingwWorker[];
 }
 

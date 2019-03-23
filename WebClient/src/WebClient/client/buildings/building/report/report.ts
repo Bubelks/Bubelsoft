@@ -13,7 +13,9 @@ export class Report {
     public addNew: ko.Observable<boolean>;
     public newWorkEstimate: ko.Observable<ISelectValue>;
     public newWorkQuantity: ko.Observable<number>;
-    public estimations: ko.ObservableArray<ISelectValue>;
+    private estimations: ko.ObservableArray<ISelectValue>;
+
+    public visibleEstimations: ko.ObservableArray<ISelectValue>;
 
     public canEdit: ko.Observable<boolean>;
 
@@ -26,6 +28,7 @@ export class Report {
         this.newWorkEstimate = ko.observable(null);
         this.newWorkQuantity = ko.observable(null);
         this.estimations = ko.observableArray([]);
+        this.visibleEstimations = ko.observableArray([]);
         this.canEdit = ko.observable(true);
         
         this.getEstimations().done(data => {
@@ -51,6 +54,19 @@ export class Report {
 
     public addNewWork(): void {
         this.addNew(true);
+        this.visibleEstimations(this.estimations());
+    }
+
+    public filterEstimations(_, event): void {
+        var text = event.target.value.toLowerCase();
+        this.visibleEstimations(this.estimations().filter(e => e.displayValue.toLowerCase().indexOf(text) > -1));
+    }
+
+    public chooseEstimation = (newEstimation: ISelectValue) => {
+        this.newWorkEstimate(newEstimation);
+        var button = $("#dropdown_estimations");
+        button.text(newEstimation.displayValue);
+        button.parent().children(".dropdown-menu").removeClass("show");
     }
 
     public saveAdding(): void {

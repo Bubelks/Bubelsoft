@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
+using BubelSoft.Core.Infrastructure.Database;
+using BubelSoft.Core.Infrastructure.Initialization;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using WebApi.Database;
-using WebApi.Database.Initialization;
 
 namespace WebApi
 {

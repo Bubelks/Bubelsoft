@@ -46,6 +46,10 @@ export class RegisterUser {
         this.modalOpen(true);
         $("body").addClass("modal-open");
     }
+
+    public dispose(): void {
+        
+    }
 }
 
 interface IUserRegisterInfo extends IUser {

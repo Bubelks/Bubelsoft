@@ -1,4 +1,7 @@
 ﻿using System.Text;
+using Bubelsoft.Building.Infrastructure;
+using BubelSoft.Core.Infrastructure;
+using BubelSoft.Core.Infrastructure.Database;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,8 +11,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using WebApi.Database;
-using WebApi.Infrastructure;
 
 namespace WebApi
 {
@@ -60,9 +61,8 @@ namespace WebApi
 
             services.AddDbContext<MainContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddRepositories();
-            services.AddCurrentUser();
-            services.AddEmailService();
+            services.AddBubelSoftCore();
+            services.AddBubelSoftBuilding();
 
             services.AddMvc();
         }

@@ -1,4 +1,8 @@
-﻿<div class="bordered filters">
+﻿<!-- ko if: loading()-->
+<div class="loader"></div>
+<!-- /ko -->
+<!-- ko ifnot: loading() -->
+<div class="bordered filters">
     <select class="custom-select" data-bind="options: types, optionsText: 'displayValue', value: type"></select>
     <!-- ko if: type().value === 2 -->
     <input class="custom-select" type="text" id="reports-date-from" data-provide="datepicker" placeholder="From">
@@ -23,15 +27,94 @@
     </tr>
     </thead>
     <tbody data-bind="foreach: estimationsReport">
-        <tr>
-            <td data-bind="text: estimationId"></td>
-            <td data-bind="text: specNumber"></td>
-            <td data-bind="text: description"></td>
-            <td data-bind="text: unit"></td>
-            <td data-bind="text: quantity"></td>
-            <td data-bind="text: unitPrice"></td>
-            <td data-bind="text: amount"></td>
-            <td data-bind="text: doneQuantity"></td>
-        </tr>
+    <tr data-bind="click: $parent.openModal">
+        <td data-bind="text: estimationId"></td>
+        <td data-bind="text: specNumber"></td>
+        <td data-bind="text: description"></td>
+        <td data-bind="text: unit"></td>
+        <td data-bind="text: quantity"></td>
+        <td data-bind="text: unitPrice"></td>
+        <td data-bind="text: amount"></td>
+        <td data-bind="text: doneQuantity"></td>
+    </tr>
     </tbody>
-</table>
+</table><!-- /ko -->
+<div style="display: flex; justify-content: space-between">
+    <ul class="pagination" data-bind="foreach: visiblePages">
+        <li class="page-item" data-bind="click: $parent.changePage, css: {'active': $parent.currentPage() === $data}">
+            <a class="page-link" href="#" data-bind="text: $data"></a>
+        </li>
+    </ul>
+    <div style="display: flex">
+        <span>All elements: </span> <span data-bind="text: count"></span>
+    </div>
+</div>
+
+<!-- ko if: estimationDetails() != null -->
+<div class="modal fade" id="estimationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bind="with: estimationDetails()">
+    <div class="my-modal modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" data-bind="text: specNumber"></h5>
+                <button type="button" class="close my-button" data-bind="click: $parent.closeModal">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div data-bind="template: { name: 'editable-value', data: description }"></div>
+                <div class="values">
+                    <div class="pair">
+                        <span>Quantiy</span>
+                        <div data-bind="template: { name: 'editable-value', data: quantity }"></div>
+                    </div>
+                    <div class="pair">
+                        <span>Unit</span>
+                        <div data-bind="template: { name: 'editable-value', data: unit }"></div>
+                    </div>
+                    <div class="pair">
+                        <span>Unit Price</span>
+                        <div data-bind="template: { name: 'editable-value', data: unitPrice }"></div>
+                    </div>
+                    <div class="pair">
+                        <span>Amount</span>
+                        <div data-bind="template: { name: 'editable-value', data: amount }"></div>
+                    </div>
+                </div>
+                <div class="company">
+                    <button class="company-name grid-button" data-bind="text: getCompanyName(), click: toggleCompany, visible: !companyEditing()"></button>
+                    <div data-bind="visible: companyEditing()">
+                        <select data-bind="value: selctedCompany, options: avaiableCompany, optionsText: 'displayValue', optionsCaption: 'Choose...'"></select>
+                        <button class="grid-button" data-bind="click: toggleCompany"><i class="fa fa-check" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+                <div class="reports">
+                <div class="reports-header">Reports:</div>
+                    <div class="reports-list" data-bind="foreach: reports">
+                        <div>
+                            <span data-bind="text: date"></span>
+                            <span style="font-weight: bold" data-bind="text: companyName"></span>
+                            <span data-bind="text: '(' + userName + ')'"></span>)
+                            <span data-bind="text: quantity + $parent.unit.value()"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="my-button" data-bind="click: saveEstimation" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/html" id="editable-value">
+    <div class="editable-value">
+        <span data-bind="text: value, visible: !editingMode()"></span>
+        <input data-bind="value: value, visible: editingMode()"></input>
+        <button class="editable-value-button" data-bind="click: toggleMode, css: {'show': editingMode()}"><i class="fa" aria-hidden="true" data-bind="css: icon()"></i></button>
+    </div>
+</script>
+<!-- /ko -->
+<!-- ko if: modalOpen() -->
+<div class="modal-backdrop fade show"></div>
+<!-- /ko -->

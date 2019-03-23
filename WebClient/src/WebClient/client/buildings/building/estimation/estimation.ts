@@ -10,29 +10,56 @@ export class Estimation {
     public readonly estimationDetails: ko.Observable<EstiationDetail>;
     public readonly modalOpen: ko.Observable<boolean>;
     public readonly companies: IBuildingCompany[];
+    public readonly count: ko.Observable<number>;
+
+    public maxPage: number;
+    public readonly visiblePages: ko.ObservableArray<number>;
+    public currentPage: ko.Observable<number>;
+    public readonly loading: ko.Observable<boolean>;
 
     private readonly buildingId: number;
 
     constructor(buildingId: number, companies: IBuildingCompany[]) {
         this.modalOpen = ko.observable(false);
         this.estimations = ko.observableArray([]);
+        this.visiblePages = ko.observableArray([]);
+        this.currentPage = ko.observable(1);
+        this.maxPage = 1;
         this.estimationDetails = ko.observable(null);
+        this.count = ko.observable(0);
         this.companies = companies;
         this.buildingId = buildingId;
+        this.loading = ko.observable(true);
 
         this.getEstimations(buildingId)
-            .done((data: IEstimation[]) => 
-                this.estimations(data));
+            .done((data: any) => {
+                this.count(data.count);
+                this.maxPage = (data.count / 30) + 1;
+                for (var i = this.currentPage() - 4 < 1 ? 1 : this.currentPage() - 4; i < ((this.currentPage() + 4) > this.maxPage ? this.maxPage : (this.currentPage() + 4)); i++)
+                    this.visiblePages.push(i);
+                this.estimations(data.estimations);
+            });
     }
     
     public openModal = (estimation: IEstimation) => {
-        this.estimationDetails(new EstiationDetail(estimation,this.buildingId, this.companies, this.onSave));
+        this.estimationDetails(new EstiationDetail(estimation, this.buildingId, this.companies, this.onSave));
 
         this.modalOpen(true);
         $("body").addClass("modal-open");
         const modal = $("#estimationModal");
         modal.addClass("show");
         modal.css("display", "block");
+    }
+
+    public changePage = (choosenPage: number) => 
+    {
+        this.currentPage(choosenPage);
+        this.visiblePages([]);
+        for (var i = this.currentPage() -4 < 1 ? 1 : this.currentPage() - 4; i < ((this.currentPage() + 4) > this.maxPage ? this.maxPage : (this.currentPage() + 4)); i++)
+            this.visiblePages.push(i);
+        this.getEstimations(this.buildingId)
+            .done((data: any) =>
+                this.estimations(data.estimations));
     }
 
     public closeModal= () => {
@@ -49,12 +76,17 @@ export class Estimation {
         rest.post("building", `${this.buildingId}/estimation/${estimation.id}`, estimation);
         this.closeModal();
         this.getEstimations(this.buildingId)
-            .done((data: IEstimation[]) =>
-                this.estimations(data));
+            .done((data: any) =>
+                this.estimations(data.estimations));
     }
 
     private getEstimations(buildingId: number): JQueryPromise<IEstimation[]> {
-        return rest.get("building", `${buildingId}/estimation`);
+        this.loading(true);
+        var skip = (this.currentPage() - 1) * 30;
+        return rest.get("buildings", `${buildingId}/estimations?skip=${skip}&take=30`)
+            .always(_ => {
+                this.loading(false);
+            });
     }
 
     public dispose(): void {

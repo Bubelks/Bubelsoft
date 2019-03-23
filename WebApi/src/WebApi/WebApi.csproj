@@ -5,31 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Infrastructure\Email\EmailTemplateProvider.cs" />
+    <Compile Remove="CurrentUser.cs" />
+    <Compile Remove="ServiceCollectionExtension.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="2.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BuildingDatabase\BuildingContext.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="EmailTemplates.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>EmailTemplates.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="EmailTemplates.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>EmailTemplates.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <ProjectReference Include="..\..\Bubelsoft.Building.Infrastructure\Bubelsoft.Building.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

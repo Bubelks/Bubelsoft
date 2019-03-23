@@ -33,18 +33,19 @@ export class Building {
         this.canReport = ko.observable(false);
         this.useReports = ko.observable(false);
         this.newReport = ko.observable(null);
-        this.reports = ko.observable(new Reports(buildingId));
+        this.reports = ko.observable(null);
 
         this.getBuilding(buildingId)
             .done((data: IBuilding) => {
                 this.buildingName(data.name);
-                this.canReport(data.canReport);
+                this.canReport(true);
             });
 
         this.getCompanies(buildingId)
             .done((data: IBuildingCompany[]) => {
             this.companies(new Companies(data, this.id));
             this.estimation(new Estimation(buildingId, data));
+            this.reports(new Reports(buildingId, data));
         });
     }
 
@@ -54,7 +55,7 @@ export class Building {
 
     public addReport(): void {
         const dto = this.newReport().getDto();
-        rest.put("building", `${this.id}/report`, dto);
+        rest.put("buildings", `${this.id}/report`, dto);
     }
 
     public toggleCard = (clicked: string, _, event) => {
@@ -81,11 +82,11 @@ export class Building {
     }
 
     private getCompanies(buildingId: number): JQueryPromise<IBuildingCompany[]> {
-        return rest.get("building", `${buildingId}/companies`);
+        return rest.get("buildings", `${buildingId}/companies`);
     }
 
     private getBuilding(buildingId: number): JQueryPromise<IBuilding> {
-        return rest.get("building", `${buildingId}`);
+        return rest.get("buildings", `${buildingId}`);
     }
 
     public dispose(): void {

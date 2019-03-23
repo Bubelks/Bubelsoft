@@ -26,7 +26,7 @@
     <None Remove="client\company\companyApp.ts" />
     <None Remove="client\company\interfaces.ts" />
     <None Remove="client\home\buildings\building.ts" />
-    <None Remove="client\logIn\logIn.ts" />
+    <None Remove="client\user\logIn\logIn.ts" />
     <None Remove="client\user\register\register.ts" />
     <None Remove="client\user\userApp.ts" />
     <None Remove="client\utils\router.ts" />
@@ -66,7 +66,7 @@
     <TypeScriptCompile Include="client\utils\navigator.ts" />
     <TypeScriptCompile Include="client\company\company.ts" />
     <TypeScriptCompile Include="client\home\buildings\building.ts" />
-    <TypeScriptCompile Include="client\logIn\logIn.ts" />
+    <TypeScriptCompile Include="client\user\logIn\logIn.ts" />
     <TypeScriptCompile Include="client\utils\router.ts" />
   </ItemGroup>
 
