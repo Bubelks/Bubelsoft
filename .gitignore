@@ -10,7 +10,7 @@
 
 #Packages
 **/[Pp]ackages/
-**/node_modules/
+**/**/node_modules/
 
 #WebClient
 WebClient/src/WebClient/client/**/*.js

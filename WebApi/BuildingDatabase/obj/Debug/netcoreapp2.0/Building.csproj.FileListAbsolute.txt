@@ -1,9 +1,0 @@
-D:\Projekty\Bubelsoft\WebApi\BuildingDatabase\bin\Debug\netcoreapp2.0\Building.deps.json
-D:\Projekty\Bubelsoft\WebApi\BuildingDatabase\bin\Debug\netcoreapp2.0\Building.dll
-D:\Projekty\Bubelsoft\WebApi\BuildingDatabase\bin\Debug\netcoreapp2.0\Building.pdb
-D:\Projekty\Bubelsoft\WebApi\BuildingDatabase\obj\Debug\netcoreapp2.0\Building.csprojResolveAssemblyReference.cache
-D:\Projekty\Bubelsoft\WebApi\BuildingDatabase\obj\Debug\netcoreapp2.0\Building.csproj.CoreCompileInputs.cache
-D:\Projekty\Bubelsoft\WebApi\BuildingDatabase\obj\Debug\netcoreapp2.0\Building.AssemblyInfoInputs.cache
-D:\Projekty\Bubelsoft\WebApi\BuildingDatabase\obj\Debug\netcoreapp2.0\Building.AssemblyInfo.cs
-D:\Projekty\Bubelsoft\WebApi\BuildingDatabase\obj\Debug\netcoreapp2.0\Building.dll
-D:\Projekty\Bubelsoft\WebApi\BuildingDatabase\obj\Debug\netcoreapp2.0\Building.pdb
