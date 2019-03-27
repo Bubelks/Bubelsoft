@@ -1,6 +1,6 @@
-﻿using Bubelsoft.Building.Infrastructure.Repositories;
+﻿using BubelSoft.Building.Infrastructure.Repositories;
 
-namespace Bubelsoft.Building.Infrastructure
+namespace BubelSoft.Building.Infrastructure
 {
     public interface IRepositoryFactory
     {

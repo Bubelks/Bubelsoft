@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Bubelsoft.Building.Infrastructure.Migrations
+namespace BubelSoft.Building.Infrastructure.Migrations
 {
     [DbContext(typeof(BuildingContext))]
     [Migration("20180122205422_Description in estimation")]

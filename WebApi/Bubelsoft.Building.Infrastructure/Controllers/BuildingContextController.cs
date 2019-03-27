@@ -1,9 +1,9 @@
-﻿using Bubelsoft.Building.Infrastructure.Repositories;
+﻿using BubelSoft.Building.Infrastructure.Repositories;
 using BubelSoft.Core.Domain.Models;
 using BubelSoft.Core.Infrastructure.Database.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Bubelsoft.Building.Infrastructure.Controllers
+namespace BubelSoft.Building.Infrastructure.Controllers
 {
     public class BuildingContextController: Controller
     {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Bubelsoft.Building.Infrastructure;
-using Bubelsoft.Building.Infrastructure.Controllers;
-using Bubelsoft.Building.Infrastructure.Entities;
-using Bubelsoft.Building.Infrastructure.Repositories;
 using BubelSoft.Building.Domain.AccessRules;
+using BubelSoft.Building.Infrastructure;
+using BubelSoft.Building.Infrastructure.Controllers;
+using BubelSoft.Building.Infrastructure.Entities;
+using BubelSoft.Building.Infrastructure.Repositories;
 using BubelSoft.Core.Domain.Models;
 using BubelSoft.Core.Infrastructure.Database.Repositories.Interfaces;
 using BubelSoft.Security;
@@ -12,8 +12,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 using NUnit.Framework;
-using Estimation = Bubelsoft.Building.Infrastructure.Controllers.Estimation;
-using ReportQuantity = Bubelsoft.Building.Infrastructure.Entities.ReportQuantity;
+using Estimation = BubelSoft.Building.Infrastructure.Controllers.Estimation;
+using ReportQuantity = BubelSoft.Building.Infrastructure.Entities.ReportQuantity;
 
 namespace BubelSoft.Building.Infrasturcture.UnitTests
 {

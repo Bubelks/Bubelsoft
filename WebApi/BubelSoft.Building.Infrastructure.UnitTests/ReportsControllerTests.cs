@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Bubelsoft.Building.Infrastructure;
-using Bubelsoft.Building.Infrastructure.Controllers;
-using Bubelsoft.Building.Infrastructure.Repositories;
 using BubelSoft.Building.Domain.AccessRules;
+using BubelSoft.Building.Infrastructure;
+using BubelSoft.Building.Infrastructure.Controllers;
+using BubelSoft.Building.Infrastructure.Repositories;
 using BubelSoft.Core.Domain.Models;
 using BubelSoft.Core.Infrastructure;
 using BubelSoft.Core.Infrastructure.Database.Repositories.Interfaces;

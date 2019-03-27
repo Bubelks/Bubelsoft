@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Bubelsoft.Building.Infrastructure.Migrations
+namespace BubelSoft.Building.Infrastructure.Migrations
 {
     public partial class CompanyinEstimation : Migration
     {

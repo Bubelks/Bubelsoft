@@ -4,9 +4,9 @@ using System.Linq;
 using BubelSoft.Building.Domain.Models;
 using BubelSoft.Core.Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using ReportQuantity = Bubelsoft.Building.Infrastructure.Entities.ReportQuantity;
+using ReportQuantity = BubelSoft.Building.Infrastructure.Entities.ReportQuantity;
 
-namespace Bubelsoft.Building.Infrastructure.Repositories
+namespace BubelSoft.Building.Infrastructure.Repositories
 {
     internal class ReportRepository : IReportRepository
     {

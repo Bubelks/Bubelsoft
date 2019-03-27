@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace Bubelsoft.Building.Infrastructure
+namespace BubelSoft.Building.Infrastructure
 {
     internal class BuildingContextFactory: IDesignTimeDbContextFactory<BuildingContext>
     {

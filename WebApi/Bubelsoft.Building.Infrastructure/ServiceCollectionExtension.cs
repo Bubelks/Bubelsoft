@@ -1,7 +1,7 @@
 ﻿using BubelSoft.Building.Domain.AccessRules;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Bubelsoft.Building.Infrastructure
+namespace BubelSoft.Building.Infrastructure
 {
     public static class ServiceCollectionExtension
     {

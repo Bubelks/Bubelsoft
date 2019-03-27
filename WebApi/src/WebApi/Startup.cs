@@ -1,6 +1,6 @@
 ﻿using System.Text;
 using System.Threading.Tasks;
-using Bubelsoft.Building.Infrastructure;
+using BubelSoft.Building.Infrastructure;
 using BubelSoft.Core.Infrastructure;
 using BubelSoft.Core.Infrastructure.Database;
 using BubelSoft.Security;

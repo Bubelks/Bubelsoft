@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Bubelsoft.Building.Infrastructure.Repositories;
 using BubelSoft.Building.Domain.AccessRules;
+using BubelSoft.Building.Infrastructure.Repositories;
 using BubelSoft.Core.Domain.Models;
 using BubelSoft.Core.Infrastructure.Database.Repositories.Interfaces;
 using BubelSoft.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Bubelsoft.Building.Infrastructure.Controllers
+namespace BubelSoft.Building.Infrastructure.Controllers
 {
     [Authorize]
     [Route("api/buildings/{id}/estimations")]

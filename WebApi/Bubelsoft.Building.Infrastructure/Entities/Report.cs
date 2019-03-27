@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Bubelsoft.Building.Infrastructure.Entities
+namespace BubelSoft.Building.Infrastructure.Entities
 {
     public class Report
     {

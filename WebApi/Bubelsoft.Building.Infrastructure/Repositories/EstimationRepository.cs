@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Bubelsoft.Building.Infrastructure.Entities;
+using BubelSoft.Building.Infrastructure.Entities;
 using BubelSoft.Core.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using NPOI.XSSF.UserModel;
 
-namespace Bubelsoft.Building.Infrastructure.Repositories
+namespace BubelSoft.Building.Infrastructure.Repositories
 {
     internal class EstimationRepository : IEstimationRepository
     {

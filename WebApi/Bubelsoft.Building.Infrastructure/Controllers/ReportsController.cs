@@ -8,7 +8,7 @@ using BubelSoft.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Bubelsoft.Building.Infrastructure.Controllers
+namespace BubelSoft.Building.Infrastructure.Controllers
 {
     [Authorize]
     [Route("api/buildings/{id}/reports")]

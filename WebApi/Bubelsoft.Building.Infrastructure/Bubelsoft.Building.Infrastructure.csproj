@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BubelSoft.Building.Domain\BubelSoft.Building.Domain.csproj" />
     <ProjectReference Include="..\BubelSoft.Core.Infrastructure\BubelSoft.Core.Infrastructure.csproj" />
-    <ProjectReference Include="..\BuildingDatabase\BubelSoft.Building.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
 
-namespace Bubelsoft.Building.Infrastructure.Migrations
+namespace BubelSoft.Building.Infrastructure.Migrations
 {
     public partial class ReportIdInQuantity : Migration
     {

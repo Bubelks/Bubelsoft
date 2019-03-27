@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BuildingDatabase\BubelSoft.Building.Domain.csproj" />
+    <ProjectReference Include="..\BubelSoft.Building.Domain\BubelSoft.Building.Domain.csproj" />
   </ItemGroup>
 
 </Project>

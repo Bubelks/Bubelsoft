@@ -1,7 +1,7 @@
-﻿using Bubelsoft.Building.Infrastructure.Entities;
+﻿using BubelSoft.Building.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bubelsoft.Building.Infrastructure
+namespace BubelSoft.Building.Infrastructure
 {
     public class BuildingContext: DbContext
     {

@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Bubelsoft.Building.Infrastructure\Bubelsoft.Building.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Bubelsoft.Building.Infrastructure\BubelSoft.Building.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Bubelsoft.Security\BubelSoft.Security.csproj" />
   </ItemGroup>
 
