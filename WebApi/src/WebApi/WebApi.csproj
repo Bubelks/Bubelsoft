@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Bubelsoft.Building.Infrastructure\Bubelsoft.Building.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Bubelsoft.Security\BubelSoft.Security.csproj" />
   </ItemGroup>
 
 </Project>

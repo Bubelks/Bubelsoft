@@ -3,12 +3,13 @@ using System.Linq;
 using BubelSoft.Core.Domain.Models;
 using BubelSoft.Core.Infrastructure.Database.Entities;
 using BubelSoft.Core.Infrastructure.Database.Repositories.Interfaces;
+using BubelSoft.Security;
 using Microsoft.EntityFrameworkCore;
 using User = BubelSoft.Core.Domain.Models.User;
 
 namespace BubelSoft.Core.Infrastructure.Database.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : IUserRepository, IUserLoginRepository
     {
         private readonly MainContext _context;
 
@@ -23,19 +24,6 @@ namespace BubelSoft.Core.Infrastructure.Database.Repositories
             return entity == null ? null : Create(entity);
         }
 
-        public UserLogInInfo GetForLogIn(string userName)
-        {
-            var entity = _context.Users.FirstOrDefault(u => u.Name == userName);
-            return entity == null
-                ? null
-                : new UserLogInInfo
-                {
-                    Id = entity.Id,
-                    UserName = entity.Name,
-                    Password = entity.Password
-                };
-        }
-
         public IEnumerable<User> GetWorkers(CompanyId companyId)
         {
             return _context.Users.Where(u => u.CompanyId == companyId.Value).Select(e => Create(e));
@@ -47,6 +35,7 @@ namespace BubelSoft.Core.Infrastructure.Database.Repositories
                 .Where(u => u.CompanyId == companyId.Value)
                 .Include(u => u.Roles)
                 .Where(u => u.Roles.Any(r => r.BuildingId == buildingId.Value))
+                .AsEnumerable()
                 .Select(Create);
         }
 
@@ -84,7 +73,15 @@ namespace BubelSoft.Core.Infrastructure.Database.Repositories
 
             return new UserId(entity.Id);
         }
-
+        
+        public (User user, string password) GetForLogIn(string userName)
+        {
+            var entity = _context.Users.FirstOrDefault(u => u.Name == userName);
+            return entity == null
+                ? (null, null)
+                : (Create(entity), entity.Password);
+        }
+        
         private static User Create(Entities.User entity)
         {
             var user = new User(new UserId(entity.Id), entity.Name, entity.FirstName, entity.LastName, entity.CompanyRole, entity.Email, entity.PhoneNumber);

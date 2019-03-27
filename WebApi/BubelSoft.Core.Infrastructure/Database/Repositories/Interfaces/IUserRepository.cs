@@ -7,7 +7,6 @@ namespace BubelSoft.Core.Infrastructure.Database.Repositories.Interfaces
     {
         User Get(UserId id);
         UserId Save(User user, string password = "");
-        UserLogInInfo GetForLogIn(string userName);
         IEnumerable<User> GetWorkers(CompanyId companyId);
         IEnumerable<User> GetBuildingWorkers(BuildingId buildingId, CompanyId companyId);
     }

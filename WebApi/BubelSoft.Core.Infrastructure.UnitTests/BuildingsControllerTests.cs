@@ -2,10 +2,12 @@
 using BubelSoft.Core.Infrastructure.Controllers;
 using BubelSoft.Core.Infrastructure.Database.Repositories.Interfaces;
 using BubelSoft.Core.Infrastructure.Services;
+using BubelSoft.Security;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
 using NUnit.Framework;
+using User = BubelSoft.Core.Domain.Models.User;
 
 namespace BubelSoft.Core.Infrastructure.UnitTests
 {
@@ -15,7 +17,7 @@ namespace BubelSoft.Core.Infrastructure.UnitTests
         private BuildingsController _buildingsController;
         private IBuildingRepository _buildingRepository;
         private ICompanyRepository _companyRepository;
-        private ICurrentUser _currentUser;
+        private IUserSession _userSession;
         private IUserRepository _userRepository;
         private IMailService _mailService;
 
@@ -24,11 +26,11 @@ namespace BubelSoft.Core.Infrastructure.UnitTests
         {
             _buildingRepository = Substitute.For<IBuildingRepository>();
             _companyRepository = Substitute.For<ICompanyRepository>();
-            _currentUser = Substitute.For<ICurrentUser>();
+            _userSession = Substitute.For<IUserSession>();
             _userRepository = Substitute.For<IUserRepository>();
             _mailService = Substitute.For<IMailService>();
 
-            _buildingsController = new BuildingsController(_buildingRepository, _companyRepository, _currentUser,
+            _buildingsController = new BuildingsController(_buildingRepository, _companyRepository, _userSession,
                 _userRepository, _mailService);
         }
 
@@ -53,7 +55,7 @@ namespace BubelSoft.Core.Infrastructure.UnitTests
 
             var user = new User(new UserId(2), "", "", "", UserCompanyRole.UserAdmin, "", "");
             user.From(companyId);
-            _currentUser.User.Returns(user);
+            _userSession.User.Returns(user);
 
             var response = _buildingsController.Get(buildingId.Value);
 
@@ -71,7 +73,7 @@ namespace BubelSoft.Core.Infrastructure.UnitTests
             var user = new User(new UserId(2), "", "", "", UserCompanyRole.UserAdmin, "", "");
             user.From(companyId);
             user.AddRole(buildingId, UserBuildingRole.Supervisor);
-            _currentUser.User.Returns(user);
+            _userSession.User.Returns(user);
 
             var response = _buildingsController.Get(buildingId.Value);
 
@@ -99,7 +101,7 @@ namespace BubelSoft.Core.Infrastructure.UnitTests
 
             var user = new User(new UserId(2), "", "", "", UserCompanyRole.UserAdmin, "", "");
             user.From(companyId);
-            _currentUser.User.Returns(user);
+            _userSession.User.Returns(user);
 
             var response = _buildingsController.GetCompanies(buildingId.Value);
 
@@ -117,7 +119,7 @@ namespace BubelSoft.Core.Infrastructure.UnitTests
             var user = new User(new UserId(2), "", "", "", UserCompanyRole.UserAdmin, "", "");
             user.From(companyId);
             user.AddRole(buildingId, UserBuildingRole.Supervisor);
-            _currentUser.User.Returns(user);
+            _userSession.User.Returns(user);
 
             var response = _buildingsController.GetCompanies(buildingId.Value);
 

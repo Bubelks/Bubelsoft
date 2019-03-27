@@ -13,14 +13,7 @@ namespace BubelSoft.IntegrationTests.BuildingTests
         private const string CompanyName = "companyName";
         private const string UserName = "userName";
 
-        private RestClient _client;
-
-        [Given(@"I logged as MacBub")]
-        public void GivenILoggedAsMacBub()
-        {
-            _client = new RestClient("MacBub", "qwe");
-            ScenarioContext.Current["Client"] = _client;
-        }
+        private RestClient _client => (RestClient)ScenarioContext.Current["Client"];
 
         [Given(@"I have access to Building")]
         public void GivenIHaveAccessToBuilding()

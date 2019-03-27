@@ -3,8 +3,10 @@ using System.Linq;
 using BubelSoft.Core.Domain.Models;
 using BubelSoft.Core.Infrastructure.Database.Repositories.Interfaces;
 using BubelSoft.Core.Infrastructure.Services;
+using BubelSoft.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using User = BubelSoft.Core.Domain.Models.User;
 
 namespace BubelSoft.Core.Infrastructure.Controllers
 {
@@ -13,15 +15,18 @@ namespace BubelSoft.Core.Infrastructure.Controllers
     {
         private readonly ICompanyRepository _companyRepository;
         private readonly IUserRepository _userRepository;
-        private readonly ICurrentUser _currentUser;
+        private readonly IUserSession _userSession;
         private readonly IMailService _mailService;
 
-        public CompanyController(ICompanyRepository companyRepository, IUserRepository userRepository,
-            ICurrentUser currentUser, IMailService mailService)
+        public CompanyController(
+            ICompanyRepository companyRepository,
+            IUserRepository userRepository,
+            IUserSession userSession,
+            IMailService mailService)
         {
             _companyRepository = companyRepository;
             _userRepository = userRepository;
-            _currentUser = currentUser;
+            _userSession = userSession;
             _mailService = mailService;
         }
 
@@ -61,8 +66,8 @@ namespace BubelSoft.Core.Infrastructure.Controllers
                 PostCode = company.PostCode,
                 Street = company.Street,
                 PlaceNumber = company.PlaceNumber,
-                CanManageWorkers = _currentUser.User.CanManageWorkers(companyId),
-                CanEdit = _currentUser.User.CanEdit(companyId),
+                CanManageWorkers = _userSession.User.CanManageWorkers(companyId),
+                CanEdit = _userSession.User.CanEdit(companyId),
                 Workers = companyUsers.Select(u => new DTO.User
                 {
                     Id = u.Id.Value,
@@ -81,7 +86,7 @@ namespace BubelSoft.Core.Infrastructure.Controllers
         [Route("my")]
         public IActionResult GetMy()
         {
-            return Get(_currentUser.User.CompanyId.Value);
+            return Get(_userSession.User.CompanyId.Value);
         }
 
         [Authorize]
@@ -94,7 +99,7 @@ namespace BubelSoft.Core.Infrastructure.Controllers
             if (company == null)
                 return NotFound();
 
-            if (!_currentUser.User.CanEdit(companyId))
+            if (!_userSession.User.CanEdit(companyId))
                 return Forbid();
 
             company.Update(
@@ -164,7 +169,7 @@ namespace BubelSoft.Core.Infrastructure.Controllers
             if (company == null)
                 return NotFound();
             
-            if (!_currentUser.User.CanManageWorkers(companyId))
+            if (!_userSession.User.CanManageWorkers(companyId))
                 return Forbid();
 
             var user = new User(
@@ -179,7 +184,7 @@ namespace BubelSoft.Core.Infrastructure.Controllers
 
             _userRepository.Save(user);
 
-            _mailService.SendWorkerAddedInfo(user, _currentUser.User, company);
+            _mailService.SendWorkerAddedInfo(user, _userSession.User, company);
             return Ok(user.Id.Value);
         }
 
@@ -193,7 +198,7 @@ namespace BubelSoft.Core.Infrastructure.Controllers
             if (!_companyRepository.Exists(companyId))
                 return NotFound();
 
-            if (!_currentUser.User.CanManageWorkers(companyId))
+            if (!_userSession.User.CanManageWorkers(companyId))
                 return Forbid();
 
             _companyRepository.DeleteWorkers(companyId, usersId.Select(uId => new UserId(uId)));

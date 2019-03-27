@@ -4,6 +4,7 @@ using BubelSoft.Core.Domain.Models;
 using BubelSoft.Core.Infrastructure.Controllers.DTO;
 using BubelSoft.Core.Infrastructure.Database.Repositories.Interfaces;
 using BubelSoft.Core.Infrastructure.Services;
+using BubelSoft.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Company = BubelSoft.Core.Domain.Models.Company;
@@ -15,15 +16,20 @@ namespace BubelSoft.Core.Infrastructure.Controllers
     public class BuildingsController : Controller
     {
         private readonly IBuildingRepository _buildingRepository;
-        private readonly ICurrentUser _currentUser;
+        private readonly IUserSession _userSession;
         private readonly ICompanyRepository _companyRepository;
         private readonly IUserRepository _userRepository;
         private readonly IMailService _mailService;
 
-        public BuildingsController(IBuildingRepository buildingRepository, ICompanyRepository companyRepository, ICurrentUser currentUser, IUserRepository userRepository, IMailService mailService)
+        public BuildingsController(
+            IBuildingRepository buildingRepository,
+            ICompanyRepository companyRepository,
+            IUserSession userSession,
+            IUserRepository userRepository,
+            IMailService mailService)
         {
             _buildingRepository = buildingRepository;
-            _currentUser = currentUser;
+            _userSession = userSession;
             _companyRepository = companyRepository;
             _userRepository = userRepository;
             _mailService = mailService;
@@ -53,15 +59,15 @@ namespace BubelSoft.Core.Infrastructure.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var userBuildings = _buildingRepository.GetFor(_currentUser.Id);
+            var userBuildings = _buildingRepository.GetFor(_userSession.User.Id);
 
             var buildings = userBuildings.Select(b => new BuildingsListItem{
                 Id = b.Id.Value,
                 Name = b.Name,
-                OwnedByMy = b.IsOwnedBy(_currentUser.User),
+                OwnedByMy = b.IsOwnedBy(_userSession.User),
                 CompanyName = b.MainContractor.Name,
                 CompanyId = b.MainContractor.Id.Value,
-                UserBuildingRoles = _currentUser.User.Roles.Where(r => r.BuildingId == b.Id).Select(r => r.UserBuildingRole)
+                UserBuildingRoles = _userSession.User.Roles.Where(r => r.BuildingId == b.Id).Select(r => r.UserBuildingRole)
             });
 
             return Ok(buildings);
@@ -76,10 +82,10 @@ namespace BubelSoft.Core.Infrastructure.Controllers
             if (building == null)
                 return NotFound();
 
-            if (!building.CanAccess(_currentUser.User))
+            if (!building.CanAccess(_userSession.User))
                 return Forbid();
 
-            return Ok(new BuildingDto(building.Name, building.IsOwnedBy(_currentUser.User), new CompanyInfo
+            return Ok(new BuildingDto(building.Name, building.IsOwnedBy(_userSession.User), new CompanyInfo
             {
                 Id = building.MainContractor.Id.Value,
                 Name = building.MainContractor.Name,
@@ -118,7 +124,7 @@ namespace BubelSoft.Core.Infrastructure.Controllers
             if (building == null)
                 return NotFound();
 
-            if (!building.CanAccess(_currentUser.User))
+            if (!building.CanAccess(_userSession.User))
                 return Forbid();
 
             var companies = building.SubContractors.Union(new[] { building.MainContractor });
@@ -128,7 +134,7 @@ namespace BubelSoft.Core.Infrastructure.Controllers
                     Id = c.Id.Value,
                     Name = c.Name,
                     MainContract = building.MainContractor.Id == c.Id,
-                    CanAddWorker = c.Id == _currentUser.User.CompanyId,
+                    CanAddWorker = c.Id == _userSession.User.CompanyId,
                     Workers = _userRepository.GetBuildingWorkers(buildingId, c.Id)
                         .Select(u => new BuildingWorker
                         {
@@ -144,7 +150,7 @@ namespace BubelSoft.Core.Infrastructure.Controllers
         {
             var building = _buildingRepository.Get(new BuildingId(id));
 
-            _mailService.SendCompanyInvitedInfo(_currentUser.User, building, email);
+            _mailService.SendCompanyInvitedInfo(_userSession.User, building, email);
 
             return Ok();
         }

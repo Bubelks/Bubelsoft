@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BubelSoft.Core.Domain\BubelSoft.Core.Domain.csproj" />
+    <ProjectReference Include="..\Bubelsoft.Security\BubelSoft.Security.csproj" />
   </ItemGroup>
 
   <ItemGroup>

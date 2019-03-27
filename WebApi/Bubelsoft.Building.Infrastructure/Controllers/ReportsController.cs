@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using BubelSoft.Building.Domain.AccessRules;
 using BubelSoft.Core.Domain.Models;
-using BubelSoft.Core.Infrastructure;
 using BubelSoft.Core.Infrastructure.Database.Repositories.Interfaces;
+using BubelSoft.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,21 +14,21 @@ namespace Bubelsoft.Building.Infrastructure.Controllers
     [Route("api/buildings/{id}/reports")]
     public class ReportsController : BuildingContextController
     {
-        private readonly ICurrentUser _currentUser;
+        private readonly IUserSession _userSession;
         private readonly IUserRepository _userRepository;
         private readonly ICompanyRepository _companyRepository;
         private readonly IReportAccessRules _reportAccessRules;
 
         public ReportsController(
-            IBuildingRepository buildingRepository, 
-            ICurrentUser currentUser, 
+            IBuildingRepository buildingRepository,
+            IUserSession userSession, 
             IUserRepository userRepository, 
             ICompanyRepository companyRepository,
             IRepositoryFactory repositoryFactory,
             IReportAccessRules reportAccessRules) 
             : base(buildingRepository, repositoryFactory)
         {
-            _currentUser = currentUser;
+            _userSession = userSession;
             _userRepository = userRepository;
             _companyRepository = companyRepository;
             _reportAccessRules = reportAccessRules;
@@ -44,11 +44,11 @@ namespace Bubelsoft.Building.Infrastructure.Controllers
 
             if (report == null) return NotFound();
 
-            if (!_reportAccessRules.CanAccess(report, _currentUser.Id)) return Forbid();
+            if (!_reportAccessRules.CanAccess(report, _userSession.User.Id)) return Forbid();
 
             return Ok(new ReportDTO
             {
-                CanEdit = report.ReporterId == _currentUser.Id,
+                CanEdit = report.ReporterId == _userSession.User.Id,
                 Date = report.Date,
                 NumberOfWorkers = report.NumberOfWorkers,
                 Work = report.Work.Select(w => new ReportQuantity
@@ -65,7 +65,7 @@ namespace Bubelsoft.Building.Infrastructure.Controllers
             var buildingId = new BuildingId(id);
             var reportRepository = ReportRepository(buildingId);
 
-            var report = new BubelSoft.Building.Domain.Models.Report(reportDtoDto.Date, reportDtoDto.NumberOfWorkers, _currentUser.Id, buildingId);
+            var report = new BubelSoft.Building.Domain.Models.Report(reportDtoDto.Date, reportDtoDto.NumberOfWorkers, _userSession.User.Id, buildingId);
 
             foreach (var reportQuantity in reportDtoDto.Work)
             {
@@ -85,9 +85,9 @@ namespace Bubelsoft.Building.Infrastructure.Controllers
             if (!reportRepository.Exists(reportId))
                 return NotFound();
 
-            var report = new BubelSoft.Building.Domain.Models.Report(reportId, reportDtoDto.Date, reportDtoDto.NumberOfWorkers, _currentUser.Id, buildingId);
+            var report = new BubelSoft.Building.Domain.Models.Report(reportId, reportDtoDto.Date, reportDtoDto.NumberOfWorkers, _userSession.User.Id, buildingId);
 
-            if (!_reportAccessRules.CanAccess(report, _currentUser.Id)) return Forbid();
+            if (!_reportAccessRules.CanAccess(report, _userSession.User.Id)) return Forbid();
 
             foreach (var reportQuantity in reportDtoDto.Work)
             {
@@ -103,7 +103,7 @@ namespace Bubelsoft.Building.Infrastructure.Controllers
         {
             var buildingId = new BuildingId(id);
             var building = BuildingRepository.Get(buildingId);
-            var user = _currentUser.User;
+            var user = _userSession.User;
             var userRoles = user.Roles.Where(r => r.BuildingId == buildingId).ToList();
 
             var reportRepository = ReportRepository(buildingId);

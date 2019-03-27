@@ -1,17 +1,20 @@
 ﻿using System.Text;
+using System.Threading.Tasks;
 using Bubelsoft.Building.Infrastructure;
 using BubelSoft.Core.Infrastructure;
 using BubelSoft.Core.Infrastructure.Database;
+using BubelSoft.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 
+[assembly: ApiController]
 namespace WebApi
 {
     public class Startup
@@ -51,11 +54,23 @@ namespace WebApi
                 {
                     o.TokenValidationParameters = new TokenValidationParameters
                     {
+                        ValidateIssuer = true,
                         ValidIssuer = Configuration["Tokens:Issuer"],
+                        ValidateAudience = true,
                         ValidAudience = Configuration["Tokens:Audience"],
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"])),
-                        ValidateLifetime = true
+                        ValidateLifetime = true,
+                        RequireExpirationTime = true,
+                        RequireSignedTokens = true
+                    };
+                    o.Events = new JwtBearerEvents
+                    {
+                        OnTokenValidated = context =>
+                        {
+                            UserSession.UpdateUser(context.Principal, context.HttpContext);
+                            return Task.CompletedTask;
+                        }
                     };
                 });
 
@@ -63,16 +78,15 @@ namespace WebApi
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddBubelSoftCore();
             services.AddBubelSoftBuilding();
+            services.AddBubelSoftSecurity();
 
-            services.AddMvc();
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-            
             app.UseCors(builder =>
                 builder.AllowAnyOrigin()
                     .AllowAnyHeader()

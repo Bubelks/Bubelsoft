@@ -1,7 +1,10 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Runtime.Remoting;
-using System.Security.Policy;
+using System.Threading.Tasks;
 using BubelSoft.IntegrationTests.UserTests;
 using Newtonsoft.Json;
 
@@ -9,28 +12,37 @@ namespace BubelSoft.IntegrationTests
 {
     public class RestClient
     {
-        private const string BaseUrl = "http://localhost:5000/api";
         private readonly string _userName;
         private readonly string _password;
-        private readonly string _token;
+        private readonly HttpClient _client;
+
+        public RestClient()
+        {
+            _client = CreateHttpClient();
+        }
+
 
         public RestClient(string userName, string password)
         {
             _userName = userName;
             _password = password;
-            _token = GetToken();
+            _client = CreateHttpClient();
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", GetToken());
         }
+        
+        public async Task<ActionResult<T>> GetAsync<T>(string action) 
+            => new ActionResult<T>(await _client.GetAsync(action).ConfigureAwait(false));
 
         public T Get<T>(string action)
         {
-            var request = WebRequest.Create(GetUrl(action));
+            var request = WebRequest.Create(action);
             
             request.Method = "GET";
-            request.Headers["authorization"] = "bearer " + _token;
-
+            request.Headers["authorization"] = "bearer " + "";
+            
             var response = (HttpWebResponse)request.GetResponse();
             if (response.StatusCode != HttpStatusCode.OK)
-                throw new ServerException($"Action: {action}");
+                throw new ServerException($"Action: {action}. Result: {response.StatusCode}");
 
             using (var stream = new StreamReader(response.GetResponseStream()))
             {
@@ -52,11 +64,11 @@ namespace BubelSoft.IntegrationTests
 
         public HttpWebResponse Post<T>(string action, T data)
         {
-            var request = WebRequest.Create(GetUrl(action));
+            var request = WebRequest.Create(action);
 
             request.ContentType = "application/json";
             request.Method = "POST";
-            request.Headers["authorization"] = "bearer " + _token;
+            request.Headers["authorization"] = "bearer ";
 
             using (var stream = new StreamWriter(request.GetRequestStream()))
             {
@@ -74,11 +86,11 @@ namespace BubelSoft.IntegrationTests
 
         public int? Put<T>(string action, T data)
         {
-            var request = WebRequest.Create(GetUrl(action));
+            var request = WebRequest.Create(action);
 
             request.ContentType = "application/json";
             request.Method = "PUT";
-            request.Headers["authorization"] = "bearer " + _token;
+            request.Headers["authorization"] = "bearer ";
 
             using (var stream = new StreamWriter(request.GetRequestStream()))
             {
@@ -100,7 +112,7 @@ namespace BubelSoft.IntegrationTests
 
         public static void RegistryUser(UserRegisterInfo user)
         {
-            var request = WebRequest.Create(GetUrl("user/register"));
+            var request = WebRequest.Create("user/register");
 
             request.ContentType = "application/json";
             request.Method = "POST";
@@ -117,7 +129,8 @@ namespace BubelSoft.IntegrationTests
                 throw new ServerException("Action: user / register");
         }
 
-        private static string GetUrl(string action) => $"{BaseUrl}/{action}";
+        private static HttpClient CreateHttpClient() 
+            => new HttpClient { BaseAddress = new Uri("http://localhost:5000/") };
 
         private string GetToken()
         {
@@ -139,12 +152,11 @@ namespace BubelSoft.IntegrationTests
             
             var response = (HttpWebResponse)request.GetResponse();
             if (response.StatusCode != HttpStatusCode.OK)
-                throw new ServerException("Action: LOGIN");
+                throw new ServerException($"Action: LOGIN. Result: {response.StatusCode}");
 
             using (var stream = new StreamReader(response.GetResponseStream()))
             {
-                var json = stream.ReadToEnd();
-                return JsonConvert.DeserializeObject<TokenResponse>(json).Token;
+                return stream.ReadToEnd();
             }
         }
 
@@ -152,10 +164,19 @@ namespace BubelSoft.IntegrationTests
         {
             public string Token { get; set; }
         }
+    }
 
-        private class IdResponse
+    public class ActionResult<T>
+    {
+        public ActionResult(HttpResponseMessage httpResponseMessage)
         {
-            public int Id { get; set; }
+            ResponseMessage = httpResponseMessage;
+            var contentString = ResponseMessage.Content.ReadAsStringAsync().Result;
+            Data = JsonConvert.DeserializeObject<T>(contentString);
         }
+
+        public T Data { get; set; }
+        public HttpStatusCode StatusCode => ResponseMessage.StatusCode;
+        public HttpResponseMessage ResponseMessage { get; }
     }
 }

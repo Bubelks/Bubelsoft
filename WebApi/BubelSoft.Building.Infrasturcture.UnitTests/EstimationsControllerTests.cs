@@ -6,8 +6,8 @@ using Bubelsoft.Building.Infrastructure.Entities;
 using Bubelsoft.Building.Infrastructure.Repositories;
 using BubelSoft.Building.Domain.AccessRules;
 using BubelSoft.Core.Domain.Models;
-using BubelSoft.Core.Infrastructure;
 using BubelSoft.Core.Infrastructure.Database.Repositories.Interfaces;
+using BubelSoft.Security;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
@@ -23,9 +23,9 @@ namespace BubelSoft.Building.Infrasturcture.UnitTests
         private EstimationsController _estimationsController;
         private IBuildingRepository _buildingRepository;
         private ICompanyRepository _companyRepository;
-        private IUserRepository _userReposiotyr;
-        private ICurrentUser _currentUser;
-        private IRepositoryFactory _reposiotryFactory;
+        private IUserRepository _userRepository;
+        private IUserSession _userSession;
+        private IRepositoryFactory _repositoryFactory;
         private IReportRepository _reportRepository;
         private IEstimationRepository _estimationRepository;
         private IEstimationAccessRules _estimationAccessRules;
@@ -33,21 +33,21 @@ namespace BubelSoft.Building.Infrasturcture.UnitTests
         [SetUp]
         public void SetUp()
         {
-            _currentUser = Substitute.For<ICurrentUser>();
+            _userSession = Substitute.For<IUserSession>();
 
             _buildingRepository = Substitute.For<IBuildingRepository>();
             _companyRepository = Substitute.For<ICompanyRepository>();
-            _userReposiotyr = Substitute.For<IUserRepository>();
+            _userRepository = Substitute.For<IUserRepository>();
 
-            _reposiotryFactory = Substitute.For<IRepositoryFactory>();
+            _repositoryFactory = Substitute.For<IRepositoryFactory>();
             _reportRepository = Substitute.For<IReportRepository>();
             _estimationRepository = Substitute.For<IEstimationRepository>();
-            _reposiotryFactory.Report(Arg.Any<string>()).Returns(_reportRepository);
-            _reposiotryFactory.Estimation(Arg.Any<string>()).Returns(_estimationRepository);
+            _repositoryFactory.Report(Arg.Any<string>()).Returns(_reportRepository);
+            _repositoryFactory.Estimation(Arg.Any<string>()).Returns(_estimationRepository);
 
             _estimationAccessRules = Substitute.For<IEstimationAccessRules>();
 
-            _estimationsController = new EstimationsController(_buildingRepository, _companyRepository, _userReposiotyr, _currentUser, _estimationAccessRules,_reposiotryFactory);
+            _estimationsController = new EstimationsController(_buildingRepository, _companyRepository, _userRepository, _userSession, _estimationAccessRules,_repositoryFactory);
         }
 
         [Test]

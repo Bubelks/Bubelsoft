@@ -7,6 +7,7 @@ using BubelSoft.Building.Domain.AccessRules;
 using BubelSoft.Core.Domain.Models;
 using BubelSoft.Core.Infrastructure;
 using BubelSoft.Core.Infrastructure.Database.Repositories.Interfaces;
+using BubelSoft.Security;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
@@ -20,7 +21,7 @@ namespace BubelSoft.Building.Infrasturcture.UnitTests
     {
         private ReportsController _reportsController;
         private IBuildingRepository _buildingRepository;
-        private ICurrentUser _currentUser;
+        private IUserSession _userSession;
         private IUserRepository _userRepository;
         private ICompanyRepository _companyRepository;
         private IRepositoryFactory _repositoryFactory;
@@ -31,7 +32,7 @@ namespace BubelSoft.Building.Infrasturcture.UnitTests
         [SetUp]
         public void SetUp()
         {
-            _currentUser = Substitute.For<ICurrentUser>();
+            _userSession = Substitute.For<IUserSession>();
 
             _buildingRepository = Substitute.For<IBuildingRepository>();
             _userRepository = Substitute.For<IUserRepository>();
@@ -45,7 +46,7 @@ namespace BubelSoft.Building.Infrasturcture.UnitTests
 
             _reportAccessRules = Substitute.For<IReportAccessRules>();
             _reportsController =
-                new ReportsController(_buildingRepository, _currentUser, _userRepository, _companyRepository, _repositoryFactory, _reportAccessRules);
+                new ReportsController(_buildingRepository, _userSession, _userRepository, _companyRepository, _repositoryFactory, _reportAccessRules);
         }
 
         [Test]

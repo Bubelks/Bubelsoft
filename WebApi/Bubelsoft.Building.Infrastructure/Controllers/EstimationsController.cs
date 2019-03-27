@@ -5,8 +5,8 @@ using System.Linq;
 using Bubelsoft.Building.Infrastructure.Repositories;
 using BubelSoft.Building.Domain.AccessRules;
 using BubelSoft.Core.Domain.Models;
-using BubelSoft.Core.Infrastructure;
 using BubelSoft.Core.Infrastructure.Database.Repositories.Interfaces;
+using BubelSoft.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,20 +19,20 @@ namespace Bubelsoft.Building.Infrastructure.Controllers
         private readonly IBuildingRepository _buildingRepository;
         private readonly ICompanyRepository _companyRepository;
         private readonly IUserRepository _userRepository;
-        private readonly ICurrentUser _currentUser;
+        private readonly IUserSession _userSession;
         private readonly IEstimationAccessRules _estimationAccessRules;
 
         public EstimationsController(IBuildingRepository buildingRepository,
             ICompanyRepository companyRepository,
             IUserRepository userRepository,
-            ICurrentUser currentUser,
+            IUserSession userSession,
             IEstimationAccessRules estimationAccessRules,
             IRepositoryFactory repositoryFactory) : base(buildingRepository, repositoryFactory)
         {
             _buildingRepository = buildingRepository;
             _companyRepository = companyRepository;
             _userRepository = userRepository;
-            _currentUser = currentUser;
+            _userSession = userSession;
             _estimationAccessRules = estimationAccessRules;
         }
 
@@ -43,7 +43,7 @@ namespace Bubelsoft.Building.Infrastructure.Controllers
             var estimationRepository = EstimationRepository(buildingId);
 
             IEnumerable<EstimationReportList> reports;
-            var count = 0;
+            int count;
             if (dateRange.From.Year == 1 || dateRange.To.Year == 1)
             {
                 reports = estimationRepository.GetAllReported(skip, take);
@@ -115,7 +115,7 @@ namespace Bubelsoft.Building.Infrastructure.Controllers
                 estimation.Amount,
                 new CompanyId(estimation.CompanyId));
 
-            if (!_estimationAccessRules.CanEdit(est, _currentUser.Id, buildingId))
+            if (!_estimationAccessRules.CanEdit(est, _userSession.User.Id, buildingId))
                 return Forbid();
 
             estimationRepository.Save(est);
@@ -178,12 +178,6 @@ namespace Bubelsoft.Building.Infrastructure.Controllers
                 };
             }));
         }
-    }
-
-    public class PageInfo
-    {
-        public int Skip { get; set; }
-        public int Take { get; set; }
     }
 
     public class Estimation

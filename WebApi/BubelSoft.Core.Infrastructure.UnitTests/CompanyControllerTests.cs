@@ -5,6 +5,7 @@ using BubelSoft.Core.Infrastructure.Controllers;
 using BubelSoft.Core.Infrastructure.Controllers.DTO;
 using BubelSoft.Core.Infrastructure.Database.Repositories.Interfaces;
 using BubelSoft.Core.Infrastructure.Services;
+using BubelSoft.Security;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
@@ -20,7 +21,7 @@ namespace BubelSoft.Core.Infrastructure.UnitTests
         private CompanyController _companyController;
         private ICompanyRepository _companyRepository;
         private IUserRepository _userRepository;
-        private ICurrentUser _currentUser;
+        private IUserSession _userSession;
         private IMailService _mailService;
 
         [SetUp]
@@ -28,10 +29,10 @@ namespace BubelSoft.Core.Infrastructure.UnitTests
         {
             _companyRepository = Substitute.For<ICompanyRepository>();
             _userRepository = Substitute.For<IUserRepository>();
-            _currentUser = Substitute.For<ICurrentUser>();
+            _userSession = Substitute.For<IUserSession>();
             _mailService = Substitute.For<IMailService>();
 
-            _companyController = new CompanyController(_companyRepository, _userRepository, _currentUser, _mailService);
+            _companyController = new CompanyController(_companyRepository, _userRepository, _userSession, _mailService);
         }
 
         [Test]
@@ -51,7 +52,7 @@ namespace BubelSoft.Core.Infrastructure.UnitTests
             var companyId = new CompanyId(12);
             _companyRepository.Get(companyId).Returns(new Company(companyId, "name"));
             _userRepository.GetWorkers(companyId).Returns(new List<User>());
-            _currentUser.User.Returns(new User(new UserId(13), "", "", "", UserCompanyRole.Admin, "", ""));
+            _userSession.User.Returns(new User(new UserId(13), "", "", "", UserCompanyRole.Admin, "", ""));
 
             var response = _companyController.Get(companyId.Value);
 
@@ -77,7 +78,7 @@ namespace BubelSoft.Core.Infrastructure.UnitTests
 
             var user = new User(new UserId(2), "","","", UserCompanyRole.Admin, "","");
             user.From(new CompanyId(14));
-            _currentUser.User.Returns(user);
+            _userSession.User.Returns(user);
 
             var response = _companyController.Edit(companyId.Value, new CompanyInfo());
 
@@ -92,7 +93,7 @@ namespace BubelSoft.Core.Infrastructure.UnitTests
 
             var user = new User(new UserId(2), "","","", UserCompanyRole.Admin, "","");
             user.From(companyId);
-            _currentUser.User.Returns(user);
+            _userSession.User.Returns(user);
 
             var response = _companyController.Edit(companyId.Value, new CompanyInfo());
 
@@ -118,7 +119,7 @@ namespace BubelSoft.Core.Infrastructure.UnitTests
 
             var user = new User(new UserId(2), "","","", UserCompanyRole.UserAdmin, "","");
             user.From(new CompanyId(14));
-            _currentUser.User.Returns(user);
+            _userSession.User.Returns(user);
 
             var response = _companyController.AddWorker(companyId.Value, new Controllers.DTO.User());
 
@@ -133,7 +134,7 @@ namespace BubelSoft.Core.Infrastructure.UnitTests
 
             var user = new User(new UserId(2), "","","", UserCompanyRole.Worker, "","");
             user.From(new CompanyId(14));
-            _currentUser.User.Returns(user);
+            _userSession.User.Returns(user);
 
             var response = _companyController.AddWorker(companyId.Value, new Controllers.DTO.User());
 
@@ -148,7 +149,7 @@ namespace BubelSoft.Core.Infrastructure.UnitTests
 
             var user = new User(new UserId(2), "","","", UserCompanyRole.Admin, "","");
             user.From(companyId);
-            _currentUser.User.Returns(user);
+            _userSession.User.Returns(user);
 
             var response = _companyController.AddWorker(companyId.Value, new Controllers.DTO.User());
 
@@ -174,7 +175,7 @@ namespace BubelSoft.Core.Infrastructure.UnitTests
 
             var user = new User(new UserId(2), "", "", "", UserCompanyRole.UserAdmin, "", "");
             user.From(new CompanyId(14));
-            _currentUser.User.Returns(user);
+            _userSession.User.Returns(user);
 
             var response = _companyController.DeleteWorkers(companyId.Value, new List<int>());
 
@@ -189,7 +190,7 @@ namespace BubelSoft.Core.Infrastructure.UnitTests
 
             var user = new User(new UserId(2), "", "", "", UserCompanyRole.Worker, "", "");
             user.From(companyId);
-            _currentUser.User.Returns(user);
+            _userSession.User.Returns(user);
 
             var response = _companyController.DeleteWorkers(companyId.Value, new List<int>());
 
@@ -204,7 +205,7 @@ namespace BubelSoft.Core.Infrastructure.UnitTests
 
             var user = new User(new UserId(2), "", "", "", UserCompanyRole.Admin, "", "");
             user.From(companyId);
-            _currentUser.User.Returns(user);
+            _userSession.User.Returns(user);
 
             var response = _companyController.DeleteWorkers(companyId.Value, new List<int>());
 

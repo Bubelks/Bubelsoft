@@ -74,6 +74,12 @@
     </Compile>
     <Compile Include="ReportTests\ReportTestSteps.cs" />
     <Compile Include="RestClient.cs" />
+    <Compile Include="SecurityTests\LogInTests.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LogInTests.feature</DependentUpon>
+    </Compile>
+    <Compile Include="SecurityTests\LogInTestsSteps.cs" />
     <Compile Include="UserTests\UserTests.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -95,6 +101,10 @@
     <None Include="ReportTests\ReportTest.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ReportTest.feature.cs</LastGenOutput>
+    </None>
+    <None Include="SecurityTests\LogInTests.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>LogInTests.feature.cs</LastGenOutput>
     </None>
     <None Include="UserTests\UserTests.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

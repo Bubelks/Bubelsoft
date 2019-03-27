@@ -3,7 +3,8 @@ using BubelSoft.Core.Domain.Models;
 using BubelSoft.Core.Infrastructure.Database;
 using BubelSoft.Core.Infrastructure.Database.Repositories;
 using BubelSoft.Core.Infrastructure.Database.Repositories.Interfaces;
-using Microsoft.AspNetCore.Identity;
+using BubelSoft.Security;
+using User = BubelSoft.Core.Domain.Models.User;
 
 namespace BubelSoft.Core.Infrastructure.Initialization
 {
@@ -13,7 +14,7 @@ namespace BubelSoft.Core.Infrastructure.Initialization
         private static IBuildingRepository _buildingRepository;
         private static ICompanyRepository _companyRepository;
 
-        public static void Initialize(MainContext context)
+        public static void Initialize(MainContext context, IBubelSoftUserPassword bubelSoftUserPassword)
         {
             SetUpRepositories(context);
 
@@ -37,13 +38,13 @@ namespace BubelSoft.Core.Infrastructure.Initialization
             maciek.From(companies[0].Id);
             maciek.AddRole(buildings[0].Id, UserBuildingRole.Admin);
             maciek.AddRole(buildings[0].Id, UserBuildingRole.Reporter);
-            _userRepository.Save(maciek, GeneratePasswordHash(maciek));
+            _userRepository.Save(maciek, GeneratePasswordHash(maciek, bubelSoftUserPassword));
 
             var kamil = new User("KamBub", "Kamil", "Bubel", UserCompanyRole.Admin, "kambub.fake@mail.com", "123456789");
             kamil.From(companies[1].Id);
             kamil.AddRole(buildings[1].Id, UserBuildingRole.Admin);
             kamil.AddRole(buildings[0].Id, UserBuildingRole.Admin);
-            _userRepository.Save(kamil, GeneratePasswordHash(kamil));
+            _userRepository.Save(kamil, GeneratePasswordHash(kamil, bubelSoftUserPassword));
         }
 
         private static void SetUpRepositories(MainContext context)
@@ -53,15 +54,14 @@ namespace BubelSoft.Core.Infrastructure.Initialization
             _companyRepository = new CompanyRepository(context);
         }
 
-        private static string GeneratePasswordHash(User user)
+        private static string GeneratePasswordHash(User user, IBubelSoftUserPassword bubelSoftUserPassword)
         {
             var userLogInInfo = new UserLogInInfo
             {
                 UserName = user.Name,
                 Password = "qwe"
             };
-            var passwordHasher = new PasswordHasher<UserLogInInfo>();
-            return passwordHasher.HashPassword(userLogInInfo, userLogInInfo.Password);
+            return bubelSoftUserPassword.Hash(userLogInInfo);
         }
     }
 }
