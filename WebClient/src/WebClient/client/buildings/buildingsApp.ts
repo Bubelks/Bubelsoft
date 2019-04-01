@@ -2,7 +2,7 @@
 
 import { Router, IRouterOptions, RouterMode } from "utils/router";
 import { Create } from "buildings/create/create";
-import { BuildingsList } from "buildings/list/list";
+//import { BuildingsList } from "buildings/list/list";
 import { Building } from "buildings/building/building";
 import { SubContractor } from "buildings/building/companies/subContractor/subContractor";
 
@@ -11,13 +11,13 @@ import * as ko from "knockout";
 export class BuildingsApp {
     public router: Router;
     public create: ko.Observable<Create>;
-    public buildingsList: ko.Observable<BuildingsList>;
+   // public buildingsList: ko.Observable<BuildingsList>;
     public building: ko.Observable<Building>;
     public subContractor: ko.Observable<SubContractor>;
 
     constructor() {
         this.create = ko.observable(null);
-        this.buildingsList = ko.observable(null);
+        ///this.buildingsList = ko.observable(null);
         this.building = ko.observable(null);
         this.subContractor = ko.observable(null);
         this.router = new Router(this.createRouterOptions());
@@ -30,7 +30,7 @@ export class BuildingsApp {
 
     private showList(): void {
         this.hideAll();
-        this.buildingsList(new BuildingsList());
+        //this.buildingsList(new BuildingsList());
     }
 
     private showCreate(buildingId: number) {
@@ -64,9 +64,9 @@ export class BuildingsApp {
             this.building().dispose();
         this.building(null);
 
-        if (this.buildingsList() != null)
-            this.buildingsList().dispose();
-        this.buildingsList(null);
+        //if (this.buildingsList() != null)
+        //    this.buildingsList().dispose();
+        //this.buildingsList(null);
 
         if (this.subContractor() != null)
             this.subContractor().dispose();

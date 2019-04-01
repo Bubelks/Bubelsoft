@@ -1,4 +1,4 @@
-﻿require(["knockout"],
+require(["knockout"],
     function (ko) {
         var myTemplateLoader = {
             loadTemplate: function (name, templateName, callback) {
@@ -28,7 +28,7 @@ require(["knockout"],
             { path: "user/register/register", tag: "user-register" },
             { path: "home/home", tag: "home" },
             { path: "buildings/create/create", tag: "building-create" },
-            { path: "buildings/list/list", tag: "buildings-list" },
+            //{ path: "buildings/list/list", tag: "buildings-list" },
             { path: "buildings/list/listItem", tag: "buildings-list-item" },
             { path: "buildings/building/building", tag: "building-home" },
             { path: "buildings/building/calendar/calendar", tag: "building-calendar" },

@@ -8,24 +8,27 @@ var gulp = require("gulp"),
 
 var paths = {
     webroot: "./wwwroot/",
-    clientroot: "./client/"
+    clientRoot: "./client/"
 };
 
-paths.js = paths.clientroot + "**/*.js";
+paths.js = paths.clientRoot + "**/*.js";
+paths.ts = paths.clientRoot + "**/*.ts";
+paths.jsMap = paths.clientRoot + "**/*.js.map";
 paths.minJs = paths.webroot + "js/**/*.min.js";
 paths.concatJsDest = paths.webroot + "js/scripts.min.js";
+paths.destinationCopyAll = paths.webroot + "js/";
 
-paths.css = paths.clientroot + "**/*.css";
+paths.css = paths.clientRoot + "**/*.css";
 paths.minCss = paths.webroot + "styles/**/*.min.css";
 paths.concatCssDest = paths.webroot + "styles/styles.min.css";
 
-paths.html = paths.clientroot + "**/*.html";
+paths.html = paths.clientRoot + "**/*.html";
 paths.htmlDest = paths.webroot + "views/";
 paths.htmlDestFiles = paths.htmlDest + "**/*.html";
 
 paths.componentsRegister = paths.webroot + "js/components.register.js";
-paths.koComponents = paths.clientroot + "**/components.register.js";
-paths.koComponentsLoader = paths.clientroot + "**/components.loaders.js";
+paths.koComponents = paths.clientRoot + "**/components.register.js";
+paths.koComponentsLoader = paths.clientRoot + "**/components.loaders.js";
 
 //gulp.task("ko:components",
 //    function() {
@@ -37,6 +40,14 @@ paths.koComponentsLoader = paths.clientroot + "**/components.loaders.js";
 //            .pipe(concat(paths.componentsRegister))
 //            .pipe(gulp.dest("."));
 //    });
+
+gulp.task("copyAll", function () {
+    rimraf(paths.destinationCopyAll + "*", function () { });
+    return gulp.src([paths.js, paths.jsMap, paths.ts], { base: paths.clientRoot})
+        //.pipe(concat(paths.destinationCopyAll))
+        //.pipe(uglify())
+        .pipe(gulp.dest(paths.destinationCopyAll));
+});
 
 gulp.task("min:js", function () {
     rimraf(paths.concatJsDest, function (){});
@@ -58,7 +69,7 @@ gulp.task("min:css",
 gulp.task("html",
     function() {
         rimraf(paths.htmlDestFiles, function () { });
-        return gulp.src(paths.html, { base: paths.clientroot })
+        return gulp.src(paths.html, { base: paths.clientRoot })
             .pipe(gulp.dest(paths.htmlDest));
     });
 

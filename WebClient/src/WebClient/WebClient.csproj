@@ -21,7 +21,6 @@
     <None Remove="client\buildings\building\report\report.ts" />
     <None Remove="client\buildings\create\create.ts" />
     <None Remove="client\buildings\create\steps\company.ts" />
-    <None Remove="client\buildings\list\list.ts" />
     <None Remove="client\buildings\navigator.ts" />
     <None Remove="client\company\company.ts" />
     <None Remove="client\company\companyApp.ts" />
@@ -31,6 +30,11 @@
     <None Remove="client\user\register\register.ts" />
     <None Remove="client\user\userApp.ts" />
     <None Remove="client\utils\router.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="client\components.register.js" />
+    <Content Include="client\main.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -59,7 +63,6 @@
     <TypeScriptCompile Include="client\buildings\create\steps\building.ts" />
     <TypeScriptCompile Include="client\buildings\create\steps\estimate.ts" />
     <TypeScriptCompile Include="client\buildings\create\steps\company.ts" />
-    <TypeScriptCompile Include="client\buildings\list\list.ts" />
     <TypeScriptCompile Include="client\company\companyApp.ts" />
     <TypeScriptCompile Include="client\company\interfaces.ts" />
     <TypeScriptCompile Include="client\user\register\register.ts" />
