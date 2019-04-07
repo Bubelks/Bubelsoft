@@ -14,9 +14,12 @@ var paths = {
 paths.js = paths.clientRoot + "**/*.js";
 paths.ts = paths.clientRoot + "**/*.ts";
 paths.jsMap = paths.clientRoot + "**/*.js.map";
+paths.jsRegister = paths.clientRoot + "**/*.js.register";
+
+paths.copyAllDest = paths.webroot + "js/";
+
 paths.minJs = paths.webroot + "js/**/*.min.js";
 paths.concatJsDest = paths.webroot + "js/scripts.min.js";
-paths.destinationCopyAll = paths.webroot + "js/";
 
 paths.css = paths.clientRoot + "**/*.css";
 paths.minCss = paths.webroot + "styles/**/*.min.css";
@@ -41,12 +44,12 @@ paths.koComponentsLoader = paths.clientRoot + "**/components.loaders.js";
 //            .pipe(gulp.dest("."));
 //    });
 
-gulp.task("copyAll", function () {
+gulp.task("copyTs", function () {
     rimraf(paths.destinationCopyAll + "*", function () { });
-    return gulp.src([paths.js, paths.jsMap, paths.ts], { base: paths.clientRoot})
+    return gulp.src([paths.js, paths.jsMap, paths.jsRegister, paths.ts], { base: paths.clientRoot})
         //.pipe(concat(paths.destinationCopyAll))
         //.pipe(uglify())
-        .pipe(gulp.dest(paths.destinationCopyAll));
+        .pipe(gulp.dest(paths.copyAllDest));
 });
 
 gulp.task("min:js", function () {
@@ -70,7 +73,10 @@ gulp.task("html",
     function() {
         rimraf(paths.htmlDestFiles, function () { });
         return gulp.src(paths.html, { base: paths.clientRoot })
+            //.pipe(concat(paths.htmlDest))
             .pipe(gulp.dest(paths.htmlDest));
     });
 
 gulp.task("default", ["min:js", "min:css", "html"]);
+
+gulp.task("debug", ["copyTs", "min:css", "html"]);

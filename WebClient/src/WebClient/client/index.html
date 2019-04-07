@@ -19,7 +19,7 @@
     <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="lib/knockout/dist/knockout.js"></script>
 
-    <script type="text/javascript" data-main="js/main.js" src="lib/require.js"></script>
+    <script type="text/javascript" data-main="js/main.register.js" src="lib/require.js"></script>
 
     <script>
         require.config({
@@ -32,6 +32,7 @@
         });
     </script>
 
+    <script type="text/javascript" src="js/bindings.register.js"></script>
     <script type="text/javascript" src="js/components.register.js"></script>
     <!--<script type="text/javascript" src="js/scripts.min.js"></script>-->
 
@@ -40,48 +41,6 @@
     </title>
 </head>
 <body>
-    <!-- ko if: showNavBar() -->
-    <nav class="navbar navbar-toggleable-md">
-        <a class="navbar-brand" tabindex="0" data-bind="click: goTo.bind(this, 'home')">Bubelsoft</a>
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" tabindex="1" data-bind="click: goTo.bind(this, 'home')">Home</a>
-                <!-- ko if: home() !== null -->
-                <div class="current-tab"></div>
-                <!-- /ko -->
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" tabindex="2" data-bind="click: goTo.bind(this, 'company')">Company</a>                
-                <!-- ko if: useCompanyApp() -->
-                <div class="current-tab"></div>
-                <!-- /ko -->
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" tabindex="3" data-bind="click: goTo.bind(this, 'buildings')">Buildings</a>                
-                <!-- ko if: useBuildingsApp() -->
-                <div class="current-tab"></div>
-                <!-- /ko -->
-            </li>
-        </ul>
-        <div class="nav-item dropdown">
-            <button class="my-button user-avatar" type="button" data-bind="click: openUserMenu">U</button>
-            <div class="dropdown-menu" aria-labelledby="user-avatar">
-                <button type="button" class="my-button dropdown-item" data-bind="click: logOut">LogOut</button>
-            </div>
-        </div>
-    </nav>
-    <!-- /ko -->
-    <!-- ko if: home() !== null -->
-    <home class="app" params="viewModel: home"></home>
-    <!-- /ko -->
-    <!-- ko if: useUserApp() -->
-    <user-app class="app" params="viewModel: userApp"></user-app>
-    <!-- /ko -->
-    <!-- ko if: useCompanyApp() -->
-    <company-app class="app" params="viewModel: companyApp"></company-app>
-    <!-- /ko -->
-    <!-- ko if: useBuildingsApp() -->
-    <buildings-app class="app" params="viewModel: buildingsApp"></buildings-app>
-    <!-- /ko -->
+    <start params="viewModel: start"></start>
 </body>
 </html>
