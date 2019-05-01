@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 using BubelSoft.IntegrationTests.BuildingTests;
 using BubelSoft.IntegrationTests.UserTests;
 using NUnit.Framework;
@@ -14,6 +16,54 @@ namespace BubelSoft.IntegrationTests.CompanyTests
     {
         private const string UserId = "UserId";
         private const string Company = "Company";
+        private static readonly string NewAdminEmail = Guid.NewGuid().ToString().Substring(0,6) + "@email.com";
+        private const string NewAdminPassword = "qwe";
+        private const string NewCompanyName = "CompanyName";
+        private const string NewCompanyNumber = "1234-567-88-90";
+        private int _newCompanyId;
+        private RestClient _client;
+
+        [When(@"I register new company")]
+
+        public async Task WhenIRegisterNewCompany()
+        {
+            var client = new RestClient();
+            var result = await client.PostAsync<int>("api/company/register", new
+            {
+                Company = new
+                {
+                    Name = "CompanyName",
+                    Number = "1234-567-88-90"
+                },
+                Administrator = new
+                {
+                    FirstName = "Maciek",
+                    LastName = "Administrator",
+                    Email = NewAdminEmail,
+                    Password = NewAdminPassword
+                }
+            }).ConfigureAwait(false);
+
+            Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(result.Data, Is.GreaterThan(0), "Created company id has to be positive");
+            _newCompanyId = result.Data;
+        }
+
+        [Then(@"I can log in as company admin")]
+        public void ThenICanLogInAsCompanyAdmin()
+        {
+            _client = new RestClient(NewAdminEmail, NewAdminPassword);
+        }
+
+        [Then(@"I can get new company info")]
+        public async Task ThenICanGetNewCompanyInfo()
+        {
+            var result = await _client.GetAsync<CompanyBase>($"api/company/{_newCompanyId}").ConfigureAwait(false);
+            Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(result.Data.Id, Is.EqualTo(_newCompanyId));
+            Assert.That(result.Data.Name, Is.EqualTo(NewCompanyName));
+            Assert.That(result.Data.Number, Is.EqualTo(NewCompanyNumber));
+        }
 
         [When(@"I delete new Worker")]
         public void WhenIDeleteNewWorker()

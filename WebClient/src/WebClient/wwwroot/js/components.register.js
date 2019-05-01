@@ -14,19 +14,25 @@ require(["knockout"],
     function(ko) {
 
         var components = [
+            { path: "home/home", tag: "home" },
             { path: "home/buildings/buildings", tag: "buildings" },
             { path: "home/buildings/building", tag: "building" },
             { path: "home/notifications/notifications", tag: "notifications" },
             { path: "home/notifications/notification", tag: "notification" },
+
+            { path: "start/start", tag: "start" },
+            { path: "start/register/register", tag: "start-register" },
+
             { path: "company/company", tag: "company" },
             { path: "company/companyApp", tag: "company-app" },
             { path: "company/create/companyCreate", tag: "company-create" },
             { path: "company/info/companyInfo", tag: "company-info" },
             { path: "company/user/create", tag: "user-create" },
+
             { path: "user/login/login", tag: "login" },
             { path: "user/userApp", tag: "user-app" },
             { path: "user/register/register", tag: "user-register" },
-            { path: "home/home", tag: "home" },
+
             { path: "buildings/create/create", tag: "building-create" },
             //{ path: "buildings/list/list", tag: "buildings-list" },
             { path: "buildings/list/listItem", tag: "buildings-list-item" },

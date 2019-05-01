@@ -8,7 +8,7 @@ namespace BubelSoft.Core.Infrastructure.Database.Entities
         [Required]
         public string Name { get; set; }
         public List<BuildingCompany> Buildings { get; set; }
-        public string Nip { get; set; }
+        public string Number { get; set; }
         public string PhoneNumber { get; set; }
         public string EMail { get; set; }
         public string City { get; set; }

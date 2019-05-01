@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.Remoting;
+using System.Text;
 using System.Threading.Tasks;
 using BubelSoft.IntegrationTests.UserTests;
 using Newtonsoft.Json;
@@ -12,7 +13,7 @@ namespace BubelSoft.IntegrationTests
 {
     public class RestClient
     {
-        private readonly string _userName;
+        private readonly string _email;
         private readonly string _password;
         private readonly HttpClient _client;
 
@@ -22,16 +23,22 @@ namespace BubelSoft.IntegrationTests
         }
 
 
-        public RestClient(string userName, string password)
+        public RestClient(string email, string password)
         {
-            _userName = userName;
+            _email = email;
             _password = password;
             _client = CreateHttpClient();
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", GetToken());
         }
-        
-        public async Task<ActionResult<T>> GetAsync<T>(string action) 
+
+        public async Task<ActionResult<T>> GetAsync<T>(string action)
             => new ActionResult<T>(await _client.GetAsync(action).ConfigureAwait(false));
+
+        public async Task<ActionResult<T>> PostAsync<T>(string action, object content)
+        {
+            var json = JsonConvert.SerializeObject(content);
+            return new ActionResult<T>(await _client.PostAsync(action, new StringContent(json, Encoding.UTF8, "application/json")).ConfigureAwait(false));
+        }
 
         public T Get<T>(string action)
         {
@@ -130,11 +137,11 @@ namespace BubelSoft.IntegrationTests
         }
 
         private static HttpClient CreateHttpClient() 
-            => new HttpClient { BaseAddress = new Uri("http://localhost:5000/") };
+            => new HttpClient { BaseAddress = new Uri("http://localhost:13567/") };
 
         private string GetToken()
         {
-            var request = WebRequest.Create("http://localhost:5000/api/user/login");
+            var request = WebRequest.Create("http://localhost:13567/api/user/login");
 
             request.ContentType = "application/json";
             request.Method = "POST";
@@ -143,7 +150,7 @@ namespace BubelSoft.IntegrationTests
             {
                 var json = JsonConvert.SerializeObject(new
                 {
-                    UserName = _userName,
+                    Email = _email,
                     Password = _password
                 });
                 

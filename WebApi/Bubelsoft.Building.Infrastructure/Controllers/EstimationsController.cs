@@ -172,7 +172,7 @@ namespace BubelSoft.Building.Infrastructure.Controllers
                 return new
                 {
                     CompanyName = companies.First(c => c.Id == user.CompanyId).Name,
-                    UserName = $"{user.FirstName} {user.LastName} ({user.Name})",
+                    UserName = $"{user.FirstName} {user.LastName} ({user.Email})",
                     Date = r.Date,
                     Quantity = r.Work[0].Quantity
                 };

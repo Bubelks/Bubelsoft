@@ -4,6 +4,6 @@ namespace BubelSoft.Security
 {
     public interface IUserLoginRepository
     {
-        (User user, string password) GetForLogIn(string userName);
+        (User user, string password) GetForLogIn(string userEmail);
     }
 }

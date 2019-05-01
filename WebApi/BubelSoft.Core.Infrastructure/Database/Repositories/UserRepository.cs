@@ -41,31 +41,14 @@ namespace BubelSoft.Core.Infrastructure.Database.Repositories
 
         public UserId Save(User user, string password = null)
         {
-            var entity = Get(user.Id.Value);
-            if (entity == null)
-            {
-                entity = new Entities.User{
-                    Name = user.Name,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    CompanyId = user.CompanyId.Value,
-                    CompanyRole = user.CompanyRole,
-                    PhoneNumber = user.PhoneNumber,
-                    Email = user.Email,
-                    Password = password,
-                    Roles = user.Roles.Select(r => new UserRole
-                    {
-                        BuildingId = r.BuildingId.Value,
-                        CompanyId = user.CompanyId.Value,
-                        UserBuildingRole = r.UserBuildingRole
+            var entity = user.IsNew
+                ? new Entities.User()
+                : Get(user.Id.Value);
 
-                    }).ToList()
-                };
-                _context.Users.Add(entity);
-            }
-            else
-                Update(entity, user, password);
+            Update(entity, user, password);
 
+            if (entity.Id == 0)
+                _context.Add(entity);
             _context.SaveChanges();
 
             if (user.Id.Value == 0)
@@ -74,9 +57,9 @@ namespace BubelSoft.Core.Infrastructure.Database.Repositories
             return new UserId(entity.Id);
         }
         
-        public (User user, string password) GetForLogIn(string userName)
+        public (User user, string password) GetForLogIn(string userEmail)
         {
-            var entity = _context.Users.FirstOrDefault(u => u.Name == userName);
+            var entity = _context.Users.FirstOrDefault(u => u.Email == userEmail);
             return entity == null
                 ? (null, null)
                 : (Create(entity), entity.Password);
@@ -84,7 +67,7 @@ namespace BubelSoft.Core.Infrastructure.Database.Repositories
         
         private static User Create(Entities.User entity)
         {
-            var user = new User(new UserId(entity.Id), entity.Name, entity.FirstName, entity.LastName, entity.CompanyRole, entity.Email, entity.PhoneNumber);
+            var user = new User(new UserId(entity.Id), entity.FirstName, entity.LastName, entity.CompanyRole, entity.Email);
 
             if(entity.CompanyId != null)
                 user.From(new CompanyId(entity.CompanyId.Value));
@@ -96,11 +79,9 @@ namespace BubelSoft.Core.Infrastructure.Database.Repositories
 
         private static void Update(Entities.User entity, User user, string passwordHash = null)
         {
-            entity.Name = user.Name;
             entity.FirstName = user.FirstName;
             entity.LastName = user.LastName;
             entity.CompanyId = user.CompanyId.Value;
-            entity.PhoneNumber = user.PhoneNumber;
             entity.Email = user.Email;
             entity.CompanyRole = user.CompanyRole;
 

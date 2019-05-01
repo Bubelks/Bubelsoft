@@ -1,6 +1,5 @@
 ﻿///<amd-module name="utils/communication/rest"/>
 
-import * as $ from "jquery";
 import { App, AppSingleton } from "app";
 
 export function get(controller: string, action: string): any {
@@ -13,7 +12,7 @@ export function get(controller: string, action: string): any {
     }).always(xhr => {
         if (xhr.status === 401)
             AppSingleton.getInstance().unauthorize();
-    });;
+    });
 }
 
 export function post(controller: string, action: string, body: any): any {

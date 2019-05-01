@@ -29,11 +29,9 @@ namespace BubelSoft.Security
             var claims = new[]
             {
                 new Claim(JwtCustomClaimNames.UserId, user.Id.ToString()),
-                new Claim(JwtCustomClaimNames.UserName, user.Name),
                 new Claim(JwtCustomClaimNames.FirstName, user.FirstName),
                 new Claim(JwtCustomClaimNames.LastName, user.LastName),
                 new Claim(JwtCustomClaimNames.Email, user.Email),
-                new Claim(JwtCustomClaimNames.PhoneNumber, user.PhoneNumber),
                 new Claim(JwtCustomClaimNames.CompanyId, user.CompanyId.Value.ToString()),
                 new Claim(JwtCustomClaimNames.CompanyRole, ((int)user.CompanyRole).ToString()),
                 new Claim(JwtCustomClaimNames.UserRoles, userRolesString),

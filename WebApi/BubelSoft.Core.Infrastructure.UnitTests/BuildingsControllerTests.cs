@@ -50,10 +50,10 @@ namespace BubelSoft.Core.Infrastructure.UnitTests
         {
             var buildingId = new BuildingId(12);
             var companyId = new CompanyId(16);
-            var building = new Building(buildingId, "name", new Company(companyId, "cName"));
+            var building = new Domain.Models.Building(buildingId, "name", new Company(companyId, "cName", "cNumber"));
             _buildingRepository.Get(buildingId).Returns(building);
 
-            var user = new User(new UserId(2), "", "", "", UserCompanyRole.UserAdmin, "", "");
+            var user = new User(new UserId(2), "", "", UserCompanyRole.UserAdmin, "");
             user.From(companyId);
             _userSession.User.Returns(user);
 
@@ -67,10 +67,10 @@ namespace BubelSoft.Core.Infrastructure.UnitTests
         {
             var buildingId = new BuildingId(12);
             var companyId = new CompanyId(16);
-            var building = new Building(buildingId, "name", new Company(companyId, "cName"));
+            var building = new Domain.Models.Building(buildingId, "name", new Company(companyId, "cName", "cNumber"));
             _buildingRepository.Get(buildingId).Returns(building);
 
-            var user = new User(new UserId(2), "", "", "", UserCompanyRole.UserAdmin, "", "");
+            var user = new User(new UserId(2), "", "", UserCompanyRole.UserAdmin, "");
             user.From(companyId);
             user.AddRole(buildingId, UserBuildingRole.Supervisor);
             _userSession.User.Returns(user);
@@ -96,10 +96,10 @@ namespace BubelSoft.Core.Infrastructure.UnitTests
         {
             var buildingId = new BuildingId(12);
             var companyId = new CompanyId(16);
-            var building = new Building(buildingId, "name", new Company(companyId, "cName"));
+            var building = new Domain.Models.Building(buildingId, "name", new Company(companyId, "cName", "cNumber"));
             _buildingRepository.Get(buildingId).Returns(building);
 
-            var user = new User(new UserId(2), "", "", "", UserCompanyRole.UserAdmin, "", "");
+            var user = new User(new UserId(2), "", "", UserCompanyRole.UserAdmin, "");
             user.From(companyId);
             _userSession.User.Returns(user);
 
@@ -113,10 +113,10 @@ namespace BubelSoft.Core.Infrastructure.UnitTests
         {
             var buildingId = new BuildingId(12);
             var companyId = new CompanyId(16);
-            var building = new Building(buildingId, "name", new Company(companyId, "cName"));
+            var building = new Domain.Models.Building(buildingId, "name", new Company(companyId, "cName", "cNumber"));
             _buildingRepository.Get(buildingId).Returns(building);
 
-            var user = new User(new UserId(2), "", "", "", UserCompanyRole.UserAdmin, "", "");
+            var user = new User(new UserId(2), "", "", UserCompanyRole.UserAdmin, "");
             user.From(companyId);
             user.AddRole(buildingId, UserBuildingRole.Supervisor);
             _userSession.User.Returns(user);

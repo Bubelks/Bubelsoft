@@ -1,5 +1,6 @@
 ﻿///<amd-module name="app"/>
 
+import { Start } from "start/start";
 import { Home } from "home/home";
 import { CompanyApp } from "company/companyApp";
 import { BuildingsApp } from "buildings/buildingsApp";
@@ -11,7 +12,9 @@ import * as navigator from "utils/navigator";
 
 export class App
 {
-    public static apiUrl = "http://localhost:5000/api";
+    public static apiUrl = "http://localhost:13567/api";
+
+    public start: Start;
 
     public home: ko.Observable<Home>;
     public companyApp: CompanyApp;
@@ -25,6 +28,7 @@ export class App
     public showNavBar: ko.Observable<boolean>;
 
     constructor() {
+        this.start = new Start();
         this.home = ko.observable(null);
         this.useBuildingsApp = ko.observable(false);
         this.useCompanyApp = ko.observable(false);

@@ -41,13 +41,7 @@ namespace BubelSoft.Core.Infrastructure.Controllers
             var company = new Company(
                 new CompanyId(buildingCreation.Company.Id),
                 buildingCreation.Company.Name,
-                buildingCreation.Company.Nip,
-                buildingCreation.Company.PhoneNumber,
-                buildingCreation.Company.Email,
-                buildingCreation.Company.City,
-                buildingCreation.Company.PostCode,
-                buildingCreation.Company.Street,
-                buildingCreation.Company.PlaceNumber
+                buildingCreation.Company.Nip
             );
 
             var building = new Building(new BuildingId(id), buildingCreation.Name, company, new List<Company>());
@@ -89,13 +83,7 @@ namespace BubelSoft.Core.Infrastructure.Controllers
             {
                 Id = building.MainContractor.Id.Value,
                 Name = building.MainContractor.Name,
-                Nip = building.MainContractor.Nip,
-                PhoneNumber = building.MainContractor.PhoneNumber,
-                Email = building.MainContractor.Email,
-                City = building.MainContractor.City,
-                PostCode = building.MainContractor.PostCode,
-                Street = building.MainContractor.Street,
-                PlaceNumber = building.MainContractor.PlaceNumber,
+                Nip = building.MainContractor.Number
             }));
         }
 
@@ -139,7 +127,7 @@ namespace BubelSoft.Core.Infrastructure.Controllers
                         .Select(u => new BuildingWorker
                         {
                             UserId = u.Id.Value,
-                            DisplayName = $"{u.FirstName} {u.LastName} ({u.Name})",
+                            DisplayName = $"{u.FirstName} {u.LastName} ({u.Email})",
                             UserBuildingRoles = u.Roles.Where(r => r.BuildingId == buildingId).Select(r => r.UserBuildingRole)
                         })
                 }));

@@ -20,13 +20,13 @@ namespace BubelSoft.Core.Infrastructure.Database.Repositories
 
         public IEnumerable<Building> GetFor(UserId userId)
         {
-            var enities = _context.Buildings
+            var entities = _context.Buildings
                 .Include(b => b.Companies)
                 .ThenInclude(bc => bc.Company)
                 .Where(b => b.IsReady.Value)
                 .Where(b => b.Companies.Any(bc => bc.Users.Any(ur => ur.UserId == userId.Value)));
 
-            return enities.Select(Convert);
+            return entities.AsEnumerable().Select(Convert);
         }
 
         public Building Get(BuildingId id)
@@ -84,22 +84,10 @@ namespace BubelSoft.Core.Infrastructure.Database.Repositories
                 dbEntity.Name,
                 new Company(new CompanyId(mainContractor.Id),
                     mainContractor.Name,
-                    mainContractor.Nip,
-                    mainContractor.PhoneNumber,
-                    mainContractor.EMail,
-                    mainContractor.City,
-                    mainContractor.PostCode,
-                    mainContractor.Street,
-                    mainContractor.PlaceNumber),
+                    mainContractor.Number),
                 dbEntity.Companies.Where(c => c.ContractType != ContractType.MainContractor).Select(c => new Company(new CompanyId(c.Company.Id),
                     c.Company.Name,
-                    c.Company.Nip,
-                    c.Company.PhoneNumber,
-                    c.Company.EMail,
-                    c.Company.City,
-                    c.Company.PostCode,
-                    c.Company.Street,
-                    c.Company.PlaceNumber)));
+                    c.Company.Number)));
         }
 
         private Entities.Building GetById(BuildingId id)

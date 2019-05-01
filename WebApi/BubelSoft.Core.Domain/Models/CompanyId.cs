@@ -1,9 +1,14 @@
-﻿namespace BubelSoft.Core.Domain.Models
+﻿using System;
+
+namespace BubelSoft.Core.Domain.Models
 {
     public struct CompanyId
     {
         public CompanyId(int value)
         {
+            if(value < 0)
+                throw new ArgumentException("Company Id has to be non-negative");
+
             Value = value;
         }
 

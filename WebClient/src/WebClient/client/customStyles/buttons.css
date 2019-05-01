@@ -1,41 +1,32 @@
-﻿.my-button {
-    outline: none !important;
-    background-color: #ffffff;
-    color: #62b5c4;
+﻿.primary-button {
+    background-color: var(--brand-light-orange);
+    color: var(--brand-light-text);
+    cursor: pointer;
+    box-shadow: none;
+    border-radius: 3px;
+}
+
+    .primary-button:hover {
+        background-color: var(--brand-orange);
+        color: white;
+    }
+
+    .primary-button:focus {
+        box-shadow: none;
+    }
+
+.primary-button-inverted {
+    color: var(--brand-very-light-orange);
+    background-color: transparent;
     border: none;
-    outline: none;
     cursor: pointer;
-    border-radius: 0;
+    box-shadow: none;
 }
 
-    .my-button:not([disabled]):hover, .my-button:not([disabled]):focus {
-        opacity: .5;
-        background-color: #62b5c4;
-        color: #ffffff;
+    .primary-button-inverted:hover {
+        color: var(--brand-orange);
     }
 
-    .my-button:not([disabled]):active {
-        opacity: 1;
+    .primary-button-inverted:focus {
+        box-shadow: none;
     }
-
-.grid-button {
-    color: #656565;
-    background-color: #f6f6f6;
-    border-radius: 0;
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-}
-
-.grid-button:hover {
-    background-color: buttonface;
-}
-
-button, a {
-    cursor: pointer;
-    outline: none;
-}
-
-button:disabled, a:disabled {
-    cursor: not-allowed;
-}

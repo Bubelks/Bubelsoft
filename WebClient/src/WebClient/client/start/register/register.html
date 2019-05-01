@@ -1,0 +1,72 @@
+﻿<div class="welcome">
+    <div class="one-line">
+        <p>First time on</p>
+        <p class="brand">BubelSoft.com</p>
+    </div>
+    <p>Here you can make first step to improve your daily work.</p>
+    <p>Click button below to start your adventure!</p>
+    <button class="btn primary-button register-button" data-toggle="modal" data-target="#registerModal">Register</button>
+</div>
+
+<div class="modal my-modal show" id="registerModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div data-bind="text: modalHeader">Company</div>
+                <button class="btn primary-button-inverted" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- ko if: currentStep() === 0 -->
+                <p>We need information about your company</p>
+                <input type="text" data-bind="my_input: companyNameParams" placeholder="Name">
+                <input type="text" data-bind="my_input: companyNumberParams" placeholder="Number">
+                <!-- /ko -->
+                <!-- ko if: currentStep() === 1 -->
+                <p>You need an administrator account</p>
+                <input type="text" data-bind="my_input: userFirstNameParams" placeholder="First name">
+                <input type="text" data-bind="my_input: userLastNameParams" placeholder="Last name">
+                <input type="text" data-bind="my_input: userEmailParams" placeholder="Email">
+                <input type="password" data-bind="my_input: userPasswordParams" placeholder="Password">
+                <input type="password" data-bind="my_input: userPasswordConfirmParams" placeholder="Password confirmation">
+                <!-- /ko -->
+                <!-- ko if: currentStep() === 2 -->
+                <p class="header">Company</p>
+                <p class="value" data-bind="text: companyName"></p>
+                <p class="value" data-bind="text: companyNumber"></p>
+                <p class="header" style="margin-top: 10px">Administrator</p>
+                <p class="value" data-bind="text: userFirstName() + ' ' + userLastName()"></p>
+                <p class="value" data-bind="text: userEmail"></p>
+                <p style="font-size: 18px; margin-top: 10px">If all data are correct you are just one click from finish!</p>
+                <p style="font-size: 13px; font-weight: 500;">If some data are wrong please go back and correct.</p>
+                <!-- /ko -->
+                <!-- ko if: currentStep() === 10 -->
+                <i class="fa fa-check"></i>
+                <p style="align-self: center">You are in!</p>
+                <!-- /ko -->
+                <!-- ko if: currentStep() === 11 -->
+                <i class="fa fa-exclamation"></i>
+                <p style="align-self: center">Sorry, we have an error.</p>
+                <p style="align-self: center">Please try again later.</p>
+                <!-- /ko -->
+                <!-- ko if: currentStep() === 12 -->
+                <div class="spinner-grow" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <!-- /ko -->
+            </div>
+            <!-- ko if: modalFooterVisible() -->
+            <div class="modal-footer">
+                <!-- ko if: invalid() -->
+                <p style="color: var(--brand-invalid)">Please correct errors</p>
+                <!-- /ko -->
+                <div class="buttons">
+                    <button class="btn primary-button-inverted" data-bind="click: modalBack, visible: modalBackVisible">Back</button>
+                    <button class="btn primary-button" data-bind="click: modalNext, text: modalNextButton">Next</button>
+                </div>
+            </div>
+            <!-- /ko -->
+        </div>
+    </div>
+</div>

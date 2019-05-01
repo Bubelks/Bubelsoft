@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using NUnit.Framework;
-using WebApi.Controllers;
+using WebApi.Controllers.Security;
 using User = BubelSoft.Core.Domain.Models.User;
 
 namespace BubelSoft.Security.UnitTests
@@ -37,11 +37,10 @@ namespace BubelSoft.Security.UnitTests
             const string userName = "userName";
             _userRepository.GetForLogIn(userName).Returns((null, null));
 
-            var response = _userController.LogIn(new UserLogInInfo
-            {
-                UserName = "userName",
+            var response = _userController.LogIn(new UserLogInInfo{
+                Email = "userName",
                 Password = "pass"
-            });
+                });
 
             Assert.That(response, Is.TypeOf<BadRequestObjectResult>());
         }
@@ -49,7 +48,7 @@ namespace BubelSoft.Security.UnitTests
         [Test]
         public void Login_BadRequest_PasswordIsWrong()
         {
-            var user = CreateUser(12, "BAD_User");
+            var user = CreateUser(12);
             var userLogInInfo = StubLogInRepository(user, goodPassword: false);
 
             var response = _userController.LogIn(userLogInInfo);
@@ -60,7 +59,7 @@ namespace BubelSoft.Security.UnitTests
         [Test]
         public void Login_Ok_UserNameAndPasswordAreCorrect()
         {
-            var user = CreateUser(12, "OK_User");
+            var user = CreateUser(12);
             var userLogInInfo = StubLogInRepository(user, goodPassword: true);
             _bubelSoftJwtToken.CreateFor(user).Returns("configconfigconfigconfigconfig");
 
@@ -72,14 +71,12 @@ namespace BubelSoft.Security.UnitTests
         [Test]
         public void GetCurrent_OkWithUser_UserIsLoggedIn()
         {
-            var userName = "userName";
-            _userSession.User.Returns(CreateUser(34, userName));
+            _userSession.User.Returns(CreateUser(34));
             
             var response = _userController.GetCurrent();
 
             Assert.That(response, Is.TypeOf<OkObjectResult>());
             var result = (response as ObjectResult).Value as WebApi.Controllers.DTO.User;
-            Assert.That(result.Name, Is.EqualTo(userName));
             Assert.That(result.FirstName, Is.EqualTo("firstName"));
             Assert.That(result.LastName, Is.EqualTo("lastName"));
             Assert.That(result.Email, Is.EqualTo("email"));
@@ -88,27 +85,25 @@ namespace BubelSoft.Security.UnitTests
         private UserLogInInfo StubLogInRepository(User user, bool goodPassword)
         {
             const string passwordHash = "passwordHash";
-            _userRepository.GetForLogIn(user.Name).Returns((user, passwordHash));
+            _userRepository.GetForLogIn(user.Email).Returns((user, passwordHash));
 
             var userLogInInfo = new UserLogInInfo
             {
-                UserName = user.Name,
+                Email = user.Email,
                 Password = "password"
             };
 
-            _bubelSoftPassword.Verify(userLogInInfo, passwordHash).Returns(goodPassword);
+            _bubelSoftPassword.Verify(userLogInInfo).Returns(goodPassword);
 
             return userLogInInfo;
         }
 
-        private static User CreateUser(int userId, string userName) =>
+        private static User CreateUser(int userId) =>
             new User(
                 new UserId(userId),
-                userName,
                 "firstName",
                 "lastName",
                 UserCompanyRole.Admin,
-                "email",
-                "890876789");
+                "email");
     }
 }

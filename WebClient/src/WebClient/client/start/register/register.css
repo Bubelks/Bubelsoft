@@ -1,0 +1,68 @@
+﻿start-register {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+    start-register .welcome p {
+        font-size: 200%;
+        margin-bottom: 4px;
+        font-weight: 600;
+    }
+
+    start-register p.brand {
+        margin-left: 10px;
+        font-weight: 800;
+    }
+
+    start-register .primary-button.register-button {
+        width: 225px;
+        height: 50px;
+        margin-top: 25px;
+        font-size: 20px;
+    }
+
+    start-register .my-modal .modal-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        min-height: 120px;
+    }
+
+        start-register .my-modal .modal-body .spinner-grow {
+            align-self: center;
+            color: var(--brand-orange);
+        }
+
+        start-register .my-modal .modal-body .fa {
+            align-self: center;
+            font-size: 60px;
+        }
+
+        start-register .my-modal .modal-body .fa-check {
+            color: var(--brand-valid);
+        }
+
+        start-register .my-modal .modal-body .fa-exclamation {
+            color: var(--brand-invalid);
+        }
+    
+        start-register .my-modal .modal-body p {
+            margin: 0;
+        }
+
+        start-register .my-modal .modal-body p.header {
+            font-size: 20px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+            start-register .my-modal .modal-body p.header:nth-child(1) {
+                margin-top: 0;
+            }
+            
+        start-register .my-modal .modal-body p.value {
+            font-weight: 500;
+            color: var(--brand-light-orange);
+        }

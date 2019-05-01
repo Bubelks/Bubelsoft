@@ -4,7 +4,8 @@
     border: none;
     border-bottom: 1px solid var(--brand-main-text);
     color: var(--brand-main-text);
-    margin-bottom: 15px;
+    margin-bottom: 4px;
+    margin-top: 4px;
 }
 
     .my-input::-webkit-input-placeholder {
@@ -22,8 +23,17 @@
         opacity: .5;
         font-size: 10px;
     }
-       
+
     .my-input.invalid {
-        border-color: red;
-        color: red;
+        border-color: var(--brand-invalid);
+        color: var(--brand-invalid);
     }
+
+.input-invalid-message .tooltip-inner {
+    color: var(--brand-light-text);
+    background-color: var(--brand-invalid);
+}
+
+.input-invalid-message .arrow::before {
+    border-right-color: var(--brand-invalid);
+}

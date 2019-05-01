@@ -1,6 +1,10 @@
 ﻿using System;
+using BubelSoft.Core.Infrastructure.Database;
+using BubelSoft.Core.Infrastructure.Initialization;
+using BubelSoft.Security;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -17,10 +21,10 @@ namespace WebApi
                 var services = scope.ServiceProvider;
                 try
                 {
-                    //var context = services.GetRequiredService<MainContext>();
-                    //context.Database.EnsureDeleted();
-                    //context.Database.Migrate();
-                    //DbInitializer.Initialize(context);
+                    var context = services.GetRequiredService<MainContext>();
+                    context.Database.EnsureDeleted();
+                    context.Database.Migrate();
+                    DbInitializer.Initialize(context, new BubelSoftUserPassword());
                 }
                 catch (Exception ex)
                 {

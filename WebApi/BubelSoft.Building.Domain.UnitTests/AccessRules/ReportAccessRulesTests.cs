@@ -41,13 +41,13 @@ namespace BubelSoft.Building.Domain.UnitTests.AccessRules
             var buildingId = new BuildingId(16);
 
             var userId = new UserId(7);
-            var user = new User(userId, "", "", "", UserCompanyRole.Worker, "", "");
+            var user = new User(userId, "", "", UserCompanyRole.Worker, "");
             user.From(companyId);
             user.AddRole(buildingId, UserBuildingRole.Supervisor);
             _userRepository.Get(userId).Returns(user);
 
             var reporterId = new UserId(5);
-            var reporter = new User(userId, "", "", "", UserCompanyRole.Worker, "", "");
+            var reporter = new User(userId, "", "", UserCompanyRole.Worker, "");
             reporter.From(companyId);
             _userRepository.Get(reporterId).Returns(reporter);
 
@@ -65,16 +65,16 @@ namespace BubelSoft.Building.Domain.UnitTests.AccessRules
 
             var buildingId = new BuildingId(16);
             _buildingRepository.Get(buildingId)
-                .Returns(new Core.Domain.Models.Building(buildingId, "name", new Company(mainContractorId, "cName")));
+                .Returns(new Core.Domain.Models.Building(buildingId, "name", new Company(mainContractorId, "cName", "cNumber")));
 
             var userId = new UserId(7);
-            var user = new User(userId, "", "", "", UserCompanyRole.Worker, "", "");
+            var user = new User(userId, "", "", UserCompanyRole.Worker, "");
             user.From(mainContractorId);
             user.AddRole(buildingId, UserBuildingRole.Supervisor);
             _userRepository.Get(userId).Returns(user);
 
             var reporterId = new UserId(5);
-            var reporter = new User(userId, "", "", "", UserCompanyRole.Worker, "", "");
+            var reporter = new User(userId, "", "", UserCompanyRole.Worker, "");
             reporter.From(new CompanyId(15));
             _userRepository.Get(reporterId).Returns(reporter);
 
@@ -90,16 +90,16 @@ namespace BubelSoft.Building.Domain.UnitTests.AccessRules
         {
             var buildingId = new BuildingId(16);
             _buildingRepository.Get(buildingId)
-                .Returns(new Core.Domain.Models.Building(buildingId, "name", new Company(new CompanyId(11), "cName")));
+                .Returns(new Core.Domain.Models.Building(buildingId, "name", new Company(new CompanyId(11), "cName", "cNumber")));
 
             var userId = new UserId(7);
-            var user = new User(userId, "", "", "", UserCompanyRole.Worker, "", "");
+            var user = new User(userId, "", "", UserCompanyRole.Worker, "");
             user.From(new CompanyId(14));
             user.AddRole(buildingId, UserBuildingRole.Supervisor);
             _userRepository.Get(userId).Returns(user);
 
             var reporterId = new UserId(5);
-            var reporter = new User(userId, "", "", "", UserCompanyRole.Worker, "", "");
+            var reporter = new User(userId, "", "", UserCompanyRole.Worker, "");
             reporter.From(new CompanyId(15));
             _userRepository.Get(reporterId).Returns(reporter);
 
@@ -115,7 +115,7 @@ namespace BubelSoft.Building.Domain.UnitTests.AccessRules
         {
             var buildingId = new BuildingId(16);
             var userId = new UserId(7);
-            var user = new User(userId, "", "", "", UserCompanyRole.Worker, "", "");
+            var user = new User(userId, "", "", UserCompanyRole.Worker, "");
             _userRepository.Get(userId).Returns(user);
 
             var reporterId = new UserId(5);

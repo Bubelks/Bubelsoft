@@ -1,0 +1,11 @@
+﻿p {
+    color: var(--brand-main-text);
+    font-weight: 700;
+}
+p.brand {
+    color: var(--brand-orange);
+}
+
+div.one-line {
+    display: inline-flex;
+}

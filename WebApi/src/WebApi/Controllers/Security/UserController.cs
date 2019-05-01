@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Controllers.DTO;
 
-namespace WebApi.Controllers
+namespace WebApi.Controllers.Security
 {
     [Route("api/[controller]")]
     public class UserController: ControllerBase
@@ -29,12 +29,12 @@ namespace WebApi.Controllers
         [HttpPost]
         public IActionResult LogIn([FromBody]UserLogInInfo userInfo)
         {
-            var (user, password) = _userRepository.GetForLogIn(userInfo.UserName);
+            var (user, password) = _userRepository.GetForLogIn(userInfo.Email);
 
             if (user == null)
                 return BadRequest("User not found");
-            
-            if(!_bubelSoftUserPassword.Verify(userInfo, password))
+
+            if(!_bubelSoftUserPassword.Verify(userInfo))
                 return BadRequest("Password is invalid");
             
             return Ok(_bubelSoftJwtToken.CreateFor(user));
@@ -42,12 +42,12 @@ namespace WebApi.Controllers
 
         [Authorize]
         [Route("current")]
+        [HttpGet]
         public IActionResult GetCurrent()
         {
             var currentUser = _userSession.User;
             var dto = new User
             {
-                Name = currentUser.Name,
                 FirstName = currentUser.FirstName,
                 LastName = currentUser.LastName,
                 Email = currentUser.Email
@@ -56,7 +56,7 @@ namespace WebApi.Controllers
         }
 
         [Route("register")]
-        public IActionResult Register([FromBody] UserRegisterInfo userInfo)
+        public IActionResult Register([FromBody] UserLogInInfo userInfo)
         {
             //var newId = 0;
             //var userId = new UserId(0);
@@ -67,14 +67,14 @@ namespace WebApi.Controllers
             //var passwordHasher = new PasswordHasher<UserLogInInfo>();
             //var userLogInInfo = new UserLogInInfo
             //{
-            //    UserName = userInfo.UserName,
+            //    Email = userInfo.Email,
             //    Password = userInfo.Password,
             //    Id = newId
             //};
             //var passwordHash = passwordHasher.HashPassword(userLogInInfo, userLogInInfo.Password);
 
             //var userDomain = new User(
-            //    userInfo.UserName,
+            //    userInfo.Email,
             //    "userInfo.FirstName",
             //    "userInfo.LastName",
             //    UserCompanyRole.Admin,
@@ -103,11 +103,5 @@ namespace WebApi.Controllers
 
             return Ok();
         }
-    }
-
-    public class UserRegisterInfo
-    {
-        public string UserName { get; set; }
-        public string Password { get; set; }
     }
 }

@@ -8,12 +8,16 @@ namespace BubelSoft.Core.Infrastructure.Database
         public MainContext(DbContextOptions options): base(options)
         { }
 
-        public DbSet<Company> Companies { get; set; }
-        public DbSet<Building> Buildings { get; set; }
-        public DbSet<User> Users { get; set; }
+        public virtual DbSet<Company> Companies { get; set; }
+        public virtual DbSet<Building> Buildings { get; set; }
+        public virtual DbSet<User> Users { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+
             modelBuilder.Entity<BuildingCompany>()
                 .HasKey(bc => new {bc.BuildingId, bc.CompanyId});
 
@@ -41,8 +45,7 @@ namespace BubelSoft.Core.Infrastructure.Database
                 .WithMany(b => b.Users)
                 .HasForeignKey(ur => new {ur.BuildingId, ur.CompanyId})
                 .OnDelete(DeleteBehavior.Cascade);
-
-
+            
             modelBuilder.Entity<Building>()
                 .Property(b => b.IsReady)
                 .HasDefaultValue(false);

@@ -10,7 +10,7 @@ namespace BubelSoft.Security
 {
     public interface IUserSession
     {
-        BubelSoft.Core.Domain.Models.User User { get; }
+        User User { get; }
     }
 
     public class UserSession: IUserSession
@@ -19,17 +19,15 @@ namespace BubelSoft.Security
 
         public static void UpdateUser(ClaimsPrincipal claimsPrincipal, HttpContext context)
         {
-            var user = new BubelSoft.Core.Domain.Models.User(
+            var user = new User(
                 new UserId(Convert.ToInt32(claimsPrincipal.FindFirst(JwtCustomClaimNames.UserId).Value)),
-                claimsPrincipal.FindFirst(JwtCustomClaimNames.UserName).Value,
                 claimsPrincipal.FindFirst(JwtCustomClaimNames.FirstName).Value,
                 claimsPrincipal.FindFirst(JwtCustomClaimNames.LastName).Value,
                 (UserCompanyRole) Convert.ToInt32(claimsPrincipal.FindFirst(JwtCustomClaimNames.CompanyRole).Value),
-                claimsPrincipal.FindFirst(JwtCustomClaimNames.Email).Value,
-                claimsPrincipal.FindFirst(JwtCustomClaimNames.PhoneNumber).Value);
+                claimsPrincipal.FindFirst(JwtCustomClaimNames.Email).Value);
             user.From(new CompanyId(Convert.ToInt32(claimsPrincipal.FindFirst(JwtCustomClaimNames.CompanyId).Value)));
 
-            var roles = JsonConvert.DeserializeObject<IList<BubelSoft.Core.Domain.Models.User.UserRole>>(claimsPrincipal.FindFirst(JwtCustomClaimNames.UserRoles).Value);
+            var roles = JsonConvert.DeserializeObject<IList<User.UserRole>>(claimsPrincipal.FindFirst(JwtCustomClaimNames.UserRoles).Value);
             foreach (var role in roles)
                 user.AddRole(role.BuildingId, role.UserBuildingRole);
 

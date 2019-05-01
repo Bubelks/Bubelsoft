@@ -30,12 +30,12 @@ namespace BubelSoft.Building.Domain.UnitTests.AccessRules
             var buildingId = new BuildingId(4);
             var mainContractorId = new CompanyId(14);
 
-            var user = new User(userId, "", "", "", UserCompanyRole.Worker, "", "");
+            var user = new User(userId,"", "", UserCompanyRole.Worker, "");
             user.From(mainContractorId);
             user.AddRole(buildingId, UserBuildingRole.Admin);
             _userRepository.Get(userId).Returns(user);
 
-            var building = new Core.Domain.Models.Building(buildingId, "name", new Company(mainContractorId, "cName"));
+            var building = new Core.Domain.Models.Building(buildingId, "name", new Company(mainContractorId, "cName", "cNumber"));
             _buildingRepository.Get(buildingId).Returns(building);
 
             var canEdit = _estimationAccessRule.CanEdit(estimation, userId, buildingId);
@@ -51,12 +51,12 @@ namespace BubelSoft.Building.Domain.UnitTests.AccessRules
             var buildingId = new BuildingId(4);
             var mainContractorId = new CompanyId(14);
 
-            var user = new User(userId, "", "", "", UserCompanyRole.Worker, "", "");
+            var user = new User(userId, "", "", UserCompanyRole.Worker, "");
             user.From(new CompanyId(12));
             user.AddRole(buildingId, UserBuildingRole.Admin);
             _userRepository.Get(userId).Returns(user);
 
-            var building = new Core.Domain.Models.Building(buildingId, "name", new Company(mainContractorId, "cName"));
+            var building = new Core.Domain.Models.Building(buildingId, "name", new Company(mainContractorId, "cName", "cNumber"));
             _buildingRepository.Get(buildingId).Returns(building);
 
             var canEdit = _estimationAccessRule.CanEdit(estimation, userId, buildingId);
@@ -72,13 +72,13 @@ namespace BubelSoft.Building.Domain.UnitTests.AccessRules
             var buildingId = new BuildingId(4);
             var mainContractorId = new CompanyId(14);
 
-            var user = new User(userId, "", "", "", UserCompanyRole.Worker, "", "");
+            var user = new User(userId, "", "", UserCompanyRole.Worker, "");
             user.From(mainContractorId);
             user.AddRole(buildingId, UserBuildingRole.Supervisor);
             user.AddRole(buildingId, UserBuildingRole.Reporter);
             _userRepository.Get(userId).Returns(user);
 
-            var building = new Core.Domain.Models.Building(buildingId, "name", new Company(mainContractorId, "cName"));
+            var building = new Core.Domain.Models.Building(buildingId, "name", new Company(mainContractorId, "cName", "cNumber"));
             _buildingRepository.Get(buildingId).Returns(building);
 
             var canEdit = _estimationAccessRule.CanEdit(estimation, userId, buildingId);

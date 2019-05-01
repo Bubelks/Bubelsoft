@@ -3,7 +3,6 @@ using System.Linq;
 using BubelSoft.Core.Domain.Models;
 using BubelSoft.Core.Infrastructure.Database.Entities;
 using BubelSoft.Core.Infrastructure.Database.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using Company = BubelSoft.Core.Domain.Models.Company;
 
 namespace BubelSoft.Core.Infrastructure.Database.Repositories
@@ -19,16 +18,12 @@ namespace BubelSoft.Core.Infrastructure.Database.Repositories
 
         public CompanyId Save(Company company)
         {
-            var entity = GetById(company.Id.Value) ?? new Entities.Company();
+            var entity = company.IsNew 
+                ? new Entities.Company()
+                : GetById(company.Id.Value);
 
             entity.Name = company.Name;
-            entity.Nip = company.Nip;
-            entity.PhoneNumber = company.PhoneNumber;
-            entity.EMail = company.Email;
-            entity.City = company.City;
-            entity.PostCode = company.PostCode;
-            entity.Street = company.Street;
-            entity.PlaceNumber = company.PlaceNumber;
+            entity.Number = company.Number;
 
             if (entity.Id == 0)
                 _context.Companies.Add(entity);
@@ -49,13 +44,7 @@ namespace BubelSoft.Core.Infrastructure.Database.Repositories
 
             return new Company(companyId,
                 entity.Name,
-                entity.Nip,
-                entity.PhoneNumber,
-                entity.EMail,
-                entity.City,
-                entity.PostCode,
-                entity.Street,
-                entity.PlaceNumber);
+                entity.Number);
         }
 
         public bool Exists(CompanyId companyId)
@@ -84,13 +73,7 @@ namespace BubelSoft.Core.Infrastructure.Database.Repositories
                 .Where(c => c.Buildings.Any(bc => bc.BuildingId == buildingId.Value))
                 .Select(entity => new Company(new CompanyId(entity.Id),
                     entity.Name,
-                    entity.Nip,
-                    entity.PhoneNumber,
-                    entity.EMail,
-                    entity.City,
-                    entity.PostCode,
-                    entity.Street,
-                    entity.PlaceNumber));
+                    entity.Number));
         }
 
         public IEnumerable<Company> GetAll()
@@ -98,13 +81,7 @@ namespace BubelSoft.Core.Infrastructure.Database.Repositories
             return _context.Companies
                 .Select(entity => new Company(new CompanyId(entity.Id),
                     entity.Name,
-                    entity.Nip,
-                    entity.PhoneNumber,
-                    entity.EMail,
-                    entity.City,
-                    entity.PostCode,
-                    entity.Street,
-                    entity.PlaceNumber));
+                    entity.Number));
         }
 
         public void AddSubContract(BuildingId buildingId, CompanyId companyId)

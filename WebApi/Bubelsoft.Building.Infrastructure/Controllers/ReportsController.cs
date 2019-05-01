@@ -135,7 +135,7 @@ namespace BubelSoft.Building.Infrastructure.Controllers
                             Id = r.Id,
                             CompanyName =
                                 companies.Single(c => c.Id == us.CompanyId).Name,
-                            UserName = $"{us.FirstName} {us.LastName} ({us.Name})"
+                            UserName = $"{us.FirstName} {us.LastName} ({us.Email})"
                         };
                     })
                 }).OrderBy(g => g.Day));

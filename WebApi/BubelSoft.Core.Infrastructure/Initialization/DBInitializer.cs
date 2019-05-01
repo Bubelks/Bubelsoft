@@ -20,8 +20,9 @@ namespace BubelSoft.Core.Infrastructure.Initialization
 
             var companies = new[]
             {
-                new Company("Company 1", "123-456-789", "123654789", "company1.fake@mail.com", "City", "78-963", "Steet", "221b"),
-                new Company("Company 2", "123-456-789", "123654789", "company1.fake@mail.com", "City", "78-963", "Steet", "221b")
+                new Company("Company 1", "123-456-789"),
+                new Company("Company 2", "123-456-789")
+
             };
             foreach (var company in companies)
                 _companyRepository.Save(company);
@@ -34,13 +35,13 @@ namespace BubelSoft.Core.Infrastructure.Initialization
             foreach (var building in buildings)
                 _buildingRepository.Save(building);
             
-            var maciek = new User("MacBub", "Maciek", "Bubel", UserCompanyRole.Admin, "macbub.fake@mail.com", "123456789");
+            var maciek = new User("MacBub", "Bubel", UserCompanyRole.Admin, "macbub.fake@mail.com");
             maciek.From(companies[0].Id);
             maciek.AddRole(buildings[0].Id, UserBuildingRole.Admin);
             maciek.AddRole(buildings[0].Id, UserBuildingRole.Reporter);
             _userRepository.Save(maciek, GeneratePasswordHash(maciek, bubelSoftUserPassword));
 
-            var kamil = new User("KamBub", "Kamil", "Bubel", UserCompanyRole.Admin, "kambub.fake@mail.com", "123456789");
+            var kamil = new User("KamBub", "Bubel", UserCompanyRole.Admin, "kambub.fake@mail.com");
             kamil.From(companies[1].Id);
             kamil.AddRole(buildings[1].Id, UserBuildingRole.Admin);
             kamil.AddRole(buildings[0].Id, UserBuildingRole.Admin);
@@ -58,7 +59,7 @@ namespace BubelSoft.Core.Infrastructure.Initialization
         {
             var userLogInInfo = new UserLogInInfo
             {
-                UserName = user.Name,
+                Email = user.Email,
                 Password = "qwe"
             };
             return bubelSoftUserPassword.Hash(userLogInInfo);
