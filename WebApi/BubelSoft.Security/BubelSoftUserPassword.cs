@@ -5,8 +5,8 @@ namespace BubelSoft.Security
 {
     public interface IBubelSoftUserPassword
     {
-        bool Verify(UserLogInInfo userLogInInfo);
-        string Hash(UserLogInInfo userLogInInfo);
+        bool Verify(UserLogInInfo userLogin, string passwordHash);
+        string Hash(UserLogInInfo userLogin);
     }
 
     public class BubelSoftUserPassword: IBubelSoftUserPassword
@@ -18,15 +18,14 @@ namespace BubelSoft.Security
             _passwordHasher = new PasswordHasher<UserLogInInfo>();
         }
 
-        public bool Verify(UserLogInInfo userLogInInfo)
+        public bool Verify(UserLogInInfo userLogin, string passwordHash)
         {
-            var passwordHash = Hash(userLogInInfo);
             return _passwordHasher
-                .VerifyHashedPassword(userLogInInfo, passwordHash, userLogInInfo.Password) != PasswordVerificationResult.Failed;
+                .VerifyHashedPassword(userLogin, passwordHash, userLogin.Password) != PasswordVerificationResult.Failed;
         }
 
-        public string Hash(UserLogInInfo userLogInInfo) =>
-            _passwordHasher.HashPassword(userLogInInfo, userLogInInfo.Password);
+        public string Hash(UserLogInInfo userLogin) =>
+            _passwordHasher.HashPassword(userLogin, userLogin.Password);
     }
     
     public class UserLogInInfo

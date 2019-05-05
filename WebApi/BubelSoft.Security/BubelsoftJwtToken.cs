@@ -11,7 +11,7 @@ namespace BubelSoft.Security
 {
     public interface IBubelSoftJwtToken
     {
-        string CreateFor(User user);
+        TokenInfo CreateFor(User user);
     }
 
     internal class BubelSoftJwtToken: IBubelSoftJwtToken
@@ -23,7 +23,7 @@ namespace BubelSoft.Security
             _configuration = configuration;
         }
 
-        public string CreateFor(User user)
+        public TokenInfo CreateFor(User user)
         {
             var userRolesString = JsonConvert.SerializeObject(user.Roles);
             var claims = new[]
@@ -40,14 +40,26 @@ namespace BubelSoft.Security
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
+            var expiration = DateTime.UtcNow.AddMinutes(30);
             var token = new JwtSecurityToken(
                 issuer: _configuration["Tokens:Issuer"],
                 audience: _configuration["Tokens:Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(30),
+                expires: expiration,
                 signingCredentials: credentials
             );
-            return new JwtSecurityTokenHandler().WriteToken(token);
+
+            return new TokenInfo
+            {
+                Token = new JwtSecurityTokenHandler().WriteToken(token),
+                Expiration = expiration
+            };
         }
+    }
+
+    public struct TokenInfo
+    {
+        public string Token;
+        public DateTime Expiration;
     }
 }

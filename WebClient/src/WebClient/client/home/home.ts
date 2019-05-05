@@ -11,16 +11,6 @@ export class Home {
     public buildings: ko.Observable<Buildings>;
     public notifications: ko.Observable<Notifications>;
 
-    constructor() {
-        this.buildings = ko.observable(new Buildings([], null));
-        this.notifications = ko.observable(new Notifications([]));
-
-        this.getBuildings()
-            .then((buildings) => {
-                this.notifications(new Notifications(buildings.map(b => b.name)));
-                this.buildings(new Buildings(buildings, this.notifications().showFor));
-            });
-    }
 
     private getBuildings(): JQueryPromise<IBuilding[]> {
         return rest.get("buildings", "");

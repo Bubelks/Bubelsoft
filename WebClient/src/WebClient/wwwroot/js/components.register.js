@@ -22,6 +22,7 @@ require(["knockout"],
 
             { path: "start/start", tag: "start" },
             { path: "start/register/register", tag: "start-register" },
+            { path: "start/login/login", tag: "start-login" },
 
             { path: "company/company", tag: "company" },
             { path: "company/companyApp", tag: "company-app" },
@@ -29,7 +30,6 @@ require(["knockout"],
             { path: "company/info/companyInfo", tag: "company-info" },
             { path: "company/user/create", tag: "user-create" },
 
-            { path: "user/login/login", tag: "login" },
             { path: "user/userApp", tag: "user-app" },
             { path: "user/register/register", tag: "user-register" },
 

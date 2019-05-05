@@ -1,4 +1,5 @@
-﻿using BubelSoft.Core.Domain.Models;
+﻿using System;
+using BubelSoft.Core.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using NUnit.Framework;
@@ -61,7 +62,7 @@ namespace BubelSoft.Security.UnitTests
         {
             var user = CreateUser(12);
             var userLogInInfo = StubLogInRepository(user, goodPassword: true);
-            _bubelSoftJwtToken.CreateFor(user).Returns("configconfigconfigconfigconfig");
+            _bubelSoftJwtToken.CreateFor(user).Returns(new TokenInfo{ Token = "configconfigconfigconfigconfig", Expiration = DateTime.UtcNow.AddDays(1)});
 
             var response = _userController.LogIn(userLogInInfo);
 
@@ -90,10 +91,10 @@ namespace BubelSoft.Security.UnitTests
             var userLogInInfo = new UserLogInInfo
             {
                 Email = user.Email,
-                Password = "password"
+                Password = passwordHash
             };
 
-            _bubelSoftPassword.Verify(userLogInInfo).Returns(goodPassword);
+            _bubelSoftPassword.Verify(Arg.Any<UserLogInInfo>(), Arg.Any<string>()).Returns(goodPassword);
 
             return userLogInInfo;
         }

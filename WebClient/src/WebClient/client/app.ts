@@ -14,7 +14,7 @@ export class App
 {
     public static apiUrl = "http://localhost:13567/api";
 
-    public start: Start;
+    public start: ko.Observable<Start>;
 
     public home: ko.Observable<Home>;
     public companyApp: CompanyApp;
@@ -28,7 +28,7 @@ export class App
     public showNavBar: ko.Observable<boolean>;
 
     constructor() {
-        this.start = new Start();
+        this.start = ko.observable(new Start());
         this.home = ko.observable(null);
         this.useBuildingsApp = ko.observable(false);
         this.useCompanyApp = ko.observable(false);
@@ -48,10 +48,6 @@ export class App
 
     public unauthorize(): void {
         navigator.navigate("user/logIn");
-    }
-
-    public authorize(): void {
-        navigator.navigate("home");
     }
 
     public openUserMenu(): void {
@@ -95,6 +91,7 @@ export class App
             this.home().dispose();
             this.home(null);
         }
+        this.start(null);
         this.useCompanyApp(false);
         this.useBuildingsApp(false);
         this.useUserApp(false);

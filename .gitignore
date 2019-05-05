@@ -19,5 +19,7 @@ WebClient/src/WebClient/client/**/*.js.map
 WebClient/src/WebClient/wwwroot/js/
 WebClient/src/WebClient/wwwroot/styles/
 WebClient/src/WebClient/wwwroot/views/
+WebClient/src/WebClient/wwwroot/lib/bootstrap/
+WebClient/src/WebClient/wwwroot/lib/jquery/
 
 #WebApi

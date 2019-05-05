@@ -1,0 +1,8 @@
+﻿<p>Welcome back!</p>
+<input class="my-input" type="text" data-bind="my_input: userEmailParams" placeholder="Email">
+<input class="my-input" type="password" data-bind="my_input: userPasswordParams" placeholder="Password">
+<button class="btn primary-button login-button" data-bind="click: login">Login</button>
+<!-- ko if: errorMessage() !== ""-->
+<p style="color: var(--brand-invalid); font-size: 100%" data-bind="text: errorMessage()"></p>
+<!-- /ko -->
+

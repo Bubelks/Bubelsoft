@@ -27,15 +27,15 @@ namespace WebApi.Controllers.Security
 
         [Route("login")]
         [HttpPost]
-        public IActionResult LogIn([FromBody]UserLogInInfo userInfo)
+        public IActionResult LogIn([FromBody]UserLogInInfo userLogin)
         {
-            var (user, password) = _userRepository.GetForLogIn(userInfo.Email);
+            var (user, passwordHash) = _userRepository.GetForLogIn(userLogin.Email);
 
             if (user == null)
                 return BadRequest("User not found");
 
-            if(!_bubelSoftUserPassword.Verify(userInfo))
-                return BadRequest("Password is invalid");
+            if(!_bubelSoftUserPassword.Verify(userLogin, passwordHash))
+                    return BadRequest("Password is invalid");
             
             return Ok(_bubelSoftJwtToken.CreateFor(user));
         }

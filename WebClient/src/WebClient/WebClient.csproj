@@ -27,8 +27,8 @@
     <None Remove="client\company\interfaces.ts" />
     <None Remove="client\customBindings\input\input.ts" />
     <None Remove="client\home\buildings\building.ts" />
+    <None Remove="client\start\login\login.ts" />
     <None Remove="client\start\start.ts" />
-    <None Remove="client\user\logIn\logIn.ts" />
     <None Remove="client\user\register\register.ts" />
     <None Remove="client\user\userApp.ts" />
     <None Remove="client\utils\router.ts" />
@@ -39,10 +39,6 @@
     <Content Include="client\components.register.js" />
     <Content Include="client\index.html" />
     <Content Include="client\main.register.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="client\company\create\companyCreate.html" />
   </ItemGroup>
 
   <ItemGroup>
@@ -70,13 +66,13 @@
     <TypeScriptCompile Include="client\company\companyApp.ts" />
     <TypeScriptCompile Include="client\company\interfaces.ts" />
     <TypeScriptCompile Include="client\customBindings\input\input.ts" />
+    <TypeScriptCompile Include="client\start\login\login.ts" />
     <TypeScriptCompile Include="client\start\start.ts" />
     <TypeScriptCompile Include="client\user\register\register.ts" />
     <TypeScriptCompile Include="client\user\userApp.ts" />
     <TypeScriptCompile Include="client\utils\navigator.ts" />
     <TypeScriptCompile Include="client\company\company.ts" />
     <TypeScriptCompile Include="client\home\buildings\building.ts" />
-    <TypeScriptCompile Include="client\user\logIn\logIn.ts" />
     <TypeScriptCompile Include="client\utils\router.ts" />
   </ItemGroup>
 
