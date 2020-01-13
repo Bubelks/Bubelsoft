@@ -11,11 +11,15 @@ namespace BubelSoft.Core.Infrastructure.Database.Repositories
 {
     public class UserRepository : IUserRepository, IUserLoginRepository
     {
+        private readonly IBubelSoftUserPassword _bubelSoftUserPassword;
         private readonly MainContext _context;
 
-        public UserRepository(MainContext context)
+        public UserRepository(
+            MainContext context,
+            IBubelSoftUserPassword bubelSoftUserPassword)
         {
             _context = context;
+            _bubelSoftUserPassword = bubelSoftUserPassword;
         }
 
         public User Get(UserId id)
@@ -57,7 +61,7 @@ namespace BubelSoft.Core.Infrastructure.Database.Repositories
             return new UserId(entity.Id);
         }
         
-        public (User user, string password) GetForLogIn(string userEmail)
+        public (User user, string passwordHash) GetForLogIn(string userEmail)
         {
             var entity = _context.Users.FirstOrDefault(u => u.Email == userEmail);
             return entity == null
@@ -77,7 +81,7 @@ namespace BubelSoft.Core.Infrastructure.Database.Repositories
             return user;
         }
 
-        private static void Update(Entities.User entity, User user, string passwordHash = null)
+        private void Update(Entities.User entity, User user, string password = null)
         {
             entity.FirstName = user.FirstName;
             entity.LastName = user.LastName;
@@ -101,8 +105,12 @@ namespace BubelSoft.Core.Infrastructure.Database.Repositories
 
                 }));
 
-            if (passwordHash != null)
-                entity.Password = passwordHash;
+            if (password != null)
+                entity.Password = _bubelSoftUserPassword.Hash(new UserLogInInfo
+                {
+                    Email = entity.Email,
+                    Password = password
+                });
         }
 
         private Entities.User Get(int id)

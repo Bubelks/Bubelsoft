@@ -16,7 +16,7 @@ namespace BubelSoft.Core.Infrastructure.Initialization
 
         public static void Initialize(MainContext context, IBubelSoftUserPassword bubelSoftUserPassword)
         {
-            SetUpRepositories(context);
+            SetUpRepositories(context, bubelSoftUserPassword);
 
             var companies = new[]
             {
@@ -35,22 +35,22 @@ namespace BubelSoft.Core.Infrastructure.Initialization
             foreach (var building in buildings)
                 _buildingRepository.Save(building);
             
-            var maciek = new User("MacBub", "Bubel", UserCompanyRole.Admin, "macbub.fake@mail.com");
+            var maciek = new User("MacBub", "Bubel", UserCompanyRole.Admin, "mac@m.com");
             maciek.From(companies[0].Id);
             maciek.AddRole(buildings[0].Id, UserBuildingRole.Admin);
             maciek.AddRole(buildings[0].Id, UserBuildingRole.Reporter);
-            _userRepository.Save(maciek, GeneratePasswordHash(maciek, bubelSoftUserPassword));
+            _userRepository.Save(maciek, "qwe");
 
-            var kamil = new User("KamBub", "Bubel", UserCompanyRole.Admin, "kambub.fake@mail.com");
+            var kamil = new User("KamBub", "Bubel", UserCompanyRole.Admin, "kam@m.com");
             kamil.From(companies[1].Id);
             kamil.AddRole(buildings[1].Id, UserBuildingRole.Admin);
             kamil.AddRole(buildings[0].Id, UserBuildingRole.Admin);
-            _userRepository.Save(kamil, GeneratePasswordHash(kamil, bubelSoftUserPassword));
+            _userRepository.Save(kamil, "qwe");
         }
 
-        private static void SetUpRepositories(MainContext context)
+        private static void SetUpRepositories(MainContext context, IBubelSoftUserPassword bubelSoftUserPassword)
         {
-            _userRepository = new UserRepository(context);
+            _userRepository = new UserRepository(context, bubelSoftUserPassword);
             _buildingRepository = new BuildingRepository(context);
             _companyRepository = new CompanyRepository(context);
         }
