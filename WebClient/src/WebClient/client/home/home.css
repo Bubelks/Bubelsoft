@@ -1,12 +1,42 @@
-﻿    home .type-select {
-        padding: 0 0 0 10px;
-        min-width: 100px;
-        border-radius: 0;
-        background-color: #f6f6f6;
+﻿nav {
+    background-color: var(--brand-light-orange)
+}
+
+    .nav div.brand {
+        margin: 10px;
+        color: var(--brand-main-text);
+        font-weight: bold;
+        font-size: 60px;
     }
 
-    home .filters {
-        padding: 5px;
-        display: flex;
-        min-height: fit-content;
+    .nav div.buttons {
+        font-size: 30px;
+    }
+
+        .nav .buttons div.primary-button {
+            padding-left: 10px;
+            background-color: transparent;
+            color: var(--brand-main-text);
+        }        
+
+        .nav .buttons div.primary-button:hover {
+            background-color: var(--brand-orange);
+        }
+
+.content {
+    padding: 20px;
+}
+
+    .content .welcome {
+        font-size: 30px;
+        font-weight: 700;
+        border-bottom: 1px solid var(--brand-very-light-orange);
+    }
+
+        .content .welcome p {
+            margin-bottom: 0px;
+        }
+
+    .content .main {
+        margin-top: 20px;
     }

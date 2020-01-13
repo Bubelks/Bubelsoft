@@ -2,6 +2,7 @@
     color: var(--brand-main-text);
     font-weight: 700;
 }
+
 p.brand {
     color: var(--brand-orange);
 }

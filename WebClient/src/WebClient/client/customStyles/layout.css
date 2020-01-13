@@ -25,10 +25,10 @@
     margin-left: 10px;
 }
 
-html {
+html, body, .home, nav, .content {
     height: 100%;
 }
 
-body {
-    height: 100%;
+.content {
+    width: 100%;
 }
