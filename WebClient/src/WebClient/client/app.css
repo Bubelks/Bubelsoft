@@ -1,52 +1,25 @@
-.user-avatar {
-    width: 40px;
-    border-radius: 50% !important;
-    height: 40px;
-    box-shadow: none !important;
-    font-weight: bold;
-}
-
-    .user-avatar:not(.show) {
-        opacity: 1 !important;
-        background-color: #ffffff!important;
-        color: #62b5c4!important;
-    }
-
-
-body > .app {
-    height: 100%;
-}
-
 nav {
-    background-color: #048299;
+    background-color: var(--brand-light-orange)
 }
 
-    nav .dropdown-menu {
-        right: 0;
-        left: auto;
-    }
+.nav div.brand {
+    margin: 10px;
+    color: var(--brand-main-text);
+    font-weight: bold;
+    font-size: 60px;
+    cursor: pointer;
+}
 
-    nav a {
-        color: white;
-    }
+.nav div.buttons {
+    font-size: 30px;
+}
 
-    nav .navbar-brand {
-        font-weight: bold;
-    }
+.nav .buttons div.primary-button {
+    padding-left: 10px;
+    background-color: transparent;
+    color: var(--brand-main-text);
+}        
 
-    nav .navbar-nav {
-        flex-direction: row;
-    }
-
-        nav .navbar-nav li .nav-link {
-            padding: 8px;
-            padding-bottom: 2px;
-        }
-
-        nav .navbar-nav li .current-tab{
-            background-color: white;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            margin: auto;
-        }
+.nav .buttons div.primary-button:hover {
+    background-color: var(--brand-orange);
+}

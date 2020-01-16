@@ -25,15 +25,13 @@ export class App
     public useBuildingsApp: ko.Observable<boolean>;
     public useCompanyApp: ko.Observable<boolean>;
     public useUserApp: ko.Observable<boolean>;
-    public showNavBar: ko.Observable<boolean>;
 
     constructor() {
         this.start = ko.observable(new Start());
-        this.home = ko.observable(null);
+        this.home = ko.observable(new Home());
         this.useBuildingsApp = ko.observable(false);
         this.useCompanyApp = ko.observable(false);
         this.useUserApp = ko.observable(false);
-        this.showNavBar = ko.observable(true);
 
         this.buildingsApp = new BuildingsApp();
         this.companyApp = new CompanyApp();
@@ -60,7 +58,15 @@ export class App
         navigator.navigate("logIn");
     }
 
-    public goTo = (url: string): void => {
+    public goToBuildings() {
+        this.goTo("buildings");
+    }
+
+    public goToHome() {
+        this.goTo("home");
+    }
+
+    private  goTo = (url: string): void => {
         navigator.navigate(url);
     }
 
@@ -76,7 +82,6 @@ export class App
 
     private showUser(): void {
         this.hideAll();
-        this.showNavBar(false);
         this.useUserApp(true);
     }
 
@@ -86,7 +91,6 @@ export class App
     }
 
     private hideAll(): void {
-        this.showNavBar(true);
         if (this.home() !== null) {
             this.home().dispose();
             this.home(null);

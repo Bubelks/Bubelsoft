@@ -6,20 +6,10 @@ import { Notifications } from "home/notifications/notifications";
 
 import * as rest from "utils/communication/rest";
 import * as ko from "knockout";
+import * as navigator from "utils/navigator";
 
 export class Home {
-    public buildings: ko.Observable<Buildings>;
-    public notifications: ko.Observable<Notifications>;
-
-
-    private getBuildings(): JQueryPromise<IBuilding[]> {
-        return rest.get("buildings", "");
-    }
-
     public dispose() {
-        if(this.buildings())
-            this.buildings().dispose();
-        if (this.notifications())
-            this.notifications().dispose();
+
     }
 }

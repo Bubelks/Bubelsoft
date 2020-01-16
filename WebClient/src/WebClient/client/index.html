@@ -16,9 +16,24 @@
 <!-- ko if: start() !== null-->
 <start params="viewModel: start"></start>
 <!-- /ko -->
-<!-- ko if: home() !== null -->
-<home params="viewModel: start"></home>
-<!-- /ko -->
+
+<div class="flex-container main">
+    <nav class="nav flex-column">
+        <div class="brand" data-bind="click: goToHome">BubelSoft</div>
+        <div class="buttons">
+            <div class="primary-button">Twoja firma</div>
+            <div class="primary-button" data-bind="click: goToBuildings">Twoje budowy</div>
+        </div>
+    </nav>
+    <div class="content">
+        <!-- ko if: home() !== null -->
+        <home params="viewModel: home"></home>
+        <!-- /ko -->
+        <!-- ko if: useBuildingsApp() -->
+        <buildings-app params="viewModel: buildingsApp"></buildings-app>
+        <!-- /ko -->
+    </div>
+</div>
 
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

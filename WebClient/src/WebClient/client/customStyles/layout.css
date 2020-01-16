@@ -25,10 +25,24 @@
     margin-left: 10px;
 }
 
-html, body, .home, nav, .content {
+html, body, .main, nav, .content {
     height: 100%;
 }
 
 .content {
     width: 100%;
+    padding: 20px;
 }
+    .content .header {
+        font-size: 30px;
+        font-weight: 700;
+        border-bottom: 1px solid var(--brand-very-light-orange);
+    }
+
+        .content .header p {
+            margin-bottom: 0px;
+        }
+
+    .content .main {
+        margin-top: 20px;
+    }
