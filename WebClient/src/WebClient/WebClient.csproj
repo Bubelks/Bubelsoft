@@ -12,13 +12,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="client\buildings\building\building.ts" />
-    <None Remove="client\buildings\building\calendar\calendar.ts" />
-    <None Remove="client\buildings\building\companies\companies.ts" />
-    <None Remove="client\buildings\building\companies\subContractor\subContractor.ts" />
-    <None Remove="client\buildings\building\estimation\estimation.ts" />
-    <None Remove="client\buildings\building\reports\reports.ts" />
-    <None Remove="client\buildings\building\report\report.ts" />
     <None Remove="client\buildings\create\create.ts" />
     <None Remove="client\buildings\create\steps\company.ts" />
     <None Remove="client\buildings\navigator.ts" />
@@ -52,13 +45,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="client\buildings\building\building.ts" />
-    <TypeScriptCompile Include="client\buildings\building\calendar\calendar.ts" />
-    <TypeScriptCompile Include="client\buildings\building\companies\companies.ts" />
-    <TypeScriptCompile Include="client\buildings\building\companies\subContractor\subContractor.ts" />
-    <TypeScriptCompile Include="client\buildings\building\estimation\estimation.ts" />
-    <TypeScriptCompile Include="client\buildings\building\reports\reports.ts" />
-    <TypeScriptCompile Include="client\buildings\building\report\report.ts" />
     <TypeScriptCompile Include="client\buildings\create\create.ts" />
     <TypeScriptCompile Include="client\buildings\create\steps\building.ts" />
     <TypeScriptCompile Include="client\buildings\create\steps\estimate.ts" />
